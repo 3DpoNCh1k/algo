@@ -1,0 +1,11 @@
+*
+!*.hpp
+!*.cpp
+!*.sh
+!*/
+!*/*.hpp
+!*/*.cpp
+
+
+
+!.gitignore
