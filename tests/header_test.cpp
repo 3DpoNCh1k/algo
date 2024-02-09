@@ -1,0 +1,74 @@
+#include "../header.hpp"
+
+#define SINGLE_ARG(...) __VA_ARGS__
+
+#define CHECK(func, type)        \
+  {                              \
+    static_assert(func<type>);   \
+    static_assert(func<type&>);  \
+    static_assert(func<type&&>); \
+  }
+
+#define CHECK_WITH_CONST(func, type) \
+  { CHECK(func, SINGLE_ARG(const type)); }
+
+#define CHECK_ALL(func, type)                 \
+  {                                           \
+    CHECK(func, SINGLE_ARG(type));            \
+    CHECK_WITH_CONST(func, SINGLE_ARG(type)); \
+  }
+
+#define CHECK_HAS_TO_STRING(type) \
+  { CHECK_ALL(has_ToString_v, SINGLE_ARG(type)); }
+
+#define CHECK_IS_TO_STRINGABLE(type) \
+  { CHECK_ALL(is_to_stringable_v, SINGLE_ARG(type)); }
+
+#define CHECK_IS_ITERBALE(type) \
+  { CHECK_ALL(is_iterable_v, SINGLE_ARG(type)); }
+
+#define CHECK_IS_VECTOR(type) \
+  { CHECK_ALL(is_vector_v, SINGLE_ARG(type)); }
+
+#define CHECK_IS_ARRAY(type) \
+  { CHECK_ALL(is_array_v, SINGLE_ARG(type)); }
+
+struct Dummy {
+  string ToString() const {
+    return "I have ToString!";
+  }
+};
+
+void RunHasToStringTests() {
+  CHECK_HAS_TO_STRING(Dummy);
+}
+
+void RunIsToStringableTests() {
+  CHECK_IS_TO_STRINGABLE(int);
+}
+
+void RunIterbaleTests() {
+  CHECK_IS_ITERBALE(set<int>);
+}
+
+void RunVectorTests() {
+  CHECK_IS_VECTOR(vector<int>);
+  CHECK_IS_VECTOR(vector<vector<int>>);
+}
+
+void RunArrayTests() {
+  CHECK_IS_ARRAY(SINGLE_ARG(array<int, 0>));
+  CHECK_IS_ARRAY(SINGLE_ARG(array<array<int, 0>, 1>));
+}
+
+void RunTests() {
+  RunHasToStringTests();
+  RunIsToStringableTests();
+  RunIterbaleTests();
+  RunVectorTests();
+  RunArrayTests();
+}
+
+int main() {
+  RunTests();
+}
