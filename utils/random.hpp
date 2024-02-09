@@ -1,3 +1,4 @@
+#include <random>
 #include "../header.hpp"
 
 struct RandomGenerator {
@@ -12,6 +13,13 @@ struct RandomGenerator {
   }
   i64 RandomInt(i64 a, i64 b) {
     return uniform_int_distribution<i64>(a, b)(rng_);
+  }
+  bool RandomBool() {
+    return RandomInt(0, 1) == 0;
+  }
+
+  mt19937& GetRng() {
+    return rng_;
   }
 
   mt19937 rng_;
