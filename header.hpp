@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <array>
 #include <bit>
 #include <bitset>
 #include <cassert>
@@ -74,34 +75,40 @@ template <typename T>
 struct rank<T&&> : rank<T> {};
 
 template <typename T>
-struct is_vector : false_type {};
+struct is_std_vector : false_type {};
 
 template <typename T>
-struct is_vector<vector<T>> : true_type {};
+struct is_std_vector<vector<T>> : true_type {};
 
 template <typename T>
-struct is_vector<T const> : is_vector<T> {};
+struct is_std_vector<T const> : is_std_vector<T> {};
 
 template <typename T>
-struct is_vector<T&> : is_vector<T> {};
+struct is_std_vector<T&> : is_std_vector<T> {};
 
 template <typename T>
-struct is_vector<T&&> : is_vector<T> {};
+struct is_std_vector<T&&> : is_std_vector<T> {};
 
 template <typename T>
-constexpr bool is_vector_v = is_vector<T>::value;
+constexpr bool is_std_vector_v = is_std_vector<T>::value;
+
+template <typename T>
+struct is_std_array : false_type {};
 
 template <typename T, size_t N>
-struct is_array<array<T, N>> : true_type {};
+struct is_std_array<array<T, N>> : true_type {};
 
 template <typename T>
-struct is_array<T const> : is_array<T> {};
+struct is_std_array<T const> : is_std_array<T> {};
 
 template <typename T>
-struct is_array<T&> : is_array<T> {};
+struct is_std_array<T&> : is_std_array<T> {};
 
 template <typename T>
-struct is_array<T&&> : is_array<T> {};
+struct is_std_array<T&&> : is_std_array<T> {};
+
+template <typename T>
+constexpr bool is_std_array_v = is_std_array<T>::value;
 
 template <typename T, typename = void>
 struct is_iterable : false_type {};
@@ -143,10 +150,11 @@ template <typename T>
 enable_if_t<has_ToString_v<T>, string> ToString(const T&);
 
 template <typename T>
-enable_if_t<is_array_v<T> || is_vector_v<T>, string> ToString(const T&);
+enable_if_t<is_std_array_v<T> || is_std_vector_v<T>, string> ToString(const T&);
 
 template <typename T>
-enable_if_t<!is_array_v<T> && !is_vector_v<T> && is_iterable_v<T>, string>
+enable_if_t<!is_std_array_v<T> && !is_std_vector_v<T> && is_iterable_v<T>,
+            string>
 ToString(const T&);
 
 string ToString(char c) {
@@ -192,7 +200,7 @@ enable_if_t<has_ToString_v<T>, string> ToString(const T& value) {
 }
 
 template <class T>
-enable_if_t<is_array_v<T> || is_vector_v<T>, string> ToString(
+enable_if_t<is_std_array_v<T> || is_std_vector_v<T>, string> ToString(
     const T& arr_or_vec) {
   stringstream result;
   result << "[";
@@ -209,7 +217,8 @@ enable_if_t<is_array_v<T> || is_vector_v<T>, string> ToString(
 }
 
 template <typename T>
-enable_if_t<!is_array_v<T> && !is_vector_v<T> && is_iterable_v<T>, string>
+enable_if_t<!is_std_array_v<T> && !is_std_vector_v<T> && is_iterable_v<T>,
+            string>
 ToString(const T& iterable) {
   stringstream result;
   result << "{";

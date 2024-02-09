@@ -27,11 +27,11 @@
 #define CHECK_IS_ITERBALE(type) \
   { CHECK_ALL(is_iterable_v, SINGLE_ARG(type)); }
 
-#define CHECK_IS_VECTOR(type) \
-  { CHECK_ALL(is_vector_v, SINGLE_ARG(type)); }
+#define CHECK_IS_STD_VECTOR(type) \
+  { CHECK_ALL(is_std_vector_v, SINGLE_ARG(type)); }
 
-#define CHECK_IS_ARRAY(type) \
-  { CHECK_ALL(is_array_v, SINGLE_ARG(type)); }
+#define CHECK_IS_STD_ARRAY(type) \
+  { CHECK_ALL(is_std_array_v, SINGLE_ARG(type)); }
 
 struct Dummy {
   string ToString() const {
@@ -52,13 +52,13 @@ void RunIterbaleTests() {
 }
 
 void RunVectorTests() {
-  CHECK_IS_VECTOR(vector<int>);
-  CHECK_IS_VECTOR(vector<vector<int>>);
+  CHECK_IS_STD_VECTOR(vector<int>);
+  CHECK_IS_STD_VECTOR(vector<vector<int>>);
 }
 
 void RunArrayTests() {
-  CHECK_IS_ARRAY(SINGLE_ARG(array<int, 0>));
-  CHECK_IS_ARRAY(SINGLE_ARG(array<array<int, 0>, 1>));
+  CHECK_IS_STD_ARRAY(SINGLE_ARG(array<int, 0>));
+  CHECK_IS_STD_ARRAY(SINGLE_ARG(array<array<int, 0>, 1>));
 }
 
 void RunTests() {
