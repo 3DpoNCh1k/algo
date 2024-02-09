@@ -3,9 +3,12 @@
 import argparse
 import json
 import os
+import re
 import subprocess
 import sys
 import traceback
+
+from pathlib import Path
 
 
 def load_config():
@@ -40,6 +43,18 @@ def run_command(args):
     assert res.returncode == 0
 
 
+def clean_command(args):
+    path = args.path
+    patterns = [".*\.exe$", ".*\.exp$", ".*\.lib$", ".*\.pdb$"]
+    for path, _, filenames in os.walk(path):
+        to_remove = filter(
+            lambda filename: any(re.match(pattern, filename) for pattern in patterns),
+            filenames,
+        )
+        for filename in to_remove:
+            os.remove(path + os.sep + filename)
+
+
 def main():
     parser = argparse.ArgumentParser(prog="Assistant")
 
@@ -51,6 +66,10 @@ def main():
     run.add_argument("local_debug", nargs="?", default=False)
     run.add_argument("--compiler", choices=["g++", "clang"], default="g++")
     run.set_defaults(cmd=run_command)
+
+    clean = subparsers.add_parser("clean")
+    clean.add_argument("path")
+    clean.set_defaults(cmd=clean_command)
 
     args = parser.parse_args()
     if "cmd" not in args:
