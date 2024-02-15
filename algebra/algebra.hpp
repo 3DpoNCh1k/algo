@@ -2,8 +2,6 @@
 
 #include "../header.hpp"
 
-// Verification for LeastPrimeFactors:
-// https://codeforces.com/group/CYMPFXi8zA/contest/279284/problem/B
 
 // a*x + b*y = g
 i64 ExtendedGCD(i64 a, i64 b, i64& x, i64& y) {
