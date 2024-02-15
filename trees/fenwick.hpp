@@ -1,81 +1,72 @@
-#ifndef FENWICK_HPP
-#define FENWICK_HPP
+#pragma once
 
-#include <bits/stdc++.h>
+#include "../header.hpp"
 
-// Verification: https://codeforces.com/group/CYMPFXi8zA/contest/240094/problem/B
-
-
-using namespace std;
+// Verification:
+// https://codeforces.com/group/CYMPFXi8zA/contest/240094/problem/B
 
 struct Fenwick {
-    
-    using ll = long long;
-    
-    static const int mxN = 5e5 + 10;
-    ll a[mxN];
+  static const int mxN = 5e5 + 10;
+  i64 a[mxN];
 
-    int get_len(int i) {
-        return ((i + 1) ^ i) & (i + 1);
-    };
+  int GetLen(int i) {
+    return ((i + 1) ^ i) & (i + 1);
+  };
 
-    void add(int i, ll val) {
-        while(i < mxN) {
-            a[i] += val;
-            i += get_len(i);
-        }
-    };
+  void Add(int i, i64 val) {
+    while (i < mxN) {
+      a[i] += val;
+      i += GetLen(i);
+    }
+  };
 
-    ll sum(int i) {
-        ll ans = 0;
-        while(i >= 0) {
-            ans += a[i];
-            i -= get_len(i);
-        }
-        return ans;
-    };
+  i64 Sum(int i) {
+    i64 ans = 0;
+    while (i >= 0) {
+      ans += a[i];
+      i -= GetLen(i);
+    }
+    return ans;
+  };
 
-    void set_val(int i, ll val) {
-        add(i, (val-(sum(i) - sum(i-1))));
-    };
+  void SetValue(int i, i64 val) {
+    Add(i, (val - (Sum(i) - Sum(i - 1))));
+  };
 
-    ll get_sum(int l, int r) {
-        return sum(r) - sum(l-1);
-    };
-
+  i64 GetSum(int l, int r) {
+    return Sum(r) - Sum(l - 1);
+  };
 };
 
-struct Fenwick_3D {
-    
-    using ll = long long;
-    static const int mxN = 128 + 5;
-    int a[mxN][mxN][mxN];
+struct Fenwick3D {
+  static const int mxN = 128 + 5;
+  int a[mxN][mxN][mxN];
 
-    void add(int x, int y, int z, int val)
-    {
-        int i, j, k;
-        for(i = x; i < mxN; i |= (i+1))
-            for(j = y; j < mxN; j |= (j + 1))
-                for(k = z; k < mxN; k |= (k + 1))
-                    a[i][j][k] += val;
+  void Add(int x, int y, int z, int val) {
+    int i, j, k;
+    for (i = x; i < mxN; i |= (i + 1)) {
+      for (j = y; j < mxN; j |= (j + 1)) {
+        for (k = z; k < mxN; k |= (k + 1)) {
+          a[i][j][k] += val;
+        }
+      }
+    }
+  }
+
+  int Get(int x, int y, int z) {
+    if (x < 0 || y < 0 || z < 0) {
+      return 0;
+    }
+    int res = 0;
+    int i, j, k;
+    for (i = x; i >= 0; i = (i & (i + 1)) - 1) {
+      for (j = y; j >= 0; j = (j & (j + 1)) - 1) {
+        for (k = z; k >= 0; k = (k & (k + 1)) - 1) {
+          res += a[i][j][k];
+        }
+      }
     }
 
-    int get(int x, int y, int z)
-    {
-        if (x < 0 || y < 0 || z < 0)
-            return 0;
-        int res = 0;
-        int i, j, k;
-        for(i = x; i >= 0; i = (i&(i+1)) - 1)
-            for(j = y; j >= 0; j = (j&(j + 1)) - 1)
-                for(k = z; k >= 0; k = (k&(k + 1)) - 1)
-                    res += a[i][j][k];
-                
-        return res;
-    }
-
+    return res;
+  }
 };
-
-
-
-#endif
