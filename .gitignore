@@ -213,4 +213,3 @@ pyrightconfig.json
 # developing
 .vscode/
 submit/
-tests/
