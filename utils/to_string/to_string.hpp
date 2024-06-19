@@ -2,13 +2,14 @@
 
 #include <type_traits>
 #include <sstream>
-
-#include <vector>
 #include <string>
-#include <bitset>
-#include <utility>
 
-#include "traits/traits.hpp"
+#include "../traits/traits.hpp"
+#include "fundamentals.hpp"
+#include "std/bitset.hpp"
+#include "std/pair.hpp"
+#include "std/string.hpp"
+#include "std/vector_bool.hpp"
 
 template <typename T>
 std::enable_if_t<is_to_stringable_v<T>, std::string> ToString(const T&);
@@ -17,42 +18,13 @@ template <typename T>
 std::enable_if_t<has_ToString_v<T>, std::string> ToString(const T&);
 
 template <typename T>
-std::enable_if_t<is_std_array_v<T> || is_std_vector_v<T>, std::string> ToString(const T&);
+std::enable_if_t<is_std_array_v<T> || is_std_vector_v<T>, std::string> ToString(
+    const T&);
 
 template <typename T>
 std::enable_if_t<!is_std_array_v<T> && !is_std_vector_v<T> && is_iterable_v<T>,
-            std::string>
+                 std::string>
 ToString(const T&);
-
-std::string ToString(char c) {
-  return std::string(1, c);
-}
-std::string ToString(bool b) {
-  return b ? "true" : "false";
-}
-std::string ToString(const char* s) {
-  return std::string(s);
-}
-std::string ToString(const std::string& s) {
-  return s;
-}
-std::string ToString(const std::vector<bool>& v) {
-  std::string result;
-  for (const auto& x : v) {
-    result += char('0' + static_cast<int>(x));
-  }
-  return result;
-}
-
-template <size_t N>
-std::string ToString(const std::bitset<N>& b) {
-  return b.ToString();
-}
-
-template <class T1, class T2>
-std::string ToString(const std::pair<T1, T2>& p) {
-  return "(" + ToString(p.first) + ", " + ToString(p.second) + ")";
-}
 
 template <typename T>
 std::enable_if_t<is_to_stringable_v<T>, std::string> ToString(const T& value) {
@@ -83,7 +55,7 @@ std::enable_if_t<is_std_array_v<T> || is_std_vector_v<T>, std::string> ToString(
 
 template <typename T>
 std::enable_if_t<!is_std_array_v<T> && !is_std_vector_v<T> && is_iterable_v<T>,
-            std::string>
+                 std::string>
 ToString(const T& iterable) {
   std::stringstream result;
   result << "{";
