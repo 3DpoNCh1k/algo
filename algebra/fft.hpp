@@ -1,6 +1,9 @@
 #pragma once
 
-#include "../header.hpp"
+#include <algorithm>
+#include <cassert>
+#include <complex>
+#include <vector>
 
 // Verification:
 // https://codeforces.com/group/CYMPFXi8zA/contest/279284/problem/F
@@ -8,7 +11,7 @@
 struct FFT {
   // NOLINTBEGIN
   using ld = long double;
-  using clx = complex<ld>;
+  using clx = std::complex<ld>;
   // use 15-17 locally if SEGFAULT
   static const int mxK = 19;
   static const int mxN = 1 << mxK;
@@ -35,7 +38,7 @@ struct FFT {
     }
   }
 
-  void DoFFT(vector<clx>& res, vector<clx> const& a) {
+  void DoFFT(std::vector<clx>& res, std::vector<clx> const& a) {
     int n = res.size(), k = mxK;
     //  for simplicity always use mxN vectors (mxN-1 order polynom)
     assert(n == mxN);
@@ -57,9 +60,9 @@ struct FFT {
     }
   }
 
-  void DoInverseFFT(vector<clx>& res, vector<clx>& a) {
+  void DoInverseFFT(std::vector<clx>& res, std::vector<clx>& a) {
     DoFFT(res, a);
-    reverse(res.begin() + 1, res.end());
+    std::reverse(res.begin() + 1, res.end());
     int n = res.size();
     for (int i = 0; i < n; ++i) {
       res[i] /= n;

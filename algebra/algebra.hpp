@@ -1,6 +1,7 @@
 #pragma once
 
-#include "../header.hpp"
+#include <vector>
+#include "../utils/types.hpp"
 
 
 // a*x + b*y = g
@@ -31,8 +32,8 @@ i64 ModularInverse(i64 a, i64 m) {
   return ((x % m) + m) % m;
 }
 
-vector<int> PrimeModularInverses(int m) {
-  vector<int> inv(m);
+std::vector<int> PrimeModularInverses(int m) {
+  std::vector<int> inv(m);
   inv[1] = 1;
   // m (mod i) = m - (m/i)*i
   // apply mod m
@@ -45,9 +46,9 @@ vector<int> PrimeModularInverses(int m) {
   return inv;
 }
 
-vector<int> LeastPrimeFactors(int n) {
-  vector<int> least_primes(n + 1);
-  vector<int> primes;
+std::vector<int> LeastPrimeFactors(int n) {
+  std::vector<int> least_primes(n + 1);
+  std::vector<int> primes;
   for (int i = 2; i <= n; ++i) {
     if (least_primes[i] == 0) {
       least_primes[i] = i;
@@ -61,6 +62,8 @@ vector<int> LeastPrimeFactors(int n) {
   }
   return least_primes;
 }
+
+const i32 MOD = 1e9 + 7;
 
 i64 AddMOD(i64 a, i64 b) {
   i64 res = a + b;
