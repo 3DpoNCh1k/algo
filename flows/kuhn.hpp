@@ -1,20 +1,22 @@
 #pragma once
 
-#include "../header.hpp"
+#include <vector>
+#include <set>
+#include <utility>
 
 // https://judge.yosupo.jp/problem/bipartitematching
 
 // TODO: fix TLE on random_03 test
 
 struct Kuhn {
-  vector<vector<int>> L;
-  vector<int> visited;
-  vector<int> mt;
+  std::vector<std::vector<int>> L;
+  std::vector<int> visited;
+  std::vector<int> mt;
   // left sz, right sz
   int n1, n2;
   // # matchings
   int k_mt;
-  Kuhn(const vector<vector<int>>& left, int n2)
+  Kuhn(const std::vector<std::vector<int>>& left, int n2)
       : n2(n2) {
     L = left;
     n1 = L.size();
@@ -22,12 +24,12 @@ struct Kuhn {
     mt.resize(n2, -1);
   }
 
-  int Solve(vector<int>& ret_mt) {
-    vector<char> used1(n1);
+  int Solve(std::vector<int>& ret_mt) {
+    std::vector<char> used1(n1);
     k_mt = 0;
-    set<pair<int, int>> q;
-    vector<vector<int>> right(n2);
-    vector<int> degs(n1);
+    std::set<std::pair<int, int>> q;
+    std::vector<std::vector<int>> right(n2);
+    std::vector<int> degs(n1);
     for (int i = 0; i < n1; ++i) {
       degs[i] = L[i].size();
       q.insert({L[i].size(), i});
