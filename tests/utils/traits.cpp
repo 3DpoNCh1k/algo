@@ -5,6 +5,9 @@
 
 #include <algo/utils/traits/traits.hpp>
 
+// NOLINTNEXTLINE
+using namespace algo::utils::traits;
+
 #define SINGLE_ARG(...) __VA_ARGS__
 
 #define CHECK(func, type)        \
