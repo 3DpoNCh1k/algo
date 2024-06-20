@@ -1,6 +1,10 @@
 #pragma once
 
-#include "../header.hpp"
+#include <cassert>
+#include <iostream>
+#include <map>
+#include <string>
+#include <vector>
 
 // Verification:
 // https://codeforces.com/group/CYMPFXi8zA/contest/261526/problem/F
@@ -11,7 +15,7 @@ struct SuffixTree {
   const int ROOT = 1;
   int INF = 1e9;
   int cnt = 2;
-  string s;
+  std::string s;
   int type = 1;
 
   struct Node {
@@ -25,10 +29,10 @@ struct SuffixTree {
           ref(ref) {
     }
     int par = 0, left = 0, right = -1, leaf = 0, ref = 0;
-    map<char, int> to;
+    std::map<char, int> to;
   };
 
-  vector<Node> tree;
+  std::vector<Node> tree;
 
   // see solve()
   explicit SuffixTree(int mxN)
@@ -146,10 +150,10 @@ struct SuffixTree {
   void Solve() {
     tree[ROOT].ref = ROOT;
     int n, i;
-    cin >> k;
-    string t;
+    std::cin >> k;
+    std::string t;
     for (i = 0; i < k; ++i) {
-      cin >> t;
+      std::cin >> t;
       t.push_back(i);
       s += t;
     }
@@ -162,18 +166,18 @@ struct SuffixTree {
     }
 
     if (dfs(ROOT, 0) == ((1 << k) - 1)) {
-      vector<string> vans;
+      std::vector<std::string> vans;
       while (ind != ROOT) {
         vans.push_back(s.substr(tree[ind].left, Len(ind)));
         ind = tree[ind].par;
       }
-      string ans;
+      std::string ans;
       for (i = vans.size() - 1; i >= 0; --i) {
         ans += vans[i];
       }
-      cout << ans;
+      std::cout << ans;
     } else {
-      cout << endl;
+      std::cout << std::endl;
     }
   }
 };

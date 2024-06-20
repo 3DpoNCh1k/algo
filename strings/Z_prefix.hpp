@@ -1,12 +1,13 @@
 #pragma once
 
-#include "../header.hpp"
+#include <string>
+#include <vector>
 
 
 // Verification: https://codeforces.com/group/CYMPFXi8zA/contest/261526/problem/B
-vector<int> PrefixFunction(const string& s) {
+std::vector<int> PrefixFunction(const std::string& s) {
   int n = s.size();
-  vector<int> pref(n);
+  std::vector<int> pref(n);
   for (int i = 1; i < n; ++i) {
     int p = pref[i - 1];
     while (true) {
@@ -24,15 +25,15 @@ vector<int> PrefixFunction(const string& s) {
 }
 
 // Verification: https://judge.yosupo.jp/problem/zalgorithm
-vector<int> ZFunction(const string& s) {
+std::vector<int> ZFunction(const std::string& s) {
   int n = s.size();
-  vector<int> zf(n);
+  std::vector<int> zf(n);
   zf[0] = n;
   int l = 0, r = 0;
   for (int i = 1; i < n; ++i) {
     int cv = 0;
     if (r >= i) {
-      cv = min(zf[i - l], r - i + 1);
+      cv = std::min(zf[i - l], r - i + 1);
     }
     while (i + cv < n && s[i + cv] == s[cv]) {
       cv++;

@@ -1,17 +1,20 @@
 #pragma once
 
-#include "../header.hpp"
+#include <cassert>
+#include <string>
+#include <vector>
+
 
 // Verification: https://judge.yosupo.jp/problem/suffixarray
 
 struct SuffixArray {
   const int AS = 256;  // Alphabet size, can be 26 + 1;
-  string s;
-  vector<int> sa, isa, ce, cnt;
-  explicit SuffixArray(const string& s)
+  std::string s;
+  std::vector<int> sa, isa, ce, cnt;
+  explicit SuffixArray(const std::string& s)
       : s(s){};
 
-  vector<int> Solve() {
+  std::vector<int> Solve() {
     s.push_back(0);  // !
     int n = (int)s.size(), log = 0;
     while ((1 << log) < n) {
@@ -42,7 +45,7 @@ struct SuffixArray {
 
     for (int it = 1; it <= log; ++it) {
       int len = 1 << it;
-      vector<int> buf(n);
+      std::vector<int> buf(n);
       for (int i = 0; i < n; ++i) {
         buf[i] = (sa[i] - (len >> 1) + n) % n;
       }
@@ -75,10 +78,10 @@ struct SuffixArray {
     return sa;
   }
 
-  vector<int> LcpArray() {
+  std::vector<int> LcpArray() {
     int n = sa.size();
     assert(n == (int)s.size());
-    vector<int> lcp(n - 1);
+    std::vector<int> lcp(n - 1);
     isa.assign(n, 0);
     for (int i = 0; i < n; ++i) {
       isa[sa[i]] = i;
@@ -98,7 +101,7 @@ struct SuffixArray {
 
       lcp[p - 1] = cur_lcp;
       cur_lcp--;
-      cur_lcp = max(cur_lcp, 0);
+      cur_lcp = std::max(cur_lcp, 0);
     }
 
     // lcp[0] - lcp(sa[0], sa[1]) - must be 0

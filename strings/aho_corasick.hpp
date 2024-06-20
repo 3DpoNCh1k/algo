@@ -1,6 +1,10 @@
 #pragma once
 
-#include "../header.hpp"
+#include <cassert>
+#include <iostream>
+#include <queue>
+#include <string>
+#include <vector>
 
 // Verification:
 // https://codeforces.com/group/CYMPFXi8zA/contest/261526/problem/I
@@ -15,15 +19,15 @@ struct AhoCorasick {
     int ch, par, ref;
     int terminal;       // 0 - not terminal, else - string_id (1-indexed)
     int prev_terminal;  // nearest terminal node through refs to ROOT
-    vector<int>
+    std::vector<int>
         next_terminals;    // nearests terminal nodes through refs to LEAVES
     int to[AlphabetSize];  // or use map
     int go[AlphabetSize];
   };
 
-  vector<Node> trie;
+  std::vector<Node> trie;
 
-  vector<int> copy_s, left_index, right_index, st_to_node, visited, st_sz;
+  std::vector<int> copy_s, left_index, right_index, st_to_node, visited, st_sz;
 
   // TASK dependent
   // copy_s - if there are duplicate pattern strings in input
@@ -42,7 +46,7 @@ struct AhoCorasick {
   }
 
   void bfs(int r) {
-    queue<int> q;
+    std::queue<int> q;
     q.push(r);
     while (!q.empty()) {
       int u = q.front();
@@ -101,14 +105,14 @@ struct AhoCorasick {
         Calc(trie[nx].terminal - 1);
       }
       for (int nx : trie[u].next_terminals) {
-        left_index[i] = min(left_index[i], left_index[(trie[nx].terminal - 1)]);
+        left_index[i] = std::min(left_index[i], left_index[(trie[nx].terminal - 1)]);
         right_index[i] =
-            max(right_index[i], right_index[(trie[nx].terminal - 1)]);
+            std::max(right_index[i], right_index[(trie[nx].terminal - 1)]);
       }
     }
   }
 
-  void MakeTrie(const vector<string>& vs) {
+  void MakeTrie(const std::vector<std::string>& vs) {
     trie[ROOT].ref = ROOT;
     int n = vs.size();  // # pattern strings
     copy_s.assign(n, -1), left_index.assign(n, mxN),
@@ -116,7 +120,7 @@ struct AhoCorasick {
     st_to_node.assign(n, -1), visited.assign(n, 0), st_sz.assign(n, 0);
 
     for (int i = 0; i < n; ++i) {
-      const string& s = vs[i];
+      const std::string& s = vs[i];
       st_sz[i] = s.size();
       int cur_v = ROOT;
       for (char c : s) {
@@ -143,7 +147,7 @@ struct AhoCorasick {
 
   // TASK dependent
   // EXAMPLE: leftmost and rightmost entries of pattern strings
-  void Solve(const string& t) {
+  void Solve(const std::string& t) {
     int cur_v = ROOT;
     for (int i = 0; i < (int)t.size(); ++i) {
       int c = t[i] - 'a';
@@ -155,8 +159,8 @@ struct AhoCorasick {
               : trie[trie[cur_v].prev_terminal].terminal;  // mb trie[0]
       if (term_s != 0) {
         term_s--;
-        left_index[term_s] = min(left_index[term_s], i);
-        right_index[term_s] = max(right_index[term_s], i);
+        left_index[term_s] = std::min(left_index[term_s], i);
+        right_index[term_s] = std::max(right_index[term_s], i);
       }
     }
     int n = copy_s.size();  // n - # pattern strings
@@ -164,12 +168,12 @@ struct AhoCorasick {
       int j = copy_s[i] == -1 ? i : copy_s[i];
       Calc(j);
       if (left_index[j] == mxN) {
-        cout << "-1 -1";
+        std::cout << "-1 -1";
       } else {
-        cout << left_index[j] - st_sz[i] + 1 << " "
+        std::cout << left_index[j] - st_sz[i] + 1 << " "
              << right_index[j] - st_sz[i] + 1;
       }
-      cout << "\n";
+      std::cout << "\n";
     }
   }
 };
