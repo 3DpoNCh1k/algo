@@ -1,4 +1,9 @@
-#include "../header.hpp"
+#include <string>
+#include <vector>
+#include <array>
+#include <set>
+
+#include "../../utils/traits/traits.hpp"
 
 #define SINGLE_ARG(...) __VA_ARGS__
 
@@ -34,7 +39,7 @@
   { CHECK_ALL(is_std_array_v, SINGLE_ARG(type)); }
 
 struct Dummy {
-  string ToString() const {
+  std::string ToString() const {
     return "I have ToString!";
   }
 };
@@ -48,17 +53,17 @@ void RunIsToStringableTests() {
 }
 
 void RunIterbaleTests() {
-  CHECK_IS_ITERBALE(set<int>);
+  CHECK_IS_ITERBALE(std::set<int>);
 }
 
 void RunVectorTests() {
-  CHECK_IS_STD_VECTOR(vector<int>);
-  CHECK_IS_STD_VECTOR(vector<vector<int>>);
+  CHECK_IS_STD_VECTOR(std::vector<int>);
+  CHECK_IS_STD_VECTOR(std::vector<std::vector<int>>);
 }
 
 void RunArrayTests() {
-  CHECK_IS_STD_ARRAY(SINGLE_ARG(array<int, 0>));
-  CHECK_IS_STD_ARRAY(SINGLE_ARG(array<array<int, 0>, 1>));
+  CHECK_IS_STD_ARRAY(SINGLE_ARG(std::array<int, 0>));
+  CHECK_IS_STD_ARRAY(SINGLE_ARG(std::array<std::array<int, 0>, 1>));
 }
 
 void RunTests() {
