@@ -1,16 +1,16 @@
 #pragma once
 
-#include "../header.hpp"
 
 // Verification: https://judge.yosupo.jp/problem/lca
 
+#include <vector>
 struct LCA {
-  vector<vector<int>> g, parent;
-  vector<int> h, t_in, t_out;
+  std::vector<std::vector<int>> g, parent;
+  std::vector<int> h, t_in, t_out;
   int n, LOG, root, t;
 
   LCA(){};
-  explicit LCA(const vector<int>& P, int root = 0)
+  explicit LCA(const std::vector<int>& P, int root = 0)
       : root(root) {
     n = P.size();  // with parent of root
     g.assign(n, {}), h.assign(n, 0), t_in.assign(n, 0), t_out.assign(n, 0);
@@ -19,7 +19,7 @@ struct LCA {
       ++LOG;
     }
 
-    parent.assign(n, vector<int>(LOG + 1));
+    parent.assign(n, std::vector<int>(LOG + 1));
     // assume root = 0
     for (int i = 1; i <= n - 1; ++i) {
       int p = P[i];
@@ -54,7 +54,7 @@ struct LCA {
   int GetLCA(int u, int v) {
     //--u, --v; // 0 indexed
     if (t_in[u] > t_in[v]) {
-      swap(u, v);
+      std::swap(u, v);
     }
     if (t_out[u] > t_out[v]) {
       return u;  // + 1;

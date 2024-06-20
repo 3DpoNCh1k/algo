@@ -1,6 +1,9 @@
 #pragma once
 
-#include "../header.hpp"
+#include <algorithm>
+#include <cassert>
+#include <string>
+#include <vector>
 
 // Verification:
 // https://codeforces.com/group/CYMPFXi8zA/contest/243321/problem/H
@@ -15,7 +18,7 @@ struct LinkCut {
     bool flip = false;
     int val = 0, dp = 0;
   };
-  vector<Node> T;
+  std::vector<Node> T;
 
   // 1 indexed, cuz node 0 - like neutral element
   explicit LinkCut(int n)
@@ -42,7 +45,7 @@ struct LinkCut {
       return;
     }
     int &l = T[x].c[0], &r = T[x].c[1];
-    T[x].dp = max({T[x].val, T[l].dp, T[r].dp});
+    T[x].dp = std::max({T[x].val, T[l].dp, T[r].dp});
   }
 
   void Push(int x) {
@@ -50,7 +53,7 @@ struct LinkCut {
       return;
     }
     int &l = T[x].c[0], &r = T[x].c[1];
-    swap(l, r);
+    std::swap(l, r);
     T[l].flip ^= 1;
     T[r].flip ^= 1;
     T[x].flip = false;
@@ -58,7 +61,7 @@ struct LinkCut {
 
   void Rotate(int x, int d) {
     int y = T[x].p, z = T[y].p, w = T[x].c[d];
-    swap(T[x].pp, T[y].pp);
+    std::swap(T[x].pp, T[y].pp);
     Set(y, static_cast<int>(d == 0), w);
     Set(x, d, y);
     Set(z, Dir(z, y), x);
@@ -88,7 +91,7 @@ struct LinkCut {
     Access(u);
     int l = T[u].c[0];
     T[l].flip ^= 1;
-    swap(T[l].p, T[l].pp);
+    std::swap(T[l].p, T[l].pp);
     Set(u, 0, 0);
   }
 
@@ -99,7 +102,7 @@ struct LinkCut {
       Splay(v);
       int r = T[u].c[1];
       T[v].pp = 0;
-      swap(T[r].p, T[r].pp);
+      std::swap(T[r].p, T[r].pp);
       Set(u, 1, v);
     }
     Splay(_u);
@@ -141,7 +144,7 @@ struct LinkCut {
     return Access(v);
   }
 
-  string ToString() {
+  std::string ToString() {
     // TODO
     return "";
   }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../header.hpp"
+#include "../utils/types.hpp"
 
 // Verification:
 // https://codeforces.com/group/CYMPFXi8zA/contest/240094/problem/B

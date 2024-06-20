@@ -1,6 +1,9 @@
 #pragma once
 
-#include "../header.hpp"
+#include <cassert>
+#include <string>
+#include <vector>
+#include "../utils/types.hpp"
 
 // Verification:
 // https://codeforces.com/group/CYMPFXi8zA/contest/240094/problem/C
@@ -24,10 +27,10 @@ struct LazySegmentTree {
     i64 lazy_set_flag = 0;  // 0/1; 1 - set value to childs
     i64 lazy_set = 0;
   };
-  vector<Node> T;
+  std::vector<Node> T;
   int n, B;
 
-  explicit LazySegmentTree(const vector<int>& a) {
+  explicit LazySegmentTree(const std::vector<int>& a) {
     n = a.size();
     B = 1;
     while (B < n) {
@@ -48,7 +51,7 @@ struct LazySegmentTree {
     assert(i < B);
     int idx_min = 2 * i, idx_max = 2 * i + 1;
     if (T[idx_min].min_value > T[idx_max].min_value) {
-      swap(idx_min, idx_max);
+      std::swap(idx_min, idx_max);
     }
     T[i].min_value = T[idx_min].min_value;
     T[i].pos = T[idx_min].pos;
@@ -62,7 +65,7 @@ struct LazySegmentTree {
   //  for Query - ok
   Node Pull(Node a, Node b) {
     if (a.min_value > b.min_value) {
-      swap(a, b);
+      std::swap(a, b);
     }
     if (a.min_value == b.min_value) {
       a.cnt += b.cnt;
@@ -168,7 +171,7 @@ struct LazySegmentTree {
     Add(1, 0, B - 1, l, r, val);
   }
 
-  string ToString() {
+  std::string ToString() {
     // TODO
     return "";
   }

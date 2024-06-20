@@ -1,6 +1,8 @@
 #pragma once
 
-#include "../header.hpp"
+#include <cassert>
+#include <vector>
+#include "../utils/types.hpp"
 
 // Verification:
 // https://codeforces.com/group/CYMPFXi8zA/contest/243321/problem/G
@@ -19,12 +21,12 @@ struct HLD {
 
   // static const int mxN = 3 * 100'000 + 10; // !!!
 
-  vector<vector<int>> g;
-  vector<int> h, top, sz, index, parent;
-  vector<Node> T;
+  std::vector<std::vector<int>> g;
+  std::vector<int> h, top, sz, index, parent;
+  std::vector<Node> T;
   int root, n, B, id;
 
-  explicit HLD(const vector<vector<int>>& g0, int root = 0)
+  explicit HLD(const std::vector<std::vector<int>>& g0, int root = 0)
       : root(root) {
     n = g0.size();
     g = g0;
@@ -142,7 +144,7 @@ struct HLD {
     Node res = {};
     while (top[u] != top[v]) {
       if (h[top[u]] < h[top[v]]) {
-        swap(u, v);
+        std::swap(u, v);
       }
       // if not commutative -> 2 branch: u->lca, lca<-v
       res = Pull(res, Query(1, 0, B - 1, index[top[u]], index[u]));
@@ -150,7 +152,7 @@ struct HLD {
       assert(u != -1);
     }
     if (h[u] < h[v]) {
-      swap(u, v);
+      std::swap(u, v);
     }
     res = Pull(res, Query(1, 0, B - 1, index[v], index[u]));
 
@@ -161,14 +163,14 @@ struct HLD {
     //--u, --v; // 0 indexed
     while (top[u] != top[v]) {
       if (h[top[u]] < h[top[v]]) {
-        swap(u, v);
+        std::swap(u, v);
       }
       Add(1, 0, B - 1, index[top[u]], index[u], d);
       u = parent[top[u]];
       assert(u != -1);
     }
     if (h[u] < h[v]) {
-      swap(u, v);
+      std::swap(u, v);
     }
     Add(1, 0, B - 1, index[v], index[u], d);
   }
