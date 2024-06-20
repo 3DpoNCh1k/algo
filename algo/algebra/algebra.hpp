@@ -4,8 +4,8 @@
 #include <algo/utils/types.hpp>
 
 namespace algo::algebra {
-  using utils::i32;
-  using utils::i64;
+using utils::i32;
+using utils::i64;
 // a*x + b*y = g
 i64 ExtendedGCD(i64 a, i64 b, i64& x, i64& y) {
   if (a == 0) {
