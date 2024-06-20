@@ -1,9 +1,10 @@
 #include <random>
-#include "../header.hpp"
+#include <chrono>
+#include "types.hpp"
 
 struct RandomGenerator {
   RandomGenerator() {
-    Reset(chrono::steady_clock::now().time_since_epoch().count());
+    Reset(std::chrono::steady_clock::now().time_since_epoch().count());
   }
   explicit RandomGenerator(u32 seed) {
     Reset(seed);
@@ -12,15 +13,15 @@ struct RandomGenerator {
     rng_.seed(seed);
   }
   i64 RandomInt(i64 a, i64 b) {
-    return uniform_int_distribution<i64>(a, b)(rng_);
+    return std::uniform_int_distribution<i64>(a, b)(rng_);
   }
   bool RandomBool() {
     return RandomInt(0, 1) == 0;
   }
 
-  mt19937& GetRng() {
+  std::mt19937& GetRng() {
     return rng_;
   }
 
-  mt19937 rng_;
+  std::mt19937 rng_;
 };

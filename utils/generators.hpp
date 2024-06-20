@@ -1,57 +1,62 @@
-#include "../header.hpp"
+#include <algorithm>
+#include <iostream>
+#include <set>
+#include <utility>
+#include <vector>
+
 #include "random.hpp"
 
 void SubsetGenerator() {
-  ios::sync_with_stdio(false);
-  cin.tie(nullptr);
+  std::ios::sync_with_stdio(false);
+  std::cin.tie(nullptr);
 
   auto rng = RandomGenerator();
 
   int from = 1, to = 5;
   int n = rng.RandomInt(from, to);
-  cout << n << "\n";
-  set<int> used;
+  std::cout << n << "\n";
+  std::set<int> used;
   for (int i = 0; i < n; ++i) {
     int x;
     do {
       x = rng.RandomInt(from, to);
     } while (used.count(x) != 0);
-    cout << x << " ";
+    std::cout << x << " ";
     used.insert(x);
   }
-  cout << "\n";
+  std::cout << "\n";
 }
 
 void TreeGenerator() {
-  ios::sync_with_stdio(false);
-  cin.tie(nullptr);
+  std::ios::sync_with_stdio(false);
+  std::cin.tie(nullptr);
 
   auto rng = RandomGenerator();
 
   int from = 2, to = 10;
   int n = rng.RandomInt(from, to);
-  cout << n << "\n";
-  vector<pair<int, int>> edges;
+  std::cout << n << "\n";
+  std::vector<std::pair<int, int>> edges;
   for (int i = 1; i < n; ++i) {
     edges.emplace_back(rng.RandomInt(0, i - 1), i);
   }
 
   // rename vertices
-  vector<int> perm(n + 1);
+  std::vector<int> perm(n + 1);
   for (int i = 1; i <= n; ++i) {
     perm[i] = i;
   }
-  shuffle(perm.begin() + 1, perm.end(), rng.GetRng());
+  std::shuffle(perm.begin() + 1, perm.end(), rng.GetRng());
 
   // shuffle edges
-  shuffle(edges.begin(), edges.end(), rng.GetRng());
+  std::shuffle(edges.begin(), edges.end(), rng.GetRng());
 
-  for (pair<int, int> edge : edges) {
+  for (std::pair<int, int> edge : edges) {
     int a = edge.first, b = edge.second;
     if (rng.RandomBool()) {
       // random order of two vertices
-      swap(a, b);
+      std::swap(a, b);
     }
-    cout << perm[a] << perm[b] << "\n";
+    std::cout << perm[a] << perm[b] << "\n";
   }
 }
