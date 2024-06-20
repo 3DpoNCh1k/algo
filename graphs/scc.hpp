@@ -1,6 +1,9 @@
 #pragma once
 
-#include "../header.hpp"
+#include <iostream>
+#include <set>
+#include <utility>
+#include <vector>
 
 // Verification: https://judge.yosupo.jp/problem/scc
 
@@ -8,12 +11,13 @@ struct SCC {
   const int mxN = 2e5;
   const int INF = 1e9;
 
-  set<pair<int, int>> ans; // edges in SCC graph (w/o duplicate edges)
-  vector<vector<int>> g, g_inv;
-  vector<int> visited, order, scc;
+  std::set<std::pair<int, int>>
+      ans;  // edges in SCC graph (w/o duplicate edges)
+  std::vector<std::vector<int>> g, g_inv;
+  std::vector<int> visited, order, scc;
   int n;
   // see solve()
-  explicit SCC(const vector<vector<int>>& g0) {
+  explicit SCC(const std::vector<std::vector<int>>& g0) {
     // 0 indexed
     g = g0;
     n = g.size();
@@ -25,7 +29,8 @@ struct SCC {
     }
   }
 
-  void Solve(vector<int>& ret_scc, set<pair<int, int>>& ret_ans) {
+  void Solve(std::vector<int>& ret_scc,
+             std::set<std::pair<int, int>>& ret_ans) {
     for (int i = 0; i < n; ++i) {
       if (visited[i] == 0) {
         OrderDfs(i);
@@ -48,13 +53,13 @@ struct SCC {
   // 1 indexed vertices
   void Solve() {
     int n, m;
-    cin >> n >> m;
+    std::cin >> n >> m;
     g.assign(n + 1, {}), g_inv.assign(n + 1, {}), visited.assign(n + 1, 0),
         scc.assign(n + 1, 0);
 
     for (int i = 0; i < m; ++i) {
       int u, v;
-      cin >> u >> v;
+      std::cin >> u >> v;
       g[u].push_back(v);
       g_inv[v].push_back(u);
     }
@@ -74,7 +79,7 @@ struct SCC {
         cmp++;
       }
     }
-    cout << ans.size();
+    std::cout << ans.size();
   }
 
  private:
