@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../header.hpp"
+#include <vector>
 
 // Verification: https://judge.yosupo.jp/problem/unionfind
 
 struct DSU {
-  vector<int> parent, height;
+  std::vector<int> parent, height;
 
   explicit DSU(int n) {
     parent.resize(n), height.resize(n, 1);

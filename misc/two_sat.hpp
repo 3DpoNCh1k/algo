@@ -1,6 +1,8 @@
 #pragma once
 
-#include "../header.hpp"
+#include <cassert>
+#include <set>
+#include <vector>
 
 // Verification: https://judge.yosupo.jp/problem/two_sat
 
@@ -8,14 +10,14 @@ struct TwoSat {
   const int mxN = 2e5;
   const int INF = 1e9;
 
-  vector<vector<int>> g, g_inv;
-  vector<int> visited, order, val;
+  std::vector<std::vector<int>> g, g_inv;
+  std::vector<int> visited, order, val;
 
   int n;
   int flag = 1;
 
   // see solve()
-  explicit TwoSat(vector<vector<int>>& g0) {
+  explicit TwoSat(std::vector<std::vector<int>>& g0) {
     g = g0;
     int n2 = g0.size();
     // assume, it's 2 * # vertices: x: (0...n-1); !x: (n...2n-1)
@@ -58,7 +60,7 @@ struct TwoSat {
   }
 
   // ans - set TRUE vertices
-  bool Solve(set<int>& ret_ans) {
+  bool Solve(std::set<int>& ret_ans) {
     for (int i = 2 * n - 1; i >= 0; --i) {
       if (visited[i] == 0) {
         dfs(i);
