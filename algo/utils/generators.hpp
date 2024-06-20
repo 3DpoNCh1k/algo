@@ -6,11 +6,12 @@
 
 #include <algo/utils/random.hpp>
 
+namespace algo::utils::generators {
 void SubsetGenerator() {
   std::ios::sync_with_stdio(false);
   std::cin.tie(nullptr);
 
-  auto rng = RandomGenerator();
+  auto rng = random::RandomGenerator();
 
   int from = 1, to = 5;
   int n = rng.RandomInt(from, to);
@@ -31,7 +32,7 @@ void TreeGenerator() {
   std::ios::sync_with_stdio(false);
   std::cin.tie(nullptr);
 
-  auto rng = RandomGenerator();
+  auto rng = random::RandomGenerator();
 
   int from = 2, to = 10;
   int n = rng.RandomInt(from, to);
@@ -59,4 +60,6 @@ void TreeGenerator() {
     }
     std::cout << perm[a] << perm[b] << "\n";
   }
+}
+
 }

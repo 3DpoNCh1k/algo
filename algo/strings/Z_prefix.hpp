@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-
+namespace algo::strings {
 // Verification: https://codeforces.com/group/CYMPFXi8zA/contest/261526/problem/B
 std::vector<int> PrefixFunction(const std::string& s) {
   int n = s.size();
@@ -44,4 +44,6 @@ std::vector<int> ZFunction(const std::string& s) {
     }
   }
   return zf;
+}
+
 }

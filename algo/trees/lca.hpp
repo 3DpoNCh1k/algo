@@ -1,9 +1,9 @@
 #pragma once
 
-
+#include <vector>
 // Verification: https://judge.yosupo.jp/problem/lca
 
-#include <vector>
+namespace algo::trees {
 struct LCA {
   std::vector<std::vector<int>> g, parent;
   std::vector<int> h, t_in, t_out;
@@ -68,3 +68,6 @@ struct LCA {
     return parent[u][0];  // + 1;
   }
 };
+
+}
+

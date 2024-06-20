@@ -4,7 +4,8 @@
 
 // Verification:
 // https://codeforces.com/group/CYMPFXi8zA/contest/240094/problem/B
-
+namespace algo::trees {
+  using utils::i64;
 struct Fenwick {
   static const int mxN = 5e5 + 10;
   i64 a[mxN];
@@ -70,3 +71,5 @@ struct Fenwick3D {
     return res;
   }
 };
+
+}

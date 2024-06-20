@@ -6,7 +6,7 @@
 
 
 // Verification: https://judge.yosupo.jp/problem/suffixarray
-
+namespace algo::strings {
 struct SuffixArray {
   const int AS = 256;  // Alphabet size, can be 26 + 1;
   std::string s;
@@ -109,3 +109,4 @@ struct SuffixArray {
     return lcp;
   }
 };
+}

@@ -11,34 +11,40 @@
 #include <algo/utils/to_string/std/string.hpp>
 #include <algo/utils/to_string/std/vector_bool.hpp>
 
+namespace algo::utils {
 template <typename T>
-std::enable_if_t<is_to_stringable_v<T>, std::string> ToString(const T&);
+std::enable_if_t<traits::is_to_stringable_v<T>, std::string> ToString(const T&);
 
 template <typename T>
-std::enable_if_t<has_ToString_v<T>, std::string> ToString(const T&);
+std::enable_if_t<traits::has_ToString_v<T>, std::string> ToString(const T&);
 
 template <typename T>
-std::enable_if_t<is_std_array_v<T> || is_std_vector_v<T>, std::string> ToString(
-    const T&);
-
-template <typename T>
-std::enable_if_t<!is_std_array_v<T> && !is_std_vector_v<T> && is_iterable_v<T>,
+std::enable_if_t<traits::is_std_array_v<T> || traits::is_std_vector_v<T>,
                  std::string>
 ToString(const T&);
 
 template <typename T>
-std::enable_if_t<is_to_stringable_v<T>, std::string> ToString(const T& value) {
+std::enable_if_t<!traits::is_std_array_v<T> && !traits::is_std_vector_v<T> &&
+                     traits::is_iterable_v<T>,
+                 std::string>
+ToString(const T&);
+
+template <typename T>
+std::enable_if_t<traits::is_to_stringable_v<T>, std::string> ToString(
+    const T& value) {
   return std::to_string(value);
 }
 
 template <typename T>
-std::enable_if_t<has_ToString_v<T>, std::string> ToString(const T& value) {
+std::enable_if_t<traits::has_ToString_v<T>, std::string> ToString(
+    const T& value) {
   return value.toString();
 }
 
 template <class T>
-std::enable_if_t<is_std_array_v<T> || is_std_vector_v<T>, std::string> ToString(
-    const T& arr_or_vec) {
+std::enable_if_t<traits::is_std_array_v<T> || traits::is_std_vector_v<T>,
+                 std::string>
+ToString(const T& arr_or_vec) {
   std::stringstream result;
   result << "[";
   for (int i = 0; i < int(arr_or_vec.size()); ++i) {
@@ -54,7 +60,8 @@ std::enable_if_t<is_std_array_v<T> || is_std_vector_v<T>, std::string> ToString(
 }
 
 template <typename T>
-std::enable_if_t<!is_std_array_v<T> && !is_std_vector_v<T> && is_iterable_v<T>,
+std::enable_if_t<!traits::is_std_array_v<T> && !traits::is_std_vector_v<T> &&
+                     traits::is_iterable_v<T>,
                  std::string>
 ToString(const T& iterable) {
   std::stringstream result;
@@ -71,3 +78,4 @@ ToString(const T& iterable) {
   result << "}";
   return result.str();
 }
+}  // namespace algo::utils

@@ -6,6 +6,7 @@
 #include <algo/utils/traits/std/containers.hpp>
 #include <algo/utils/traits/std/rank.hpp>
 
+namespace algo::utils::traits {
 // NOLINTBEGIN
 template <typename T, typename = void>
 struct is_iterable : std::false_type {};
@@ -22,7 +23,8 @@ template <typename T, typename = void>
 struct is_to_stringable : std::false_type {};
 
 template <typename T>
-struct is_to_stringable<T, std::void_t<decltype(std::to_string(std::declval<T>()))>>
+struct is_to_stringable<
+    T, std::void_t<decltype(std::to_string(std::declval<T>()))>>
     : std::true_type {};
 
 template <typename T>
@@ -38,3 +40,4 @@ struct has_ToString<T, std::void_t<decltype(std::declval<T>().ToString())>>
 template <typename T>
 constexpr bool has_ToString_v = has_ToString<T>::value;
 // NOLINTEND
+}  // namespace algo::utils::traits

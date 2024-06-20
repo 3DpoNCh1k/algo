@@ -8,6 +8,7 @@
 
 // TODO: fix TLE on random_03 test
 
+namespace algo::flows {
 struct Kuhn {
   std::vector<std::vector<int>> L;
   std::vector<int> visited;
@@ -91,3 +92,4 @@ struct Kuhn {
     return false;
   }
 };
+}  // namespace algo::flows

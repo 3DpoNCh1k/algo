@@ -8,7 +8,7 @@
 
 // Verification:
 // https://codeforces.com/group/CYMPFXi8zA/contest/261526/problem/F
-
+namespace algo::strings {
 struct SuffixTree {
   int mxN = 2e5 + 100;  // ! in constructor
   const int AS = 128;
@@ -181,3 +181,5 @@ struct SuffixTree {
     }
   }
 };
+
+}

@@ -5,7 +5,7 @@
 #include <vector>
 
 // Verification: https://judge.yosupo.jp/problem/two_sat
-
+namespace algo::misc {
 struct TwoSat {
   const int mxN = 2e5;
   const int INF = 1e9;
@@ -92,3 +92,5 @@ struct TwoSat {
     return flag != 0;
   }
 };
+
+}

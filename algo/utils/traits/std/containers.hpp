@@ -3,6 +3,7 @@
 #include <type_traits>
 #include <vector>
 
+namespace algo::utils::traits {
 // NOLINTBEGIN
 template <typename T>
 struct is_std_vector : std::false_type {};
@@ -40,3 +41,4 @@ struct is_std_array<T&&> : is_std_array<T> {};
 template <typename T>
 constexpr bool is_std_array_v = is_std_array<T>::value;
 // NOLINTEND
+}  // namespace algo::utils::traits

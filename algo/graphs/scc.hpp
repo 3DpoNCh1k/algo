@@ -6,7 +6,7 @@
 #include <vector>
 
 // Verification: https://judge.yosupo.jp/problem/scc
-
+namespace algo::graphs {
 struct SCC {
   const int mxN = 2e5;
   const int INF = 1e9;
@@ -107,3 +107,5 @@ struct SCC {
     }
   }
 };
+
+}

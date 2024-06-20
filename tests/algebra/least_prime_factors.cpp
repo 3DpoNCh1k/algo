@@ -5,7 +5,7 @@
 
 // https://codeforces.com/group/CYMPFXi8zA/contest/279284/problem/B
 void Solve() {
-  std::vector<int> least_prime_factors = LeastPrimeFactors(2e6 + 5);
+  std::vector<int> least_prime_factors = algo::algebra::LeastPrimeFactors(2e6 + 5);
   int n;
   std::cin >> n;
   for (int i = 0; i < n; ++i) {

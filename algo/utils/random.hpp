@@ -3,7 +3,8 @@
 
 #include <algo/utils/types.hpp>
 
-struct RandomGenerator {
+namespace algo::utils::random {
+  struct RandomGenerator {
   RandomGenerator() {
     Reset(std::chrono::steady_clock::now().time_since_epoch().count());
   }
@@ -26,3 +27,4 @@ struct RandomGenerator {
 
   std::mt19937 rng_;
 };
+}

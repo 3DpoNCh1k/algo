@@ -2,6 +2,7 @@
 
 #include <string>
 
+namespace algo::utils {
 std::string ToString(char c) {
   return std::string(1, c);
 }
@@ -10,4 +11,5 @@ std::string ToString(bool b) {
 }
 std::string ToString(const char* s) {
   return std::string(s);
+}
 }
