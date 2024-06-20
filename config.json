@@ -2,7 +2,7 @@
   "compiler": {
     "g++": {
       "std": "c++17",
-      "always": "-Wall -Wextra -Wshadow",
+      "always": "-I . -Wall -Wextra -Wshadow",
       "profiles": {
         "fast": "-static -O2",
         "debug": "-fsanitize=address -fsanitize=undefined"
@@ -11,7 +11,7 @@
     },
     "clang": {
       "std": "c++17",
-      "always": "-Wall -Wextra -Wshadow",
+      "always": "-I . -Wall -Wextra -Wshadow",
       "profiles": {
         "fast": "",
         "debug": ""

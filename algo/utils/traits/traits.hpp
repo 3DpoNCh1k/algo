@@ -3,8 +3,8 @@
 #include <string>
 #include <type_traits>
 
-#include "std/containers.hpp"
-#include "std/rank.hpp"
+#include <algo/utils/traits/std/containers.hpp>
+#include <algo/utils/traits/std/rank.hpp>
 
 // NOLINTBEGIN
 template <typename T, typename = void>

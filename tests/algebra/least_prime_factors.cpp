@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-#include "../../algebra/algebra.hpp"
+#include <algo/algebra/algebra.hpp>
 
 // https://codeforces.com/group/CYMPFXi8zA/contest/279284/problem/B
 void Solve() {

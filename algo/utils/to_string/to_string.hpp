@@ -4,12 +4,12 @@
 #include <sstream>
 #include <string>
 
-#include "../traits/traits.hpp"
-#include "fundamentals.hpp"
-#include "std/bitset.hpp"
-#include "std/pair.hpp"
-#include "std/string.hpp"
-#include "std/vector_bool.hpp"
+#include <algo/utils/traits/traits.hpp>
+#include <algo/utils/to_string/fundamentals.hpp>
+#include <algo/utils/to_string/std/bitset.hpp>
+#include <algo/utils/to_string/std/pair.hpp>
+#include <algo/utils/to_string/std/string.hpp>
+#include <algo/utils/to_string/std/vector_bool.hpp>
 
 template <typename T>
 std::enable_if_t<is_to_stringable_v<T>, std::string> ToString(const T&);

@@ -1,6 +1,7 @@
 #include <random>
 #include <chrono>
-#include "types.hpp"
+
+#include <algo/utils/types.hpp>
 
 struct RandomGenerator {
   RandomGenerator() {

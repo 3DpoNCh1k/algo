@@ -4,7 +4,7 @@
 #include <utility>
 #include <iostream>
 
-#include "../utils/debug.hpp"
+#include <algo/utils/debug.hpp>
 
 // NOLINTBEGIN
 using namespace std;

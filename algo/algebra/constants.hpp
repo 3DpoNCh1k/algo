@@ -1,4 +1,4 @@
-#include "../utils/types.hpp"
+#include <algo/utils/types.hpp>
 
 // NOLINTBEGIN
 const i64 INF64 = 1e18;

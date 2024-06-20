@@ -3,7 +3,7 @@
 #include <array>
 #include <set>
 
-#include "../../utils/traits/traits.hpp"
+#include <algo/utils/traits/traits.hpp>
 
 #define SINGLE_ARG(...) __VA_ARGS__
 

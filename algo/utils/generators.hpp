@@ -4,7 +4,7 @@
 #include <utility>
 #include <vector>
 
-#include "random.hpp"
+#include <algo/utils/random.hpp>
 
 void SubsetGenerator() {
   std::ios::sync_with_stdio(false);

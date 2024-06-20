@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "../utils/types.hpp"
+#include <algo/utils/types.hpp>
 
 
 // a*x + b*y = g
