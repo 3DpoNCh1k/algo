@@ -11,4 +11,4 @@ std::string ToString(const std::vector<bool>& v) {
   }
   return result;
 }
-}
+}  // namespace algo::utils

@@ -62,4 +62,4 @@ void TreeGenerator() {
   }
 }
 
-}
+}  // namespace algo::utils::generators

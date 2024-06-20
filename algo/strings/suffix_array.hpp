@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 
-
 // Verification: https://judge.yosupo.jp/problem/suffixarray
 namespace algo::strings {
 struct SuffixArray {
@@ -109,4 +108,4 @@ struct SuffixArray {
     return lcp;
   }
 };
-}
+}  // namespace algo::strings

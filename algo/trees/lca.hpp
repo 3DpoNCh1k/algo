@@ -69,5 +69,4 @@ struct LCA {
   }
 };
 
-}
-
+}  // namespace algo::trees

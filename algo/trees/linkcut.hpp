@@ -13,7 +13,7 @@
 // with lca method and modified Access
 
 namespace algo::trees {
-  struct LinkCut {
+struct LinkCut {
   struct Node {
     int p = 0, c[2] = {0, 0}, pp = 0;
     bool flip = false;
@@ -151,5 +151,4 @@ namespace algo::trees {
   }
 };
 
-}
-
+}  // namespace algo::trees

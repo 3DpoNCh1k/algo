@@ -7,4 +7,4 @@ const int d8i[8] = {-1, -1, 0, 1, 1, 1, 0, -1};
 const int d8j[8] = {0, 1, 1, 1, 0, -1, -1, -1};
 // NOLINTEND
 
-}
+}  // namespace algo::graphs

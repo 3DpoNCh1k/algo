@@ -12,4 +12,4 @@ std::string ToString(bool b) {
 std::string ToString(const char* s) {
   return std::string(s);
 }
-}
+}  // namespace algo::utils

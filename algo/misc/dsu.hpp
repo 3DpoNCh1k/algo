@@ -39,5 +39,4 @@ struct DSU {
   }
 };
 
-}
-
+}  // namespace algo::misc

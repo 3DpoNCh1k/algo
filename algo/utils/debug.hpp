@@ -5,7 +5,7 @@
 #include <algo/utils/to_string/to_string.hpp>
 
 namespace algo::utils::debug {
-  void DBG() {
+void DBG() {
 }
 template <class Head, class... Tail>
 void DBG(Head h, Tail... t) {
@@ -24,4 +24,4 @@ void DBG(Head h, Tail... t) {
 #define dbg(...) 0
 #endif
 
-}
+}  // namespace algo::utils::debug

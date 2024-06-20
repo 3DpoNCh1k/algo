@@ -105,7 +105,8 @@ struct AhoCorasick {
         Calc(trie[nx].terminal - 1);
       }
       for (int nx : trie[u].next_terminals) {
-        left_index[i] = std::min(left_index[i], left_index[(trie[nx].terminal - 1)]);
+        left_index[i] =
+            std::min(left_index[i], left_index[(trie[nx].terminal - 1)]);
         right_index[i] =
             std::max(right_index[i], right_index[(trie[nx].terminal - 1)]);
       }
@@ -171,11 +172,11 @@ struct AhoCorasick {
         std::cout << "-1 -1";
       } else {
         std::cout << left_index[j] - st_sz[i] + 1 << " "
-             << right_index[j] - st_sz[i] + 1;
+                  << right_index[j] - st_sz[i] + 1;
       }
       std::cout << "\n";
     }
   }
 };
 
-}
+}  // namespace algo::strings

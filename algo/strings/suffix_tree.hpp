@@ -182,4 +182,4 @@ struct SuffixTree {
   }
 };
 
-}
+}  // namespace algo::strings

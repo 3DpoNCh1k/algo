@@ -9,7 +9,7 @@
 // Verification:
 // https://codeforces.com/group/CYMPFXi8zA/contest/240094/problem/C
 namespace algo::trees {
-  using utils::i64;
+using utils::i64;
 struct LazySegmentTree {
   static const i64 INF = 1e18 + 100;
   // EXAMPLE: size, minimum, its count and one of its position
@@ -178,4 +178,4 @@ struct LazySegmentTree {
     return "";
   }
 };
-}
+}  // namespace algo::trees

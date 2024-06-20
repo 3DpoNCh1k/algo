@@ -7,7 +7,7 @@
 // Verification:
 // https://codeforces.com/group/CYMPFXi8zA/contest/243321/problem/G
 namespace algo::trees {
-  using utils::i64;
+using utils::i64;
 // HLD with lazy prop
 struct HLD {
   // sum of vertices values on path u-v; for calcs on edges - do some
@@ -177,4 +177,4 @@ struct HLD {
   }
 };
 
-}
+}  // namespace algo::trees

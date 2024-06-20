@@ -108,4 +108,4 @@ struct SCC {
   }
 };
 
-}
+}  // namespace algo::graphs

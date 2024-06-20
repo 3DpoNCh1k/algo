@@ -8,4 +8,4 @@ template <size_t N>
 std::string ToString(const std::bitset<N>& b) {
   return b.ToString();
 }
-}
+}  // namespace algo::utils

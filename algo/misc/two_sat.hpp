@@ -93,4 +93,4 @@ struct TwoSat {
   }
 };
 
-}
+}  // namespace algo::misc
