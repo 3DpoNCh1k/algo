@@ -11,7 +11,7 @@ import traceback
 from pathlib import Path
 
 from rithm.commands.clean import clean_command
-from rithm.commands.prepare_submission import submission_command
+from rithm.commands.prepare_submission import prepare_submission_command
 from rithm.commands.run import run_command
 
 
@@ -31,9 +31,9 @@ def main():
     clean.add_argument("path")
     clean.set_defaults(cmd=clean_command)
 
-    submission = subparsers.add_parser("submission")
+    submission = subparsers.add_parser("prepare_submission")
     submission.add_argument("filename")
-    submission.set_defaults(cmd=submission_command)
+    submission.set_defaults(cmd=prepare_submission_command)
 
     args = parser.parse_args()
     if "cmd" not in args:

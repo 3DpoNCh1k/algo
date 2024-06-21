@@ -2,7 +2,7 @@ from pathlib import Path
 import re
 
 
-def submission_command(args):
+def prepare_submission_command(args):
     filename = args.filename
     text = open(filename, "r").read()
     file_path = Path(filename)
