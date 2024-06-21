@@ -13,7 +13,10 @@ from pathlib import Path
 from rithm.commands.clean import clean_command
 from rithm.commands.prepare_submission import prepare_submission_command
 from rithm.commands.run import run_command
-from rithm.commands.check_dependencies import check_dependencies_command, check_all_command
+from rithm.commands.check_dependencies import (
+    check_dependencies_command,
+    check_all_command,
+)
 
 
 def main():

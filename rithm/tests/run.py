@@ -3,6 +3,7 @@ from pathlib import Path
 from rithm.source_files import *
 from rithm.graph import *
 
+
 def main():
     print("Hello!")
     paths = list(Path(".").iterdir())
@@ -26,6 +27,7 @@ def main():
     res, cycle = has_cycle(g)
     print(res)
     print(cycle)
+
 
 if __name__ == "__main__":
     main()
