@@ -27,5 +27,21 @@ def check_all_command(args):
             if result:
                 print(f"Found cycle: {cycle}")
                 sys.exit(1)
-            print("Success!")
     
+
+    check_pragma(path)
+    print("Success!")
+
+
+def has_pragma(path):
+    return path.open().read().startswith("#pragma once")
+
+def check_pragma(path):
+    header_extensions = ["hpp", "h"]
+    for ext in header_extensions:
+        for file_path in path.glob(f"**/*.{ext}"):
+            if not has_pragma(file_path):
+                print(f"File {file_path} does not has #pragma once")
+                sys.exit(1)
+    
+    print("Success!")

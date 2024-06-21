@@ -1,3 +1,5 @@
+#pragma once
+
 #include <algo/utils/types.hpp>
 
 namespace algo::algebra {
