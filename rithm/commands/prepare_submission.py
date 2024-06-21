@@ -1,27 +1,81 @@
 from pathlib import Path
 import re
 
+from rithm.graph import *
+from rithm.source_files import *
+
+def remove_pragma(text):
+    print("remove pragma")
+    return re.sub("#pragma once", "", text).lstrip()
+
+def remove_includes(text):
+    print("remove includes")
+    print(text)
+    new_text_parts = []
+    last_index = 0
+    for match in re.finditer(r'(?P<include>#include.*\n?)', text):
+        print(match)
+        print(match.group("include"))
+        print(match.start())
+        print(match.end())
+        new_text_parts.append(text[last_index: match.start()])
+        last_index = match.end()
+    
+    new_text_parts.append(text[last_index:])
+    new_text = "".join(new_text_parts)
+    new_text = new_text.lstrip()
+    print("new text")
+    print(new_text)
+
+    return new_text
+
+
+def add_std_includes(text, std_dependencies):
+    include_list = list(map(lambda name: f"#include <{name}>", std_dependencies))
+    include_text = "\n".join(include_list)
+    return text + "\n" + include_text
+
+def expand_algo_includes(text, dependency_order):
+    algo_text_list = []
+    for file_node in dependency_order:
+        file_text = file_node.file.text
+        file_text = remove_pragma(file_text)
+        file_text = remove_includes(file_text)
+        algo_text_list.append(file_text)
+    
+    algo_text = "\n".join(algo_text_list)
+    return text + "\n" + algo_text
+
 
 def prepare_submission_command(args):
     filename = args.filename
-    text = open(filename, "r").read()
     file_path = Path(filename)
-
     folder = file_path.parent
 
-    submission_text = ""
-    last_index = 0
-    for match in re.finditer(r'#include "(?P<path>.*)"', text):
-        include_filename = match.group("path")
-        include_file_text = open(folder / include_filename, "r").read()
-        submission_text += text[last_index : match.start()]
-        submission_text += include_file_text
-        last_index = match.end()
-    submission_text += text[last_index:]
+    text = file_path.open().read()
+    print(text)
+    # remove_includes(text)
+    new_text = remove_pragma(text)
+    print("new_text")
+    print(new_text)
 
-    # remove #pragma once and #include "../header.hpp"
-    submission_text = re.sub("#pragma once", "", submission_text)
-    submission_text = re.sub('#include "../header.hpp"', "", submission_text)
+    dependency_graph = create_graph(file_path)
+    dependency_order = get_topological_order(dependency_graph)
+    std_dependencies = set()
+    for file_node in dependency_order:
+        print(file_node)
+        std_dependencies.update(file_node.file.std_dependencies)
+    
+    print(std_dependencies)
+
+    header = "// TODO: add header"
+    text = header
+    text = add_std_includes(text, std_dependencies)
+    text = expand_algo_includes(text, dependency_order)
+    print("result text")
+    print(text)
+    submission_text = text
+    
 
     name = file_path.name
     new_folder_path = Path(".") / "submit" / folder.name

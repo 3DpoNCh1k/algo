@@ -42,3 +42,7 @@ class CppFile(SourceFile):
     @property
     def algo_dependencies(self):
         return tuple(filter(lambda dep: dep.startswith("algo/"), self.dependencies))
+    
+    @property
+    def std_dependencies(self):
+        return tuple(filter(lambda dep: not dep.startswith("algo/"), self.dependencies))
