@@ -1,11 +1,7 @@
 from pathlib import Path
-import sys
-import os
-
-print(sys.path)
-print(os.getcwd())
 
 from rithm.source_files import *
+from rithm.graph import *
 
 def main():
     print("Hello!")
@@ -19,6 +15,17 @@ def main():
     #         CppFile(p)
     p = Path("./tests/run.cpp")
     cpp_file = CppFile(p)
+    print(hash(cpp_file))
+    print(hash(Node(cpp_file)))
+
+    g = create_graph(p)
+    res, cycle = has_cycle(g)
+    print(g)
+
+    g = {1: [2], 2: [1]}
+    res, cycle = has_cycle(g)
+    print(res)
+    print(cycle)
 
 if __name__ == "__main__":
     main()

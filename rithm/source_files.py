@@ -13,7 +13,15 @@ class SourceFile:
     @property
     def text(self):
         return self.path.open().read()
-
+    
+    @property
+    def name(self):
+        return self.path.name
+    
+    @property
+    def absolute_name(self):
+        return str(self.path.absolute())
+    
 
 class CppFile(SourceFile):
     extensions = ("cpp", "hpp", "h")
