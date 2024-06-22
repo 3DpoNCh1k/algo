@@ -213,3 +213,6 @@ pyrightconfig.json
 # developing
 .vscode/
 submit/
+
+# link to rithm
+rithm
