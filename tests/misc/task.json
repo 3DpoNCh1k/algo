@@ -1,0 +1,5 @@
+{
+  "link": "https://judge.yosupo.jp/problem/unionfind",
+  "library-checker-problems": "datastructure/unionfind",
+  "solution": "dsu.cpp"
+}
