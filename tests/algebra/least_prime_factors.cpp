@@ -3,7 +3,6 @@
 
 #include <algo/algebra/algebra.hpp>
 
-// https://codeforces.com/group/CYMPFXi8zA/contest/279284/problem/B
 void Solve() {
   std::vector<int> least_prime_factors =
       algo::algebra::LeastPrimeFactors(2e6 + 5);
