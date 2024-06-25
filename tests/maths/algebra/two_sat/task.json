@@ -1,0 +1,5 @@
+{
+  "link": "https://https://judge.yosupo.jp/problem/two_sat",
+  "library-checker-problems": "math/two_sat",
+  "solution": "two_sat.cpp"
+}
