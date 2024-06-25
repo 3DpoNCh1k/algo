@@ -2,7 +2,7 @@
 
 #include <algo/utils/types.hpp>
 
-namespace algo::math::algebra {
+namespace algo::maths::algebra {
 using utils::i64;
 // a*x + b*y = g
 i64 ExtendedGCD(i64 a, i64 b, i64& x, i64& y) {
@@ -25,4 +25,4 @@ i64 GCD(i64 a, i64 b) {
   i64 x, y;
   return ExtendedGCD(a, b, x, y);
 }
-}  // namespace algo::math::algebra
+}  // namespace algo::maths::algebra

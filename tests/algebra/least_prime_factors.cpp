@@ -1,11 +1,11 @@
 #include <iostream>
 #include <vector>
 
-#include <algo/math/algebra/least_prime_factors.hpp>
+#include <algo/maths/algebra/least_prime_factors.hpp>
 
 void Solve() {
   std::vector<int> least_prime_factors =
-      algo::math::algebra::LeastPrimeFactors(2e6 + 5);
+      algo::maths::algebra::LeastPrimeFactors(2e6 + 5);
   int n;
   std::cin >> n;
   for (int i = 0; i < n; ++i) {

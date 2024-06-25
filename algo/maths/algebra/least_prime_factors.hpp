@@ -2,7 +2,7 @@
 
 #include <vector>
 
-namespace algo::math::algebra {
+namespace algo::maths::algebra {
 std::vector<int> LeastPrimeFactors(int n) {
   std::vector<int> least_primes(n + 1);
   std::vector<int> primes;
@@ -19,4 +19,4 @@ std::vector<int> LeastPrimeFactors(int n) {
   }
   return least_primes;
 }
-}  // namespace algo::math::algebra
+}  // namespace algo::maths::algebra

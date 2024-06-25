@@ -1,10 +1,10 @@
 #pragma once
 
 #include <algo/utils/types.hpp>
-#include <algo/math/algebra/gcd.hpp>
+#include <algo/maths/algebra/gcd.hpp>
 #include <vector>
 
-namespace algo::math::algebra {
+namespace algo::maths::algebra {
 using utils::i64;
 
 // a*x = 1 (mod m) ~> a*x = 1 + m*y ~> a*x - m*y = 1
@@ -31,4 +31,4 @@ std::vector<int> PrimeModularInverses(int m) {
   }
   return inv;
 }
-}  // namespace algo::math::algebra
+}  // namespace algo::maths::algebra

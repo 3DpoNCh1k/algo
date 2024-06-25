@@ -5,7 +5,7 @@
 #include <vector>
 
 // Verification: https://judge.yosupo.jp/problem/two_sat
-namespace algo::math::algebra {
+namespace algo::maths::algebra {
 struct TwoSat {
   const int mxN = 2e5;
   const int INF = 1e9;
@@ -93,4 +93,4 @@ struct TwoSat {
   }
 };
 
-}  // namespace algo::math::algebra
+}  // namespace algo::maths::algebra

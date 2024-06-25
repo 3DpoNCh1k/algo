@@ -8,7 +8,7 @@
 // Verification:
 // https://codeforces.com/group/CYMPFXi8zA/contest/279284/problem/F
 
-namespace algo::math::algebra {
+namespace algo::maths::algebra {
 struct FFT {
   // NOLINTBEGIN
   using ld = long double;
@@ -71,4 +71,4 @@ struct FFT {
   }
 };
 
-}  // namespace algo::math::algebra
+}  // namespace algo::maths::algebra
