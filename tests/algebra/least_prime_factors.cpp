@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-#include <algo/algebra/algebra.hpp>
+#include <algo/math/algebra/least_prime_factors.hpp>
 
 void Solve() {
   std::vector<int> least_prime_factors =
