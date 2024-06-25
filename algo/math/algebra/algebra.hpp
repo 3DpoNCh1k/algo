@@ -3,7 +3,7 @@
 #include <vector>
 #include <algo/utils/types.hpp>
 
-namespace algo::algebra {
+namespace algo::math::algebra {
 using utils::i32;
 using utils::i64;
 // a*x + b*y = g
@@ -83,4 +83,4 @@ i64 MultiplyMOD(i64 a, i64 b) {
   return res % MOD;
 }
 
-}  // namespace algo::algebra
+}  // namespace algo::math::algebra

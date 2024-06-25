@@ -5,7 +5,7 @@
 
 void Solve() {
   std::vector<int> least_prime_factors =
-      algo::algebra::LeastPrimeFactors(2e6 + 5);
+      algo::math::algebra::LeastPrimeFactors(2e6 + 5);
   int n;
   std::cin >> n;
   for (int i = 0; i < n; ++i) {
