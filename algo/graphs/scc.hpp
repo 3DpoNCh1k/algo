@@ -5,7 +5,6 @@
 #include <utility>
 #include <vector>
 
-// Verification: https://judge.yosupo.jp/problem/scc
 namespace algo::graphs {
 struct StronglyConnectedComponents {
   const int mxN = 2e5;

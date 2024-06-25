@@ -2,8 +2,6 @@
 
 #include <vector>
 
-// Verification: https://judge.yosupo.jp/problem/unionfind
-
 namespace algo::data_structures {
 struct DisjointSetUnion {
   std::vector<int> parent, height;
