@@ -17,11 +17,13 @@ void DBG(Head h, Tail... t) {
 }
 #ifdef LOCAL_DEBUG
 #define dbg(...)                                                     \
-  cerr << "LINE(" << __LINE__ << ") -> [" << #__VA_ARGS__ << "]: ["; \
+  std::cerr << "LINE(" << __LINE__ << ") -> [" << #__VA_ARGS__ << "]: ["; \
   DBG(__VA_ARGS__);                                                  \
-  cerr << "]\n";
+  std::cerr << "]\n";
 #else
 #define dbg(...) 0
 #endif
 
 }  // namespace algo::utils::debug
+
+using algo::utils::debug::DBG;
