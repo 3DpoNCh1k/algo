@@ -25,4 +25,8 @@ std::vector<int> ZFunction(const std::string& s) {
   }
   return zf;
 }
+
+// alias
+constexpr auto LongestCommonPrefixes = ZFunction;
+
 }  // namespace algo::strings

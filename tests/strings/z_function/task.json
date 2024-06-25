@@ -1,0 +1,5 @@
+{
+  "link": "https://judge.yosupo.jp/problem/zalgorithm",
+  "library-checker-problems": "string/zalgorithm",
+  "solution": "z_function.cpp"
+}
