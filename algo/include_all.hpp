@@ -19,7 +19,8 @@
 #include <algo/strings/aho_corasick.hpp>
 #include <algo/strings/suffix_array.hpp>
 #include <algo/strings/suffix_tree.hpp>
-#include <algo/strings/Z_prefix.hpp>
+#include <algo/strings/z_function.hpp>
+#include <algo/strings/prefix_function.hpp>
 
 // trees
 #include <algo/trees/fenwick.hpp>
