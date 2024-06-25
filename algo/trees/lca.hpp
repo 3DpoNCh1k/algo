@@ -1,16 +1,15 @@
 #pragma once
 
 #include <vector>
-// Verification: https://judge.yosupo.jp/problem/lca
 
 namespace algo::trees {
-struct LCA {
+struct LowestCommonAncestor {
   std::vector<std::vector<int>> g, parent;
   std::vector<int> h, t_in, t_out;
   int n, LOG, root, t;
 
-  LCA(){};
-  explicit LCA(const std::vector<int>& P, int root = 0)
+  LowestCommonAncestor(){};
+  explicit LowestCommonAncestor(const std::vector<int>& P, int root = 0)
       : root(root) {
     n = P.size();  // with parent of root
     g.assign(n, {}), h.assign(n, 0), t_in.assign(n, 0), t_out.assign(n, 0);
@@ -69,4 +68,5 @@ struct LCA {
   }
 };
 
+using LCA = LowestCommonAncestor;
 }  // namespace algo::trees

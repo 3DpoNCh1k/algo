@@ -1,0 +1,5 @@
+{
+  "link": "https://judge.yosupo.jp/problem/lca",
+  "library-checker-problems": "graph/lca",
+  "solution": "lca.cpp"
+}
