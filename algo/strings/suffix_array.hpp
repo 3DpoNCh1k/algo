@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 
-// Verification: https://judge.yosupo.jp/problem/suffixarray
 namespace algo::strings {
 struct SuffixArray {
   const int AS = 256;  // Alphabet size, can be 26 + 1;
@@ -73,8 +72,8 @@ struct SuffixArray {
     }
 
     // sa[0] - nth suffix (pb(0))
-    // or return vector(sa.begin() + 1, sa.end());
-    return sa;
+    return std::vector(sa.begin() + 1, sa.end());
+    // return sa;
   }
 
   std::vector<int> LcpArray() {

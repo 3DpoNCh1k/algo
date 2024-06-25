@@ -1,0 +1,5 @@
+{
+  "link": "https://judge.yosupo.jp/problem/suffixarray",
+  "library-checker-problems": "string/suffixarray",
+  "solution": "suffix_array.cpp"
+}
