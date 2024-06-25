@@ -4,7 +4,7 @@
 #include <set>
 
 #include <algo/maths/algebra/two_sat.hpp>
-#include "algo/utils/debug.hpp"
+#include <algo/utils/debug.hpp>
 
 
 int main() {

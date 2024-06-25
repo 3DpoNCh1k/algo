@@ -7,17 +7,17 @@
 
 // Verification: https://judge.yosupo.jp/problem/scc
 namespace algo::graphs {
-struct SCC {
+struct StronglyConnectedComponents {
   const int mxN = 2e5;
   const int INF = 1e9;
 
   std::set<std::pair<int, int>>
-      ans;  // edges in SCC graph (w/o duplicate edges)
+      ans;  // edges in StronglyConnectedComponents graph (w/o duplicate edges)
   std::vector<std::vector<int>> g, g_inv;
   std::vector<int> visited, order, scc;
   int n;
   // see solve()
-  explicit SCC(const std::vector<std::vector<int>>& g0) {
+  explicit StronglyConnectedComponents(const std::vector<std::vector<int>>& g0) {
     // 0 indexed
     g = g0;
     n = g.size();
@@ -49,7 +49,7 @@ struct SCC {
     ret_ans = ans;
   }
 
-  // EXAMPLE (cnt # edges in SCC graph)
+  // EXAMPLE (cnt # edges in StronglyConnectedComponents graph)
   // 1 indexed vertices
   void Solve() {
     int n, m;
@@ -107,5 +107,7 @@ struct SCC {
     }
   }
 };
+
+using SCC = StronglyConnectedComponents;
 
 }  // namespace algo::graphs

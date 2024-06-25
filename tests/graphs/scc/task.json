@@ -1,0 +1,5 @@
+{
+  "link": "https://https://judge.yosupo.jp/problem/scc",
+  "library-checker-problems": "graph/scc",
+  "solution": "scc.cpp"
+}
