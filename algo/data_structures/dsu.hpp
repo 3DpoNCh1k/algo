@@ -5,10 +5,10 @@
 // Verification: https://judge.yosupo.jp/problem/unionfind
 
 namespace algo::data_structures {
-struct DSU {
+struct DisjointSetUnion {
   std::vector<int> parent, height;
 
-  explicit DSU(int n) {
+  explicit DisjointSetUnion(int n) {
     parent.resize(n), height.resize(n, 1);
     for (int i = 0; i < n; ++i) {
       parent[i] = i;
@@ -38,5 +38,7 @@ struct DSU {
     }
   }
 };
+
+using DSU = DisjointSetUnion;
 
 }  // namespace algo::data_structures
