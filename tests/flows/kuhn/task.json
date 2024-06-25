@@ -1,0 +1,5 @@
+{
+  "link": "https://judge.yosupo.jp/problem/bipartitematching",
+  "library-checker-problems": "graph/bipartitematching",
+  "solution": "kuhn.cpp"
+}

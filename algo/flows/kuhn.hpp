@@ -4,10 +4,7 @@
 #include <set>
 #include <utility>
 
-// https://judge.yosupo.jp/problem/bipartitematching
-
 // TODO: fix TLE on random_03 test
-
 namespace algo::flows {
 struct Kuhn {
   std::vector<std::vector<int>> L;
