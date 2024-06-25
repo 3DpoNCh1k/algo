@@ -4,7 +4,7 @@
 
 // Verification: https://judge.yosupo.jp/problem/unionfind
 
-namespace algo::misc {
+namespace algo::data_structures {
 struct DSU {
   std::vector<int> parent, height;
 
@@ -39,4 +39,4 @@ struct DSU {
   }
 };
 
-}  // namespace algo::misc
+}  // namespace algo::data_structures

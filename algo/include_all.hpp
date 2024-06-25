@@ -12,8 +12,8 @@
 #include <algo/maths/algebra/modular_inverse.hpp>
 #include <algo/maths/algebra/two_sat.hpp>
 
-// misc
-#include <algo/misc/dsu.hpp>
+// data_structures
+#include <algo/data_structures/dsu.hpp>
 
 // strings
 #include <algo/strings/aho_corasick.hpp>
