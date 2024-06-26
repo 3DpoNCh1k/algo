@@ -1,21 +1,26 @@
 #pragma once
 
 #include <algo/utils/types.hpp>
+#include <vector>
 
 // Verification:
 // https://codeforces.com/group/CYMPFXi8zA/contest/240094/problem/B
 namespace algo::trees {
 using utils::i64;
 struct Fenwick {
-  static const int mxN = 5e5 + 10;
-  i64 a[mxN];
+  std::vector<i64> a;
+  int n;
+
+  explicit Fenwick(int n): n(n) {
+    a.assign(n, 0);
+  }
 
   int GetLen(int i) {
     return ((i + 1) ^ i) & (i + 1);
   };
 
   void Add(int i, i64 val) {
-    while (i < mxN) {
+    while (i < n) {
       a[i] += val;
       i += GetLen(i);
     }
@@ -36,6 +41,10 @@ struct Fenwick {
 
   i64 GetSum(int l, int r) {
     return Sum(r) - Sum(l - 1);
+  };
+
+  i64 GetValue(int i) {
+    return GetSum(i, i);
   };
 };
 

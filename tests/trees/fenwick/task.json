@@ -1,0 +1,5 @@
+{
+  "link": "https://judge.yosupo.jp/problem/predecessor_problem",
+  "library-checker-problems": "datastructure/predecessor_problem",
+  "solution": "predecessor.cpp"
+}
