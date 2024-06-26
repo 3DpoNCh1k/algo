@@ -1,0 +1,5 @@
+{
+  "link": "https://judge.yosupo.jp/problem/range_affine_point_get",
+  "library-checker-problems": "datastructure/range_affine_point_get",
+  "solution": "lazy.cpp"
+}

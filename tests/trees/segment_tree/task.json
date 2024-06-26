@@ -1,0 +1,5 @@
+{
+  "link": "https://judge.yosupo.jp/problem/point_add_range_sum",
+  "library-checker-problems": "datastructure/point_add_range_sum",
+  "solution": "point_add_range_sum.cpp"
+}

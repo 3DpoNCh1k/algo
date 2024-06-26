@@ -18,12 +18,17 @@ struct LazySegmentTree {
     Node() {
       // Neutral element
       min_value = INF, pos = 1e9, cnt = 1, sz = 1;
+      sum = 0;
     };
     Node(i64 val, int pos, int cnt = 1)
         : min_value(val),
           pos(pos),
-          cnt(cnt){};
+          cnt(cnt),
+          sum(val)
+          {};
+    
     int pos, cnt = 1, sz = 1;
+    i64 sum = 0;
     i64 min_value = INF;
     i64 lazy_add = 0;       // add value to elements of the node's segment
     i64 lazy_set_flag = 0;  // 0/1; 1 - set value to childs
@@ -42,6 +47,7 @@ struct LazySegmentTree {
     for (int i = 0; i < n; ++i) {
       T[B + i].min_value = a[i];
       T[B + i].pos = i;
+      T[B + i].sum = a[i];
     }
     for (int i = B - 1; i > 0; --i) {
       Pull(i);
@@ -62,6 +68,7 @@ struct LazySegmentTree {
       T[i].cnt += T[idx_max].cnt;
     }
     T[i].sz = T[idx_min].sz + T[idx_max].sz;
+    T[i].sum = T[idx_min].sum + T[idx_max].sum;
   }
 
   //  for Query - ok
@@ -73,6 +80,7 @@ struct LazySegmentTree {
       a.cnt += b.cnt;
     }
     a.sz += b.sz;
+    a.sum += b.sum;
     return a;
   }
 
@@ -85,17 +93,25 @@ struct LazySegmentTree {
       T[left].lazy_set_flag = 1;
       T[left].lazy_set = T[v].lazy_set;
       T[left].lazy_add = 0;
+      T[left].sum = T[v].lazy_set * T[left].sz;
+      
       T[right].min_value = T[v].lazy_set;
       T[right].lazy_set_flag = 1;
       T[right].lazy_set = T[v].lazy_set;
       T[right].lazy_add = 0;
+      T[right].sum = T[v].lazy_set * T[right].sz;
+      
       T[v].lazy_set_flag = 0;
     }
     if (T[v].lazy_add != 0) {
       T[left].min_value += T[v].lazy_add;
       T[left].lazy_add += T[v].lazy_add;
+      T[left].sum += T[v].lazy_add * T[left].sz;
+
       T[right].min_value += T[v].lazy_add;
       T[right].lazy_add += T[v].lazy_add;
+      T[right].sum += T[v].lazy_add * T[right].sz;
+      
       T[v].lazy_add = 0;
     }
   };
@@ -108,6 +124,7 @@ struct LazySegmentTree {
     }
     if (l <= L && R <= r) {
       T[v].min_value += val;
+      T[v].sum += T[v].sz * val;
       T[v].lazy_add += val;
       return;
     }
@@ -131,6 +148,7 @@ struct LazySegmentTree {
       T[v].lazy_add = 0;
       T[v].lazy_set_flag = 1;
       T[v].lazy_set = val;
+      T[v].sum = val * T[v].sz;
       return;
     }
 
@@ -143,7 +161,7 @@ struct LazySegmentTree {
     Pull(v);
   };
 
-  // sz, min_val, cnt, pos
+  // sz, min_val, cnt, pos, sum
   Node Query(int v, int L, int R, int l, int r) {
     if (r < L || l > R) {
       return Node();
@@ -164,6 +182,11 @@ struct LazySegmentTree {
   i64 GetMin(int l, int r) {
     Node ans = Query(1, 0, B - 1, l, r);
     return ans.min_value;
+  }
+
+  i64 GetSum(int l, int r) {
+    Node ans = Query(1, 0, B - 1, l, r);
+    return ans.sum;
   }
 
   void SetValue(int l, int r, i64 val) {
