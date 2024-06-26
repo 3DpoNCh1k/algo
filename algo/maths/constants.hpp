@@ -1,6 +1,6 @@
 #pragma once
 
-#include <algo/utils/types.hpp>
+#include <algo/utils/types/types.hpp>
 
 namespace algo::math {
 using utils::i32;

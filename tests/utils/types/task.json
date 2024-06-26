@@ -1,0 +1,5 @@
+{
+  "link": "https://judge.yosupo.jp/problem/many_aplusb_128bit",
+  "library-checker-problems": "sample/many_aplusb_128bit",
+  "solution": "types.cpp"
+}

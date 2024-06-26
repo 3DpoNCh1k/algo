@@ -2,7 +2,7 @@
 
 #include <cassert>
 #include <vector>
-#include <algo/utils/types.hpp>
+#include <algo/utils/types/types.hpp>
 
 // Verification:
 // https://codeforces.com/group/CYMPFXi8zA/contest/243321/problem/G
