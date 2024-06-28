@@ -6,8 +6,6 @@
 #include <string>
 #include <vector>
 
-// Verification:
-// https://codeforces.com/group/CYMPFXi8zA/contest/261526/problem/F
 namespace algo::strings {
 struct SuffixTree {
   int mxN = 2e5 + 100;  // ! in constructor
@@ -175,7 +173,7 @@ struct SuffixTree {
       for (i = vans.size() - 1; i >= 0; --i) {
         ans += vans[i];
       }
-      std::cout << ans;
+      std::cout << ans << std::endl;
     } else {
       std::cout << std::endl;
     }
