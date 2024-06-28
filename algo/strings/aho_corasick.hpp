@@ -6,8 +6,6 @@
 #include <string>
 #include <vector>
 
-// Verification:
-// https://codeforces.com/group/CYMPFXi8zA/contest/261526/problem/I
 namespace algo::strings {
 struct AhoCorasick {
   int mxN = 2e6;  // ! in constructor
