@@ -5,9 +5,6 @@
 #include <complex>
 #include <vector>
 
-// Verification:
-// https://codeforces.com/group/CYMPFXi8zA/contest/279284/problem/F
-
 namespace algo::maths::algebra {
 struct FFT {
   // NOLINTBEGIN
