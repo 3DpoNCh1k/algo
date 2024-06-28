@@ -3,8 +3,6 @@
 #include <algo/utils/types/types.hpp>
 #include <vector>
 
-// Verification:
-// https://codeforces.com/group/CYMPFXi8zA/contest/240094/problem/B
 namespace algo::trees {
 using utils::i64;
 struct Fenwick {
