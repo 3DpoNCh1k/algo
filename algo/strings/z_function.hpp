@@ -4,7 +4,6 @@
 #include <vector>
 
 namespace algo::strings {
-// Verification: https://judge.yosupo.jp/problem/zalgorithm
 std::vector<int> ZFunction(const std::string& s) {
   int n = s.size();
   std::vector<int> zf(n);
