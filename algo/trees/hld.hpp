@@ -4,8 +4,7 @@
 #include <vector>
 #include <algo/utils/types/types.hpp>
 
-// Verification:
-// https://codeforces.com/group/CYMPFXi8zA/contest/243321/problem/G
+
 namespace algo::trees {
 using utils::i64;
 // HLD with lazy prop
