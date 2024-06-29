@@ -5,9 +5,6 @@
 #include <string>
 #include <vector>
 
-// Verification:
-// https://codeforces.com/group/CYMPFXi8zA/contest/243321/problem/H
-
 // retrograd's implementation https://codeforces.com/blog/entry/75885
 
 // with lca method and modified Access
