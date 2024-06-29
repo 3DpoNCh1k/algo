@@ -6,8 +6,6 @@
 
 #include <algo/utils/types/types.hpp>
 
-// Verification:
-// https://codeforces.com/group/CYMPFXi8zA/contest/240094/problem/C
 namespace algo::trees {
 using utils::i64;
 struct LazySegmentTree {
@@ -37,7 +35,7 @@ struct LazySegmentTree {
   std::vector<Node> T;
   int n, B;
 
-  explicit LazySegmentTree(const std::vector<int>& a) {
+  explicit LazySegmentTree(const std::vector<i64>& a) {
     n = a.size();
     B = 1;
     while (B < n) {
