@@ -1,3 +1,5 @@
+#pragma once
+
 // flows
 #include <algo/flows/kuhn.hpp>
 
