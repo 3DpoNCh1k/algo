@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <algo/utils/to_string/declarations/all.hpp>
 
 namespace algo::utils {
 template <class T1, class T2>

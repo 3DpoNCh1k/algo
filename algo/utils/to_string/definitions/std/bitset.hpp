@@ -6,6 +6,6 @@
 namespace algo::utils {
 template <size_t N>
 std::string ToString(const std::bitset<N>& b) {
-  return b.ToString();
+  return b.to_string();
 }
 }  // namespace algo::utils
