@@ -1,5 +1,8 @@
+#include <deque>
 #include <map>
 #include <set>
+#include <unordered_map>
+#include <unordered_set>
 #include <utility>
 #include <string>
 
@@ -118,9 +121,40 @@ void TestIterable() {
     CHECK_TO_STRING(s, expected);
   }
   {
+    auto ms = std::multiset<int>({1, 1, 2});
+    std::string expected = "{1, 1, 2}";
+    CHECK_TO_STRING(ms, expected);
+  }
+  {
+    auto hs = std::unordered_set<int>({1, 2});
+    std::string expected1 = "{1, 2}";
+    std::string expected2 = "{2, 1}";
+    auto result = ToString(hs);
+    ASSERT_TRUE(result == expected1 || result == expected2);
+  }
+  {
     auto m = std::map<std::string, int>({{"key1", 1}, {"key2", 2}});
     std::string expected = "{(key1, 1), (key2, 2)}";
     CHECK_TO_STRING(m, expected);
+  }
+  {
+    auto mm = std::multimap<std::string, int>({{"key1", 1}, {"key1", 2}});
+    std::string expected1 = "{(key1, 1), (key1, 2)}";
+    std::string expected2 = "{(key1, 2), (key1, 1)}";
+    auto result = ToString(mm);
+    ASSERT_TRUE(result == expected1 || result == expected2);
+  }
+  {
+    auto hm = std::unordered_map<std::string, int>({{"key1", 1}, {"key2", 2}});
+    std::string expected1 = "{(key1, 1), (key2, 2)}";
+    std::string expected2 = "{(key2, 2), (key1, 1)}";
+    auto result = ToString(hm);
+    ASSERT_TRUE(result == expected1 || result == expected2);
+  }
+  {
+    auto q = std::deque<int>({1, 2, 3});
+    std::string expected = "{1, 2, 3}";
+    CHECK_TO_STRING(q, expected);
   }
 }
 
