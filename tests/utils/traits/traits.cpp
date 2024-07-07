@@ -1,54 +1,64 @@
-#include <string>
+#include <map>
 #include <vector>
 #include <array>
 #include <set>
 
 #include <algo/utils/traits/traits.hpp>
+#include <algo/utils/preprocessor.hpp>
+#include <tests/testing/stubs/dummies.hpp>
+#include <tests/testing/asserts.hpp>
 
 // NOLINTNEXTLINE
 using namespace algo::utils::traits;
 
-#define SINGLE_ARG(...) __VA_ARGS__
-
-#define CHECK(func, type)        \
-  {                              \
-    static_assert(func<type>);   \
-    static_assert(func<type&>);  \
-    static_assert(func<type&&>); \
+#define CHECK(template_value, type)             \
+  {                                             \
+    STATIC_ASSERT_TRUE(template_value<type>);   \
+    STATIC_ASSERT_TRUE(template_value<type&>);  \
+    STATIC_ASSERT_TRUE(template_value<type&&>); \
   }
 
-#define CHECK_WITH_CONST(func, type) \
-  { CHECK(func, SINGLE_ARG(const type)); }
+#define CHECK_WITH_CONST(template_value, type) \
+  { CHECK(template_value, const type); }
 
-#define CHECK_ALL(func, type)                 \
-  {                                           \
-    CHECK(func, SINGLE_ARG(type));            \
-    CHECK_WITH_CONST(func, SINGLE_ARG(type)); \
+#define CHECK_ALL(template_value, type)     \
+  {                                         \
+    CHECK(template_value, type);            \
+    CHECK_WITH_CONST(template_value, type); \
   }
 
-#define CHECK_HAS_TO_STRING(type) \
-  { CHECK_ALL(has_ToString_v, SINGLE_ARG(type)); }
-
-#define CHECK_IS_TO_STRINGABLE(type) \
-  { CHECK_ALL(is_to_stringable_v, SINGLE_ARG(type)); }
-
-#define CHECK_IS_ITERBALE(type) \
-  { CHECK_ALL(is_iterable_v, SINGLE_ARG(type)); }
-
-#define CHECK_IS_STD_VECTOR(type) \
-  { CHECK_ALL(is_std_vector_v, SINGLE_ARG(type)); }
-
-#define CHECK_IS_STD_ARRAY(type) \
-  { CHECK_ALL(is_std_array_v, SINGLE_ARG(type)); }
-
-struct Dummy {
-  std::string ToString() const {
-    return "I have ToString!";
+#define CHECK_HAS_TO_STRING(type)     \
+  {                                   \
+    using T = type;                   \
+    { CHECK_ALL(has_ToString_v, T); } \
   }
-};
+
+#define CHECK_IS_TO_STRINGABLE(type)      \
+  {                                       \
+    using T = type;                       \
+    { CHECK_ALL(is_to_stringable_v, T); } \
+  }
+
+#define CHECK_IS_ITERBALE(type)      \
+  {                                  \
+    using T = type;                  \
+    { CHECK_ALL(is_iterable_v, T); } \
+  }
+
+#define CHECK_IS_STD_VECTOR(type)      \
+  {                                    \
+    using T = type;                    \
+    { CHECK_ALL(is_std_vector_v, T); } \
+  }
+
+#define CHECK_IS_STD_ARRAY(type)  \
+  {                               \
+    using T = type;               \
+    CHECK_ALL(is_std_array_v, T); \
+  }
 
 void RunHasToStringTests() {
-  CHECK_HAS_TO_STRING(Dummy);
+  CHECK_HAS_TO_STRING(DummyWithToString);
 }
 
 void RunIsToStringableTests() {
@@ -56,7 +66,9 @@ void RunIsToStringableTests() {
 }
 
 void RunIterbaleTests() {
+  CHECK_IS_ITERBALE(std::vector<Dummy>);
   CHECK_IS_ITERBALE(std::set<int>);
+  CHECK_IS_ITERBALE(AS_SINGLE_ARGUMENT(std::map<std::string, int>));
 }
 
 void RunVectorTests() {
@@ -65,9 +77,22 @@ void RunVectorTests() {
 }
 
 void RunArrayTests() {
-  CHECK_IS_STD_ARRAY(SINGLE_ARG(std::array<int, 0>));
-  CHECK_IS_STD_ARRAY(SINGLE_ARG(std::array<std::array<int, 0>, 1>));
+  CHECK_IS_STD_ARRAY(AS_SINGLE_ARGUMENT(std::array<int, 0>));
+  CHECK_IS_STD_ARRAY(AS_SINGLE_ARGUMENT(std::array<std::array<int, 0>, 1>));
 }
+
+void RunDimensionTest() {
+  STATIC_ASSERT_EQ(dimension_v<int>, 0);
+  STATIC_ASSERT_EQ(dimension_v<std::string>, 0);
+  STATIC_ASSERT_EQ(dimension_v<std::set<int>>, 0);
+  STATIC_ASSERT_EQ(dimension_v<std::vector<int>>, 1);
+  STATIC_ASSERT_EQ(AS_SINGLE_ARGUMENT(dimension_v<std::array<int, 0>>), 1);
+  STATIC_ASSERT_EQ(dimension_v<std::vector<std::vector<int>>>, 2);
+  STATIC_ASSERT_EQ(
+      AS_SINGLE_ARGUMENT(dimension_v<std::array<std::array<int, 0>, 0>>), 2);
+  STATIC_ASSERT_EQ(
+      AS_SINGLE_ARGUMENT(dimension_v<std::array<std::vector<int>, 0>>), 2);
+};
 
 void RunTests() {
   RunHasToStringTests();
@@ -75,6 +100,7 @@ void RunTests() {
   RunIterbaleTests();
   RunVectorTests();
   RunArrayTests();
+  RunDimensionTest();
 }
 
 int main() {
