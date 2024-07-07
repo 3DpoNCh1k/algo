@@ -4,7 +4,7 @@
 #include <type_traits>
 
 #include <algo/utils/traits/std/containers.hpp>
-#include <algo/utils/traits/std/rank.hpp>
+#include <algo/utils/traits/std/dimension.hpp>
 
 namespace algo::utils::traits {
 // NOLINTBEGIN

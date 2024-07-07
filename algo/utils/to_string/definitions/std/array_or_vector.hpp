@@ -6,6 +6,7 @@
 
 #include <algo/utils/to_string/declarations/all.hpp>
 #include <algo/utils/traits/traits.hpp>
+#include "algo/utils/traits/std/dimension.hpp"
 
 namespace algo::utils {
 template <class T>
@@ -15,7 +16,7 @@ ToString(const T& arr_or_vec) {
   std::stringstream result;
   result << "[";
   for (int i = 0; i < int(arr_or_vec.size()); ++i) {
-    if constexpr (std::rank_v<decltype(arr_or_vec[i])> > 0) {
+    if constexpr (traits::dimension_v<decltype(arr_or_vec[i])> > 0) {
       result << "\n";
     }
     result << "i=" + ToString(i) + ": ";

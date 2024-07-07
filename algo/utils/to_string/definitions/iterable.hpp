@@ -17,7 +17,7 @@ ToString(const T& iterable) {
   result << "{";
   int i = 0;
   for (const auto& entry : iterable) {
-    if constexpr (std::rank_v<decltype(entry)> > 0) {
+    if constexpr (traits::dimension_v<decltype(entry)> > 0) {
       result << "\n";
     }
     result << ToString(entry);
