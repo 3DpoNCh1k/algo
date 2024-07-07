@@ -1,3 +1,5 @@
+#pragma once
+
 struct MoveOnly {
     MoveOnly() = default;
 
