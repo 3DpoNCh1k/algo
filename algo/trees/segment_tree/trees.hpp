@@ -10,17 +10,17 @@
 
 namespace algo::trees::segment_tree {
 template <typename Operation, typename StatisticsTuple>
-using LazyPropagationStaticTree =
+using LazyPropagationStaticSegmentTree =
     details::SegmentTree<details::LazyPropagator, details::StaticTree,
                          Operation, StatisticsTuple>;
 
 template <typename Operation, typename StatisticsTuple>
-using LazyPropagationDynamicTree =
+using LazyPropagationDynamicSegmentTree =
     details::SegmentTree<details::LazyPropagator, details::DynamicTree,
                          Operation, StatisticsTuple>;
 
 template <typename Operation, typename StatisticsTuple>
-using EagerPropagationStaticTree =
+using EagerPropagationStaticSegmentTree =
     details::SegmentTree<details::EagerPropagator, details::StaticTree,
                          Operation, StatisticsTuple>;
 
