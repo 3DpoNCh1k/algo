@@ -23,10 +23,10 @@ struct DynamicTree {
 
   std::vector<TreeNode> nodes;
   int ROOT = -1;
-  const static int MaxSize = 1e6;
+  static constexpr int DefaultMaxSize = 1e6;
   // TODO: use allocator instead of reserve
 
-  explicit DynamicTree(utils::i64 l, utils::i64 r, int max_size = MaxSize) {
+  explicit DynamicTree(utils::i64 l, utils::i64 r, int max_size = DefaultMaxSize) {
     nodes.reserve(max_size);
     ROOT = CreateNode(l, r);
   }
