@@ -16,10 +16,10 @@ int main() {
       std::cin >> a[i];
     }
 
-    auto lazy = LazyPropagationDynamicSegmentTree<Operation<operations::AddOp>, Statistics<statistics::Sum>>(0, n-1);
+    auto segment_tree = LazyPropagationDynamicSegmentTree<Operation<operations::AddOp>, Statistics<statistics::Sum>>(0, n-1);
 
     for(int i = 0; i < n; ++i) {
-      lazy.ApplyAtIndex(i, operations::AddOp{a[i]});
+      segment_tree.ApplyAtIndex(i, operations::AddOp{a[i]});
     }
 
     for(int i = 0; i < q; ++i) {
@@ -30,14 +30,14 @@ int main() {
             {
               int index, value;
               std::cin >> index >> value;
-              lazy.ApplyAtIndex(index, operations::AddOp{value});
+              segment_tree.ApplyAtIndex(index, operations::AddOp{value});
               break;
             }
           case 1:
           {
               int l, r;
               std::cin >> l >> r;
-              auto result = lazy.GetFromRange<statistics::Sum>(l, r-1).result;
+              auto result = segment_tree.GetFromRange<statistics::Sum>(l, r-1).result;
               std::cout << result << std::endl;
               break;
           }
