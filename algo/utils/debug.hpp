@@ -21,7 +21,7 @@ void DBG(Head h, Tail... t) {
   DBG(__VA_ARGS__);                                                  \
   std::cerr << "]\n";
 #else
-#define dbg(...) 0
+#define dbg(...)
 #endif
 
 }  // namespace algo::utils::debug
