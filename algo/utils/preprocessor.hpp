@@ -10,3 +10,8 @@
 
 #define CONCAT(x, y) \
   _CONCAT_EXPANDED(AS_SINGLE_ARGUMENT(x), AS_SINGLE_ARGUMENT(y))
+
+#define IGNORE_UNUSED(value) \
+  do {                       \
+    (void)(value);           \
+  } while (false)
