@@ -2,7 +2,7 @@
   "tests-task": {
     "tests": [
       {
-        "target": "meta.cpp",
+        "target": "unit.cpp",
         "profile": "DebugLocalDebug"
       }
     ]
