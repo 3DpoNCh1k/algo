@@ -1,0 +1,10 @@
+{
+  "tests-task": {
+    "tests": [
+      {
+        "target": "meta.cpp",
+        "profile": "DebugLocalDebug"
+      }
+    ]
+  }
+}

@@ -13,12 +13,12 @@ struct IntNumber {
 };
 
 template <int... first_seq, int... second_seq>
-auto Concat(IntSeq<first_seq...>, IntSeq<second_seq...>) {
+constexpr auto Concat(IntSeq<first_seq...>, IntSeq<second_seq...>) {
   return IntSeq<first_seq..., second_seq...>{};
 };
 
 template <int from, int to>
-auto IntRange() {
+constexpr auto IntRange() {
   if constexpr (from > to) {
     return IntSeq<>{};
   } else {
@@ -27,12 +27,12 @@ auto IntRange() {
 };
 
 template <class F, int... ints>
-void CallForIntSeq(F fun, IntSeq<ints...>) {
+constexpr void CallForIntSeq(F fun, IntSeq<ints...>) {
   (fun(IntNumber<ints>{}), ...);
 }
 
 template <int from, int to, class Body>
-void ForLoop(Body body) {
+constexpr void ForLoop(Body body) {
   CallForIntSeq(body, IntRange<from, to>());
 }
 }  // namespace algo::utils::meta
