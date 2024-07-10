@@ -1,3 +1,10 @@
 {
-  "target": "include_all.cpp"
+  "tests-task": {
+    "tests": [
+      {
+        "target": "include_all.cpp",
+        "profile": "DebugLocalDebug"
+      }
+    ]
+  }
 }
