@@ -6,9 +6,10 @@
 
 namespace algo::trees::segment_tree::details {
 
-template <typename Operation, typename Value>
+template <typename Op, typename StatisticsTuple>
 struct StaticTree {
-  using DataNode = Node<Operation, Value>;
+  using Operation = Op;
+  using DataNode = Node<Operation, StatisticsTuple>;
   struct TreeNode : DataNode {
     int index = -1;
     void SetIndex(int idx) {
@@ -56,6 +57,22 @@ struct StaticTree {
     const TreeNode& internal_node = static_cast<const TreeNode&>(node);
     int right_index = 2 * internal_node.index + 1;
     return nodes[right_index];
+  }
+
+  DataNode& GetNodeAt(int range_index) {
+    return nodes[range_index + B];
+  }
+
+  DataNode& GetParent(const DataNode& node) {
+    const TreeNode& internal_node = static_cast<const TreeNode&>(node);
+    int parent_index = internal_node.index / 2;
+    return nodes[parent_index];
+  }
+
+  bool HasParent(const DataNode& node) {
+    const TreeNode& internal_node = static_cast<const TreeNode&>(node);
+    int parent_index = internal_node.index / 2;
+    return parent_index >= ROOT;
   }
 };
 

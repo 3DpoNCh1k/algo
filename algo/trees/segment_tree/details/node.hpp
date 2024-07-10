@@ -2,37 +2,16 @@
 
 #include <sstream>
 #include <tuple>
+
 #include <algo/utils/debug.hpp>
+#include <algo/utils/meta.hpp>
 
 namespace algo::trees::segment_tree::details {
 
-template<typename... StatisticsTypes>
-struct Value {
-  std::tuple<StatisticsTypes...> value;
-};
-
-template<std::size_t N>
-struct Number { static const constexpr auto Value = N; };
-
-template <class F, std::size_t... Is>
-void For(F fun, std::index_sequence<Is...>)
-{
-  (fun(Number<Is>{}), ...);
-}
-
-template<int N>
-struct IntNumber { static const constexpr auto Value = N; };
-
-template <class F, int... Is>
-void For(F fun, std::integer_sequence<int,Is...>)
-{
-  (fun(IntNumber<Is>{}), ...);
-}
-
-template <typename Operation, typename Value>
+template <typename Operation, typename StatisticsTuple>
 struct Node {
-  Operation update;
-  Value value;
+  Operation operation;
+  StatisticsTuple statistics;
 
   int L = -1;
   int R = -1;
@@ -48,42 +27,45 @@ struct Node {
   void SetInterval(int l, int r) {
     L = l;
     R = r;
-    For([&](auto index) {
-      auto & stat = std::get<index.Value>(value.value);
-      stat.L = L;
-      stat.R = R;
-    }, std::make_index_sequence<std::tuple_size_v<decltype(value.value)>>{});
+    utils::meta::ForLoop<0, std::tuple_size_v<StatisticsTuple> - 1>(
+        [&](auto index_number) {
+          auto& stat = std::get<index_number.Value>(statistics);
+          stat.L = L;
+          stat.R = R;
+        });
   };
 
-  void ApplyOperation(const Operation & op) {
-    // auto seq = std::make_index_sequence<std::tuple_size_v<decltype(value)>>{};
-    For([&](auto index) {
-      auto & stat = std::get<index.Value>(value.value);
-      stat = UpdateStatistics(stat, op);
-    }, std::make_index_sequence<std::tuple_size_v<decltype(value.value)>>{});
-    update = CombineOperations(update, op);
+  void ApplyOperation(const Operation& op) {
+    utils::meta::ForLoop<0, std::tuple_size_v<StatisticsTuple> - 1>(
+        [&](auto index_number) {
+          auto& stat = std::get<index_number.Value>(statistics);
+          stat = UpdateStatistics(stat, op);
+        });
+    operation = CombineOperations(operation, op);
   }
 
-  void Pull(const Node & left, const Node & right) {
-    For([&](auto index) {
-      auto & stat = std::get<index.Value>(value.value);
-      const auto & left_stat = std::get<index.Value>(left.value.value);
-      const auto & right_stat = std::get<index.Value>(right.value.value);
-      stat = left_stat.Merge(right_stat);
-      stat.L = L;
-      stat.R = R;
-    }, std::make_index_sequence<std::tuple_size_v<decltype(value.value)>>{});
+  void Pull(const Node& left, const Node& right) {
+    utils::meta::ForLoop<0, std::tuple_size_v<StatisticsTuple> - 1>(
+        [&](auto index_number) {
+          auto& stat = std::get<index_number.Value>(statistics);
+          const auto& left_stat = std::get<index_number.Value>(left.statistics);
+          const auto& right_stat =
+              std::get<index_number.Value>(right.statistics);
+          stat = left_stat.Merge(right_stat);
+          stat.L = L;
+          stat.R = R;
+        });
   };
 
-  void Push(Node & left, Node & right) {
-    left.ApplyOperation(update);
-    right.ApplyOperation(update);
-    update = Operation{};
+  void Push(Node& left, Node& right) {
+    left.ApplyOperation(operation);
+    right.ApplyOperation(operation);
+    operation = Operation{};
   };
 
-  template<typename Statistics>
+  template <typename Statistics>
   Statistics Get() const {
-    auto & stat = std::get<Statistics>(value.value);
+    auto& stat = std::get<Statistics>(statistics);
     dbg("Node.Get", L, R, stat.result);
     return stat;
   }
@@ -92,8 +74,8 @@ struct Node {
     std::stringstream ss;
     ss << "Node:" << std::endl;
     ss << "L = " << L << " R = " << R << std::endl;
-    ss << "Operation = " << update.ToString();
+    ss << "Operation = " << operation.ToString();
     return ss.str();
   };
 };
-}
+}  // namespace algo::trees::segment_tree::details

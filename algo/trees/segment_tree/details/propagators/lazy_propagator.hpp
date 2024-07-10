@@ -1,35 +1,26 @@
 #pragma once
 
-#include <algo/trees/segment_tree/details/node.hpp>
-
-#include "algo/trees/segment_tree/details/dynamic_tree.hpp"
-#include "algo/trees/segment_tree/details/static_tree.hpp"
-
 namespace algo::trees::segment_tree::details {
 
-template <typename Operation, typename Value>
-struct LazyProp {
-  using TreeType = StaticTree<Operation, Value>;
-  // using TreeType = DynamicTree<Operation, Value>;
-  using NodeType = typename TreeType::DataNode;
-  TreeType tree;
-  explicit LazyProp(int n)
-      : tree(n) {
+template <typename Tree>
+struct LazyPropagator {
+  using Operation = typename Tree::Operation;
+  using NodeType = typename Tree::DataNode;
+
+  Tree& tree;
+  explicit LazyPropagator(Tree& tree)
+      : tree(tree) {
   }
 
-  // explicit LazyProp(int n)
-  //     : tree(0, n-1) {
-  // }
-
-  void ApplyAtIndex(int idx, Operation op) {
+  void ApplyAtIndex(int idx, const Operation& op) {
     ApplyOnRange(idx, idx, op);
   }
 
-  void ApplyOnRange(int l, int r, Operation op) {
+  void ApplyOnRange(int l, int r, const Operation& op) {
     ApplyOnRangeImpl(tree.GetRoot(), l, r, op);
   }
 
-  void ApplyOnRangeImpl(NodeType & node, int l, int r, Operation op) {
+  void ApplyOnRangeImpl(NodeType& node, int l, int r, const Operation& op) {
     if (node.IsOutside(l, r)) {
       return;
     }
@@ -50,11 +41,11 @@ struct LazyProp {
 
   template <typename Statistics>
   Statistics GetFromRange(int l, int r) {
-    return GetFromRangeImpl<Statistics>(tree.GetRoot(), l,r);
+    return GetFromRangeImpl<Statistics>(tree.GetRoot(), l, r);
   }
 
   template <typename Statistics>
-  Statistics GetFromRangeImpl(NodeType & node, int l, int r) {
+  Statistics GetFromRangeImpl(NodeType& node, int l, int r) {
     if (node.IsOutside(l, r)) {
       return Statistics{};
     }
@@ -68,4 +59,4 @@ struct LazyProp {
   }
 };
 
-}  // namespace algo::trees::segment_tree
+}  // namespace algo::trees::segment_tree::details

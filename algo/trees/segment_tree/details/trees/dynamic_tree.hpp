@@ -1,15 +1,17 @@
 #pragma once
 
 #include <vector>
+#include <cassert>
 
 #include "algo/utils/types/types.hpp"
 #include <algo/trees/segment_tree/details/node.hpp>
 
 namespace algo::trees::segment_tree::details {
 
-template <typename Operation, typename Value>
+template <typename Op, typename StatisticsTuple>
 struct DynamicTree {
-  using DataNode = Node<Operation, Value>;
+  using Operation = Op;
+  using DataNode = Node<Operation, StatisticsTuple>;
   struct TreeNode : DataNode {
     int index = -1;
     int left_index = -1;
