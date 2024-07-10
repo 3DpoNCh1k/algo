@@ -1,3 +1,10 @@
 {
-  "target": "to_string.cpp"
+  "tests-task": {
+    "tests": [
+      {
+        "target": "to_string.cpp",
+        "profile": "DebugLocalDebug"
+      }
+    ]
+  }
 }

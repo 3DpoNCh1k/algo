@@ -1,3 +1,10 @@
 {
-  "target": "modular.cpp"
+  "tests-task": {
+    "tests": [
+      {
+        "target": "modular.cpp",
+        "profile": "DebugLocalDebug"
+      }
+    ]
+  }
 }

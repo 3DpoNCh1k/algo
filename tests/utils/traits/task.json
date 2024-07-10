@@ -1,3 +1,10 @@
 {
-  "target": "traits.cpp"
+  "tests-task": {
+    "tests": [
+      {
+        "target": "traits.cpp",
+        "profile": "DebugLocalDebug"
+      }
+    ]
+  }
 }
