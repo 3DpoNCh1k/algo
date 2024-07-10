@@ -5,7 +5,12 @@
 #include <string>
 
 #include <algo/trees/lazy_segment_tree.hpp>
+#include "algo/trees/segment_tree/lazy_propagation.hpp"
+#include "algo/trees/segment_tree/node.hpp"
+#include "algo/trees/segment_tree/statistics.hpp"
 #include "algo/utils/types/types.hpp"
+
+using namespace algo::trees::segment_tree;
 
 int main() {
   std::ios::sync_with_stdio(false);
@@ -18,7 +23,12 @@ int main() {
   for(auto & value: a) {
     std::cin >> value;
   }
-  auto lazy = algo::trees::LazySegmentTree(a);
+  // auto lazy = algo::trees::LazySegmentTree(a);
+  auto lazy = algo::trees::segment_tree::LazyProp<SetAddOp, Value<Minimum>>(n);
+  for(int i = 0; i < n; ++i) {
+    dbg("set", i, i, a[i]);
+    lazy.ApplyAtIndex(i, SetAddOp(SetOp{true, a[i]}));
+  }
 
   std::string line;
   while(std::getline(std::cin, line)) {
@@ -34,18 +44,18 @@ int main() {
       i64 x;
       ss >> i >> j >> x;
       --i, --j;
-      lazy.SetValue(i, j, x);
+      lazy.ApplyOnRange(i, j, SetAddOp(SetOp{true, x}));
     } else if (command == "add") {
       int i, j;
       i64 x;
       ss >> i >> j >> x;
       --i, --j;
-      lazy.AddValue(i, j, x);
+      lazy.ApplyOnRange(i, j, SetAddOp(AddOp{x}));
     } else if (command == "min") {
       int i, j;
       ss >> i >> j;
       --i, --j;
-      std::cout << lazy.GetMin(i, j) << "\n";
+      std::cout << lazy.GetFromRange<Minimum>(i, j).result << "\n";
     } else {
       std::abort();
     }
