@@ -12,4 +12,9 @@ std::string ToString(bool b) {
 std::string ToString(const char* s) {
   return std::string(s);
 }
+
+template <typename T>
+std::string ToString(T* pointer) {
+  return std::to_string(uintptr_t(pointer));
+}
 }  // namespace algo::utils
