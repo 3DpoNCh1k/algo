@@ -1,4 +1,4 @@
-#pragma  once
+#pragma once
 
 #include "algo/trees/segment_tree/statistics/base.hpp"
 #include "algo/trees/segment_tree/operations/add.hpp"
@@ -8,7 +8,7 @@ namespace algo::trees::segment_tree::statistics {
 struct Sum : Base {
   utils::i64 result = 0;
 
-  Sum Merge(const Sum & that) const {
+  Sum Merge(const Sum& that) const {
     auto result = *this;
     result.result += that.result;
     return result;
@@ -23,4 +23,4 @@ Sum UpdateStatistics(const Sum& stat, const operations::AddOp& op) {
   return new_stat;
 };
 
-}
+}  // namespace algo::trees::segment_tree::statistics

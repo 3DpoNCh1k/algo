@@ -1,4 +1,4 @@
-#pragma  once
+#pragma once
 
 namespace algo::trees::segment_tree::statistics {
 

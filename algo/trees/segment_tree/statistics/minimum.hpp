@@ -1,4 +1,4 @@
-#pragma  once
+#pragma once
 
 #include <algorithm>
 #include <limits>
@@ -11,7 +11,7 @@ namespace algo::trees::segment_tree::statistics {
 struct Minimum : Base {
   utils::i64 result = std::numeric_limits<utils::i64>::max();
 
-  Minimum Merge(const Minimum & that) const {
+  Minimum Merge(const Minimum& that) const {
     auto result = *this;
     result.result = std::min(result.result, that.result);
     return result;
@@ -29,4 +29,4 @@ Minimum UpdateStatistics(const Minimum& stat, const operations::SetAddOp& op) {
   return new_stat;
 };
 
-}
+}  // namespace algo::trees::segment_tree::statistics
