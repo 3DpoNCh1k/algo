@@ -1,5 +1,20 @@
 {
-  "link": "https://judge.yosupo.jp/problem/point_add_range_sum",
-  "library-checker-problems": "datastructure/point_add_range_sum",
-  "solution": "point_add_range_sum.cpp"
+  "library-checker-task": {
+    "link": "https://judge.yosupo.jp/problem/point_add_range_sum",
+    "path": "datastructure/point_add_range_sum",
+    "targets": [
+      {
+        "solution": "eager_static.cpp",
+        "profile": "Release"
+      },
+      {
+        "solution": "lazy_static.cpp",
+        "profile": "Release"
+      },
+      {
+        "solution": "lazy_dynamic.cpp",
+        "profile": "Release"
+      }
+    ]
+  }
 }
