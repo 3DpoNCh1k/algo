@@ -70,7 +70,7 @@
 #include <algo/utils/traits/traits.hpp>
 #include <algo/utils/types/128_t.hpp>
 #include <algo/utils/types/modular.hpp>
-#include <algo/utils/types/types.hpp>
+#include <algo/utils/types/fundamentals.hpp>
 
 int main() {
 }

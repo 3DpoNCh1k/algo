@@ -2,11 +2,10 @@
 
 #include <cassert>
 #include <vector>
-#include <algo/utils/types/types.hpp>
-
+#include <algo/utils/types/fundamentals.hpp>
 
 namespace algo::trees {
-using utils::i64;
+
 // HLD with lazy prop
 struct HLD {
   // sum of vertices values on path u-v; for calcs on edges - do some

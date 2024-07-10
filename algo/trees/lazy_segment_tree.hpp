@@ -4,10 +4,10 @@
 #include <string>
 #include <vector>
 
-#include <algo/utils/types/types.hpp>
+#include <algo/utils/types/fundamentals.hpp>
 
 namespace algo::trees {
-using utils::i64;
+
 struct LazySegmentTree {
   static const i64 INF = 1e18 + 100;
   // EXAMPLE: size, minimum, its count and one of its position
@@ -22,9 +22,8 @@ struct LazySegmentTree {
         : min_value(val),
           pos(pos),
           cnt(cnt),
-          sum(val)
-          {};
-    
+          sum(val){};
+
     int pos, cnt = 1, sz = 1;
     i64 sum = 0;
     i64 min_value = INF;
@@ -92,13 +91,13 @@ struct LazySegmentTree {
       T[left].lazy_set = T[v].lazy_set;
       T[left].lazy_add = 0;
       T[left].sum = T[v].lazy_set * T[left].sz;
-      
+
       T[right].min_value = T[v].lazy_set;
       T[right].lazy_set_flag = 1;
       T[right].lazy_set = T[v].lazy_set;
       T[right].lazy_add = 0;
       T[right].sum = T[v].lazy_set * T[right].sz;
-      
+
       T[v].lazy_set_flag = 0;
     }
     if (T[v].lazy_add != 0) {
@@ -109,7 +108,7 @@ struct LazySegmentTree {
       T[right].min_value += T[v].lazy_add;
       T[right].lazy_add += T[v].lazy_add;
       T[right].sum += T[v].lazy_add * T[right].sz;
-      
+
       T[v].lazy_add = 0;
     }
   };

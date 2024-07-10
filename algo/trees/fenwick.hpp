@@ -1,15 +1,16 @@
 #pragma once
 
-#include <algo/utils/types/types.hpp>
+#include <algo/utils/types/fundamentals.hpp>
 #include <vector>
 
 namespace algo::trees {
-using utils::i64;
+
 struct Fenwick {
   std::vector<i64> a;
   int n;
 
-  explicit Fenwick(int n): n(n) {
+  explicit Fenwick(int n)
+      : n(n) {
     a.assign(n, 0);
   }
 

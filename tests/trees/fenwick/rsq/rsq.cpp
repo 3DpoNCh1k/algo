@@ -2,12 +2,12 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include "algo/utils/types/types.hpp"
+#include "algo/utils/types/fundamentals.hpp"
 #include <algo/utils/debug.hpp>
 #include <algo/trees/fenwick.hpp>
 
 int main() {
-  using algo::utils::i64;
+  using i64;
   int n;
   std::cin >> n;
   auto fenwick = algo::trees::Fenwick(n);

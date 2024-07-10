@@ -1,11 +1,10 @@
 #pragma once
 
-#include <algo/utils/types/types.hpp>
+#include <algo/utils/types/fundamentals.hpp>
 #include <algo/maths/algebra/gcd.hpp>
 #include <vector>
 
 namespace algo::maths::algebra {
-using utils::i64;
 
 // a*x = 1 (mod m) ~> a*x = 1 + m*y ~> a*x - m*y = 1
 i64 ModularInverse(i64 a, i64 m) {

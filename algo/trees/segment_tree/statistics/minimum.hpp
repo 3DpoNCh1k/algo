@@ -4,12 +4,12 @@
 #include <limits>
 #include "algo/trees/segment_tree/operations/set_add.hpp"
 #include "algo/trees/segment_tree/statistics/base.hpp"
-#include "algo/utils/types/types.hpp"
+#include "algo/utils/types/fundamentals.hpp"
 
 namespace algo::trees::segment_tree::statistics {
 
 struct Minimum : Base {
-  utils::i64 result = std::numeric_limits<utils::i64>::max();
+  i64 result = std::numeric_limits<i64>::max();
 
   Minimum Merge(const Minimum& that) const {
     auto result = *this;

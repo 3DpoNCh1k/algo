@@ -1,9 +1,8 @@
 #include <algo/utils/types/modular.hpp>
-#include <algo/utils/types/types.hpp>
+#include <algo/utils/types/fundamentals.hpp>
 #include <tests/testing/asserts.hpp>
 
 using namespace algo::utils;
-
 
 template <typename InternalType, InternalType Mod>
 struct Tester {

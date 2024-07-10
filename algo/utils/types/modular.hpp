@@ -2,7 +2,7 @@
 
 #include <type_traits>
 
-#include <algo/utils/types/types.hpp>
+#include <algo/utils/types/fundamentals.hpp>
 
 namespace algo::utils {
 template <typename InternalType, InternalType Mod,

@@ -2,11 +2,11 @@
 
 #include "algo/trees/segment_tree/statistics/base.hpp"
 #include "algo/trees/segment_tree/operations/add.hpp"
-#include "algo/utils/types/types.hpp"
+#include "algo/utils/types/fundamentals.hpp"
 namespace algo::trees::segment_tree::statistics {
 
 struct Sum : Base {
-  utils::i64 result = 0;
+  i64 result = 0;
 
   Sum Merge(const Sum& that) const {
     auto result = *this;

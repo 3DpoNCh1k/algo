@@ -1,9 +1,9 @@
 #pragma once
 
-#include <algo/utils/types/types.hpp>
+#include <algo/utils/types/fundamentals.hpp>
 
 namespace algo::maths::algebra {
-using utils::i64;
+
 // a*x + b*y = g
 i64 ExtendedGCD(i64 a, i64 b, i64& x, i64& y) {
   if (a == 0) {

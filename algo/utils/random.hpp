@@ -3,7 +3,7 @@
 #include <random>
 #include <chrono>
 
-#include <algo/utils/types/types.hpp>
+#include <algo/utils/types/fundamentals.hpp>
 
 namespace algo::utils::random {
 struct RandomGenerator {

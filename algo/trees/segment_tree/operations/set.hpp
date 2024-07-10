@@ -3,12 +3,12 @@
 #include <string>
 #include <sstream>
 
-#include "algo/utils/types/types.hpp"
+#include "algo/utils/types/fundamentals.hpp"
 
 namespace algo::trees::segment_tree::operations {
 struct SetOp {
   bool should_set = false;
-  utils::i64 set;
+  i64 set;
 
   std::string ToString() const {
     std::stringstream ss;
@@ -17,6 +17,6 @@ struct SetOp {
   };
 };
 auto CombineOperations(const SetOp& op_old, const SetOp& op_new) {
-return op_new;
+  return op_new;
 }
-}
+}  // namespace algo::trees::segment_tree::operations

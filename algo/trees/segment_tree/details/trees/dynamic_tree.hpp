@@ -3,7 +3,7 @@
 #include <vector>
 #include <cassert>
 
-#include "algo/utils/types/types.hpp"
+#include "algo/utils/types/fundamentals.hpp"
 #include <algo/trees/segment_tree/details/node.hpp>
 
 namespace algo::trees::segment_tree::details {
@@ -26,7 +26,7 @@ struct DynamicTree {
   static constexpr int DefaultMaxSize = 1e6;
   // TODO: use allocator instead of reserve
 
-  explicit DynamicTree(utils::i64 l, utils::i64 r, int max_size = DefaultMaxSize) {
+  explicit DynamicTree(i64 l, i64 r, int max_size = DefaultMaxSize) {
     nodes.reserve(max_size);
     ROOT = CreateNode(l, r);
   }

@@ -3,10 +3,10 @@
 #include <string>
 #include <sstream>
 
-#include "algo/utils/types/types.hpp"
+#include "algo/utils/types/fundamentals.hpp"
 namespace algo::trees::segment_tree::operations {
 struct AddOp {
-  utils::i64 add = 0;
+  i64 add = 0;
 
   std::string ToString() const {
     std::stringstream ss;

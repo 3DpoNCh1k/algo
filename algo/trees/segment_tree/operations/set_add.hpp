@@ -3,18 +3,21 @@
 #include <string>
 #include <sstream>
 
-#include "algo/utils/types/types.hpp"
+#include "algo/utils/types/fundamentals.hpp"
 #include "algo/trees/segment_tree/operations/add.hpp"
 #include "algo/trees/segment_tree/operations/set.hpp"
 
 namespace algo::trees::segment_tree::operations {
 struct SetAddOp {
   bool should_set = false;
-  utils::i64 set;
-  utils::i64 add = 0;
+  i64 set;
+  i64 add = 0;
   SetAddOp(){};
-  SetAddOp(const AddOp& op): add(op.add) {};
-  SetAddOp(const SetOp& op): should_set(op.should_set), set(op.set) {};
+  SetAddOp(const AddOp& op)
+      : add(op.add){};
+  SetAddOp(const SetOp& op)
+      : should_set(op.should_set),
+        set(op.set){};
 
   std::string ToString() const {
     std::stringstream ss;
@@ -22,7 +25,6 @@ struct SetAddOp {
     return ss.str();
   };
 };
-
 
 auto CombineOperations(const SetAddOp& op_old, const SetAddOp& op_new) {
   auto result_op = op_old;
@@ -36,5 +38,4 @@ auto CombineOperations(const SetAddOp& op_old, const SetAddOp& op_new) {
   return result_op;
 }
 
-
-}
+}  // namespace algo::trees::segment_tree::operations
