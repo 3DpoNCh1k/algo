@@ -1,0 +1,10 @@
+{
+  "tests-task": {
+    "tests": [
+      {
+        "target": "unit.cpp",
+        "profile": "DebugLocalDebug"
+      }
+    ]
+  }
+}
