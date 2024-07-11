@@ -1,0 +1,10 @@
+{
+  "tests-task": {
+    "tests": [
+      {
+        "target": "stress.cpp",
+        "profile": "DebugLocalDebug"
+      }
+    ]
+  }
+}
