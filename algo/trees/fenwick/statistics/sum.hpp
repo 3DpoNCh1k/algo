@@ -7,6 +7,7 @@ namespace algo::trees::fenwick::statistics {
 
 struct Sum : Base {
   i64 result = 0;
+  // using Statistics = Sum;
 
   Sum Merge(const Sum& that) const {
     auto result = *this;

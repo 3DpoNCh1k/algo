@@ -3,7 +3,7 @@
     "tests": [
       {
         "target": "unit.cpp",
-        "profile": "DebugLocalDebug"
+        "profile": "Debug"
       },
       {
         "target": "stress.cpp",

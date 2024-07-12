@@ -1,0 +1,14 @@
+{
+  "tests-task": {
+    "tests": [
+      {
+        "target": "unit.cpp",
+        "profile": "Debug"
+      },
+      {
+        "target": "stress.cpp",
+        "profile": "Debug"
+      }
+    ]
+  }
+}

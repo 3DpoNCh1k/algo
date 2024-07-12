@@ -16,7 +16,7 @@ int main() {
   std::cin >> n >> q;
   std::string t;
   std::cin >> t;
-  auto fenwick = FenwickTree<Operation<AddOp>, Statistics<Sum>>(n);
+  auto fenwick = Fenwick<Operation<AddOp>, Statistics<Sum>>(n);
 
   auto set_at_index = [&fenwick](int index, auto value) {
     auto res = fenwick.GetAtIndex<Sum>(index);

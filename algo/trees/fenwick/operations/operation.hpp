@@ -9,8 +9,9 @@ Statistics UpdateStatistics(const Statistics& stat, const Operation& op);
 template <typename Operation>
 auto CombineOperations(const Operation& op_old, const Operation& op_new);
 
-template <typename Operation>
+template <typename Op>
 struct OperationAtIndex {
+  using Operation = Op;
   int index;
   Operation operation;
   // OperationAtIndex(){};

@@ -5,51 +5,70 @@
 #include "algo/trees/fenwick/operations/operation.hpp"
 #include "algo/trees/fenwick/statistics/statistics.hpp"
 #include <algo/trees/fenwick/details/fenwick_tree.hpp>
+#include <algo/trees/fenwick/details/node.hpp>
 
 #include <tuple>
 
 namespace algo::trees::fenwick {
 
-template <typename Operation, typename StatisticsTuple>
+template <typename FenwickTreeImpl>
 struct FenwickTree {
+  // using Operation = typename FenwickTreeImpl::Operation;
+  // using Statistics = typename Node::Statistics;
+  static constexpr int Dimension = FenwickTreeImpl::Dimension;
+
+  // using IndexOperation =
+  //     decltype(std::declval<operations::Apply<Operation>>().At(1));
+
+  // using T = FenwickTreeImpl;
+
+  FenwickTreeImpl impl;
+
   FenwickTree() = delete;
-  using IndexOperation =
-      decltype(std::declval<operations::Apply<Operation>>().At(1));
-
-  details::FenwickTreeImpl<IndexOperation, StatisticsTuple> impl;
-
-  explicit FenwickTree(int n)
-      : impl(n) {
+  template <typename... Args>
+  explicit FenwickTree(Args... args)
+      : impl(args...) {
   }
 
-  template <typename... Args>
+  template <typename Operation, typename... Args>
   void ApplyAtIndex(const Operation& op, Args... indexes) {
     auto operation = operations::Apply(op).At(indexes...);
-    // static_assert(std::is_same_v<decltype(operation), IndexOperation>);
-    // auto iop = IndexOperation(operation);
     impl.Apply(operation);
   }
 
-  template <typename Statistics>
-  Statistics GetAtIndex(int idx) {
-    return GetFromRange<Statistics>(idx, idx);
+  template <typename Statistics, typename... Args>
+  Statistics GetAtIndex(Args... args) {
+    auto range_stat = statistics::Get<Statistics>().At(args...);
+    return impl.GetFromRange(range_stat);
   }
 
-  template <typename Statistics>
-  Statistics GetFromRange(int l, int r) {
-    auto range_stat = statistics::StatisticsFromRange<Statistics>(l, r);
+  template <typename Statistics, typename... Args>
+  Statistics GetFromRange(Args... args) {
+    auto range_stat = statistics::Get<Statistics>().From(args...);
     return impl.GetFromRange(range_stat);
   }
 };
 
-// template <typename Operation, typename StatisticsTuple>
-// using LazyPropagationStaticSegmentTree =
+template <typename Operation, typename Statistics>
+using Fenwick1DImpl = details::FenwickTreeImpl<
+    details::Node<operations::OperationAtIndex<Operation>, Statistics>>;
 
-// template <typename Operation, typename StatisticsTuple>
-// using LazyPropagationDynamicSegmentTree =
+template <typename Operation, typename Statistics>
+using Fenwick2DImpl =
+    details::FenwickTreeImpl<Fenwick1DImpl<Operation, Statistics>>;
 
-// template <typename Operation, typename StatisticsTuple>
-// using EagerPropagationStaticSegmentTree =
+template <typename Operation, typename Statistics>
+using Fenwick3DImpl =
+    details::FenwickTreeImpl<Fenwick2DImpl<Operation, Statistics>>;
+
+template <typename Operation, typename Statistics>
+using Fenwick = FenwickTree<Fenwick1DImpl<Operation, Statistics>>;
+
+template <typename Operation, typename Statistics>
+using Fenwick2D = FenwickTree<Fenwick2DImpl<Operation, Statistics>>;
+
+template <typename Operation, typename Statistics>
+using Fenwick3D = FenwickTree<Fenwick3DImpl<Operation, Statistics>>;
 
 template <typename Op>
 using Operation = Op;

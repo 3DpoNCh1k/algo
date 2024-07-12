@@ -17,7 +17,7 @@ using namespace statistics;
 int main() {
   int n;
   std::cin >> n;
-  auto fenwick = FenwickTree<Operation<AddOp>, Statistics<Sum>>(n);
+  auto fenwick = Fenwick<Operation<AddOp>, Statistics<Sum>>(n);
 
   auto set_at_index = [&fenwick](int index, auto value) {
     auto res = fenwick.GetAtIndex<Sum>(index);

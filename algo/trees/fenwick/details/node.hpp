@@ -8,9 +8,14 @@
 
 namespace algo::trees::fenwick::details {
 
-template <typename StatisticsTuple>
+template <typename OpAtIndex, typename StatisticsTuple>
 struct Node {
-  StatisticsTuple statistics;
+  using OperationAtIndex = OpAtIndex;
+  using Operation = typename OperationAtIndex::Operation;
+  using Statistics = StatisticsTuple;
+  constexpr static int Dimension = 0;
+
+  Statistics statistics;
 
   int L = -1;
   int R = -1;
@@ -34,8 +39,8 @@ struct Node {
         });
   };
 
-  template <typename OperationAtIndex>
-  void Apply(const OperationAtIndex& op) {
+  // template <typename OperationAtIndex>
+  void Apply(const Operation& op) {
     utils::meta::ForLoop<0, std::tuple_size_v<StatisticsTuple> - 1>(
         [&](auto index_number) {
           auto& stat = std::get<index_number.Value>(statistics);
@@ -43,8 +48,15 @@ struct Node {
         });
   }
 
+  // template <typename Statistics>
+  // Statistics Get() const {
+  //   auto& stat = std::get<Statistics>(statistics);
+  //   dbg("Node.Get", L, R, stat.result);
+  //   return stat;
+  // }
+
   template <typename Statistics>
-  Statistics Get() const {
+  Statistics Get(Statistics) const {
     auto& stat = std::get<Statistics>(statistics);
     dbg("Node.Get", L, R, stat.result);
     return stat;

@@ -12,18 +12,17 @@ struct AddAndSumTester {
   using RandomGenerator = algo::utils::generators::RandomGenerator;
   int n;
   RandomGenerator random;
-  FenwickTree<Operation<AddOp>, Statistics<Sum>> fenwick;
+  Fenwick<Operation<AddOp>, Statistics<Sum>> fenwick;
   std::vector<i64> rival;
 
   explicit AddAndSumTester(int n)
       : n(n),
         random(RandomGenerator(0)),
-        fenwick(FenwickTree<Operation<AddOp>, Statistics<Sum>>(n)),
+        fenwick(Fenwick<Operation<AddOp>, Statistics<Sum>>(n)),
         rival(n) {
   }
 
   void Test(int queries, i64 min_add_value, i64 max_add_value) {
-    auto fenwick = FenwickTree<Operation<AddOp>, Statistics<Sum>>(n);
     for (int i = 0; i < n; ++i) {
       auto res = fenwick.GetAtIndex<Sum>(i);
       ASSERT_EQ(res.result, 0);
