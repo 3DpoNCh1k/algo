@@ -25,9 +25,18 @@ constexpr std::enable_if_t<IsU64<T>, int> IndexOfLeastSignificantBit(T x) {
 };
 
 template <typename T>
+constexpr std::enable_if_t<IsU64<T>, u64> LeastSignificantBitOnly(T x) {
+  return x == 0 ? 0 : 1LL << IndexOfLeastSignificantBit(x);
+};
+
+template <typename T>
 constexpr std::enable_if_t<IsU64<T>, int> IndexOfMostSignificantBit(T x) {
-  // 0 -> -1
   return x == 0 ? -1 : 63 - __builtin_clzll(x);
+};
+
+template <typename T>
+constexpr std::enable_if_t<IsU64<T>, u64> MostSignificantBitOnly(T x) {
+  return x == 0 ? 0 : 1LL << IndexOfMostSignificantBit(x);
 };
 
 template <typename T>
