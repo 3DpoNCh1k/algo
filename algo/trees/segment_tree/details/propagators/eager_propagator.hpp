@@ -4,8 +4,8 @@ namespace algo::trees::segment_tree::details {
 
 template <typename Tree>
 struct EagerPropagator {
-  using Operation = typename Tree::Operation;
-  using NodeType = typename Tree::DataNode;
+  using Node = typename Tree::DataNode;
+  using Operation = typename Node::Operation;
 
   Tree& tree;
   explicit EagerPropagator(Tree& tree)
@@ -13,7 +13,7 @@ struct EagerPropagator {
   }
 
   void ApplyAtIndex(int idx, const Operation& op) {
-    NodeType* current_node = &tree.GetNodeAt(idx);
+    Node* current_node = &tree.GetNodeAt(idx);
     current_node->ApplyOperation(op);
     while (tree.HasParent(*current_node)) {
       current_node = &tree.GetParent(*current_node);
@@ -38,7 +38,7 @@ struct EagerPropagator {
   }
 
   template <typename Statistics>
-  Statistics GetFromRangeTopDownImpl(NodeType& node, int l, int r) {
+  Statistics GetFromRangeTopDownImpl(Node& node, int l, int r) {
     if (node.IsOutside(l, r)) {
       return Statistics{};
     }

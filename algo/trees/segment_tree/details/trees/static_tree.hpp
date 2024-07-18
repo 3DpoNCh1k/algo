@@ -2,14 +2,11 @@
 
 #include <vector>
 
-#include <algo/trees/segment_tree/details/node.hpp>
-
 namespace algo::trees::segment_tree::details {
 
-template <typename Op, typename StatisticsTuple>
+template <typename Node>
 struct StaticTree {
-  using Operation = Op;
-  using DataNode = Node<Operation, StatisticsTuple>;
+  using DataNode = Node;
   struct TreeNode : DataNode {
     int index = -1;
     void SetIndex(int idx) {

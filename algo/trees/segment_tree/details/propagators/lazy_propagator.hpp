@@ -4,8 +4,8 @@ namespace algo::trees::segment_tree::details {
 
 template <typename Tree>
 struct LazyPropagator {
-  using Operation = typename Tree::Operation;
-  using NodeType = typename Tree::DataNode;
+  using Node = typename Tree::DataNode;
+  using Operation = typename Node::Operation;
 
   Tree& tree;
   explicit LazyPropagator(Tree& tree)
@@ -20,7 +20,7 @@ struct LazyPropagator {
     ApplyOnRangeImpl(tree.GetRoot(), l, r, op);
   }
 
-  void ApplyOnRangeImpl(NodeType& node, int l, int r, const Operation& op) {
+  void ApplyOnRangeImpl(Node& node, int l, int r, const Operation& op) {
     if (node.IsOutside(l, r)) {
       return;
     }
@@ -45,7 +45,7 @@ struct LazyPropagator {
   }
 
   template <typename Statistics>
-  Statistics GetFromRangeImpl(NodeType& node, int l, int r) {
+  Statistics GetFromRangeImpl(Node& node, int l, int r) {
     if (node.IsOutside(l, r)) {
       return Statistics{};
     }

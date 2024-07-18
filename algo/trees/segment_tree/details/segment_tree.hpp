@@ -5,10 +5,12 @@
 namespace algo::trees::segment_tree::details {
 
 template <template <typename> typename PropagatorTemplate,
-          template <typename, typename> typename TreeTemplate,
+          template <typename> typename TreeTemplate,
+          template <typename, typename> typename NodeTemplate,
           typename Operation, typename StatisticsTuple>
 struct SegmentTree {
-  using Tree = TreeTemplate<Operation, StatisticsTuple>;
+  using Node = NodeTemplate<Operation, StatisticsTuple>;
+  using Tree = TreeTemplate<Node>;
   using Propagator = PropagatorTemplate<Tree>;
 
   Tree tree;

@@ -7,22 +7,24 @@
 #include <algo/trees/segment_tree/details/segment_tree.hpp>
 
 #include <tuple>
+#include "algo/trees/segment_tree/details/nodes/eager.hpp"
+#include "algo/trees/segment_tree/details/nodes/lazy.hpp"
 
 namespace algo::trees::segment_tree {
 template <typename Operation, typename StatisticsTuple>
 using LazyPropagationStaticSegmentTree =
     details::SegmentTree<details::LazyPropagator, details::StaticTree,
-                         Operation, StatisticsTuple>;
+                         details::LazyNode, Operation, StatisticsTuple>;
 
 template <typename Operation, typename StatisticsTuple>
 using LazyPropagationDynamicSegmentTree =
     details::SegmentTree<details::LazyPropagator, details::DynamicTree,
-                         Operation, StatisticsTuple>;
+                         details::LazyNode, Operation, StatisticsTuple>;
 
 template <typename Operation, typename StatisticsTuple>
 using EagerPropagationStaticSegmentTree =
     details::SegmentTree<details::EagerPropagator, details::StaticTree,
-                         Operation, StatisticsTuple>;
+                         details::EagerNode, Operation, StatisticsTuple>;
 
 template <typename Op>
 using Operation = Op;

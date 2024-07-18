@@ -4,14 +4,12 @@
 #include <cassert>
 
 #include "algo/utils/types/fundamentals.hpp"
-#include <algo/trees/segment_tree/details/node.hpp>
 
 namespace algo::trees::segment_tree::details {
 
-template <typename Op, typename StatisticsTuple>
+template <typename Node>
 struct DynamicTree {
-  using Operation = Op;
-  using DataNode = Node<Operation, StatisticsTuple>;
+  using DataNode = Node;
   struct TreeNode : DataNode {
     int index = -1;
     int left_index = -1;

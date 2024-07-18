@@ -8,9 +8,10 @@
 
 namespace algo::trees::segment_tree::details {
 
-template <typename Operation, typename StatisticsTuple>
-struct Node {
-  Operation operation;
+template <typename Op, typename Stats>
+struct BaseNode {
+  using Operation = Op;
+  using StatisticsTuple = Stats;
   StatisticsTuple statistics;
 
   int L = -1;
@@ -41,10 +42,9 @@ struct Node {
           auto& stat = std::get<index_number.Value>(statistics);
           stat = UpdateStatistics(stat, op);
         });
-    operation = CombineOperations(operation, op);
   }
 
-  void Pull(const Node& left, const Node& right) {
+  void Pull(const BaseNode& left, const BaseNode& right) {
     utils::meta::ForLoop<0, std::tuple_size_v<StatisticsTuple> - 1>(
         [&](auto index_number) {
           auto& stat = std::get<index_number.Value>(statistics);
@@ -55,12 +55,6 @@ struct Node {
           stat.L = L;
           stat.R = R;
         });
-  };
-
-  void Push(Node& left, Node& right) {
-    left.ApplyOperation(operation);
-    right.ApplyOperation(operation);
-    operation = Operation{};
   };
 
   template <typename Statistics>
@@ -74,7 +68,6 @@ struct Node {
     std::stringstream ss;
     ss << "Node:" << std::endl;
     ss << "L = " << L << " R = " << R << std::endl;
-    ss << "Operation = " << operation.ToString();
     return ss.str();
   };
 };
