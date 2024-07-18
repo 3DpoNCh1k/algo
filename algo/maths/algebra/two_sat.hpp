@@ -21,7 +21,8 @@ struct TwoSat {
     int vertex_count = dependency_graph.size();
     // Assume that #vertices == 2 * #variables
     // #variables == n
-    // Variables have indices in range: [0...n-1] and corresponding negations have [n...2*n-1]
+    // Variables have indices in range: [0...n-1] and corresponding negations
+    // have [n...2*n-1]
     assert((vertex_count % 2) == 0);
     variable_count = vertex_count / 2;
     dependency_graph_inversed.assign(vertex_count, {});

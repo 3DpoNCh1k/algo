@@ -13,11 +13,12 @@ struct EagerPropagator {
   }
 
   void ApplyAtIndex(int idx, const Operation& op) {
-    NodeType * current_node = &tree.GetNodeAt(idx);
+    NodeType* current_node = &tree.GetNodeAt(idx);
     current_node->ApplyOperation(op);
-    while(tree.HasParent(*current_node)) {
+    while (tree.HasParent(*current_node)) {
       current_node = &tree.GetParent(*current_node);
-      current_node->Pull(tree.GetLeft(*current_node), tree.GetRight(*current_node));
+      current_node->Pull(tree.GetLeft(*current_node),
+                         tree.GetRight(*current_node));
     }
   }
 
@@ -38,7 +39,7 @@ struct EagerPropagator {
 
   template <typename Statistics>
   Statistics GetFromRangeTopDownImpl(NodeType& node, int l, int r) {
-      if (node.IsOutside(l, r)) {
+    if (node.IsOutside(l, r)) {
       return Statistics{};
     }
     if (node.IsInside(l, r)) {

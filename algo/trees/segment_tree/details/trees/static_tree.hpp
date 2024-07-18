@@ -76,4 +76,4 @@ struct StaticTree {
   }
 };
 
-}  // namespace algo::trees::segment_tree
+}  // namespace algo::trees::segment_tree::details

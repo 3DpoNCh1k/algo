@@ -40,4 +40,4 @@ struct SegmentTree {
     return propagator.template GetFromRange<Statistics>(l, r);
   }
 };
-}
+}  // namespace algo::trees::segment_tree::details

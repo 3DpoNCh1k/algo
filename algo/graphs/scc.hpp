@@ -16,7 +16,8 @@ struct StronglyConnectedComponents {
   std::vector<int> visited, order, scc;
   int n;
   // see solve()
-  explicit StronglyConnectedComponents(const std::vector<std::vector<int>>& g0) {
+  explicit StronglyConnectedComponents(
+      const std::vector<std::vector<int>>& g0) {
     // 0 indexed
     g = g0;
     n = g.size();

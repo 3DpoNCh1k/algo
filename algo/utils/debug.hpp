@@ -16,9 +16,9 @@ void DBG(Head h, Tail... t) {
   DBG(t...);
 }
 #ifdef LOCAL_DEBUG
-#define dbg(...)                                                     \
+#define dbg(...)                                                          \
   std::cerr << "LINE(" << __LINE__ << ") -> [" << #__VA_ARGS__ << "]: ["; \
-  DBG(__VA_ARGS__);                                                  \
+  DBG(__VA_ARGS__);                                                       \
   std::cerr << "]\n";
 #else
 #define dbg(...)
