@@ -15,7 +15,6 @@ int main() {
   std::ios::sync_with_stdio(false);
   std::cin.tie(nullptr);
 
-  using i64;
   int n;
   std::cin >> n;
   std::vector<i64> a(n);

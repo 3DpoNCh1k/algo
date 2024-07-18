@@ -2,5 +2,11 @@
   "codeforces": {
     "link": "https://codeforces.com/group/CYMPFXi8zA/contest/261526/problem/F",
     "solution": "solution.cpp"
-  }
+  },
+  "examples": [
+    {
+      "solution": "solution.cpp",
+      "profile": "Release"
+    }
+  ]
 }

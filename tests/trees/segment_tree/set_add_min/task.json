@@ -2,5 +2,15 @@
   "codeforces": {
     "link": "https://codeforces.com/group/CYMPFXi8zA/contest/240094/problem/C",
     "solution": "solve.cpp"
-  }
+  },
+  "examples": [
+    {
+      "solution": "lazy_dynamic.cpp",
+      "profile": "Release"
+    },
+    {
+      "solution": "lazy_static.cpp",
+      "profile": "Release"
+    }
+  ]
 }

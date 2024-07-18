@@ -16,5 +16,19 @@
         "profile": "Release"
       }
     ]
-  }
+  },
+  "examples": [
+    {
+      "solution": "lazy_dynamic.cpp",
+      "profile": "Release"
+    },
+    {
+      "solution": "lazy_static.cpp",
+      "profile": "Release"
+    },
+    {
+      "solution": "eager_static.cpp",
+      "profile": "Release"
+    }
+  ]
 }
