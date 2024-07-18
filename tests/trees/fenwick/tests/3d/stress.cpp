@@ -1,7 +1,7 @@
 #include "algo/trees/fenwick/operations/add.hpp"
 #include "algo/trees/fenwick/statistics/sum.hpp"
 #include "algo/trees/fenwick/trees.hpp"
-#include "algo/utils/generators/random_generator.hpp"
+#include "algo/utils/generators/random.hpp"
 #include "tests/testing/asserts.hpp"
 
 using namespace algo::trees::fenwick;
