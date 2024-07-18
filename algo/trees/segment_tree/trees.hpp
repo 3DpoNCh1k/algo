@@ -1,9 +1,9 @@
 #pragma once
 
-#include <algo/trees/segment_tree/details/trees/dynamic_tree.hpp>
-#include <algo/trees/segment_tree/details/trees/static_tree.hpp>
-#include <algo/trees/segment_tree/details/propagators/lazy_propagator.hpp>
-#include <algo/trees/segment_tree/details/propagators/eager_propagator.hpp>
+#include <algo/trees/segment_tree/details/trees/dynamic.hpp>
+#include <algo/trees/segment_tree/details/trees/static.hpp>
+#include <algo/trees/segment_tree/details/propagators/lazy.hpp>
+#include <algo/trees/segment_tree/details/propagators/eager.hpp>
 #include <algo/trees/segment_tree/details/segment_tree.hpp>
 
 #include <tuple>
