@@ -4,7 +4,7 @@
     "path": "math/two_sat",
     "targets": [
       {
-        "solution": "two_sat.cpp",
+        "solution": "solution.cpp",
         "profile": "Release"
       }
     ]

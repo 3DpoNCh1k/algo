@@ -4,7 +4,7 @@
     "path": "graph/lca",
     "targets": [
       {
-        "solution": "lca.cpp",
+        "solution": "solution.cpp",
         "profile": "Release"
       }
     ]

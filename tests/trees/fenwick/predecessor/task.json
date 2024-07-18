@@ -4,7 +4,7 @@
     "path": "datastructure/predecessor_problem",
     "targets": [
       {
-        "solution": "predecessor.cpp",
+        "solution": "solution.cpp",
         "profile": "Release"
       }
     ]

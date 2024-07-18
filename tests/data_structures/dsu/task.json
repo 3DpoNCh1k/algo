@@ -4,7 +4,7 @@
     "path": "datastructure/unionfind",
     "targets": [
       {
-        "solution": "dsu.cpp",
+        "solution": "solution.cpp",
         "profile": "Release"
       }
     ]

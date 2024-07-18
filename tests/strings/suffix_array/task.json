@@ -4,7 +4,7 @@
     "path": "string/suffixarray",
     "targets": [
       {
-        "solution": "suffix_array.cpp",
+        "solution": "solution.cpp",
         "profile": "Release"
       }
     ]

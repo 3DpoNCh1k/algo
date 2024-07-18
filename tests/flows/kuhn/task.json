@@ -4,7 +4,7 @@
     "path": "graph/bipartitematching",
     "targets": [
       {
-        "solution": "kuhn.cpp",
+        "solution": "solution.cpp",
         "profile": "Release"
       }
     ]

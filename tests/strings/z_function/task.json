@@ -4,7 +4,7 @@
     "path": "string/zalgorithm",
     "targets": [
       {
-        "solution": "z_function.cpp",
+        "solution": "solution.cpp",
         "profile": "Release"
       }
     ]
