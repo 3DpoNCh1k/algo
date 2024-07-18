@@ -1,6 +1,6 @@
 #include <set>
 
-#include <algo/utils/generators/random_generator.hpp>
+#include <algo/utils/generators/random.hpp>
 #include "tests/testing/asserts.hpp"
 
 using namespace algo::utils::generators;

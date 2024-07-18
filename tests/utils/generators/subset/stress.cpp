@@ -1,7 +1,7 @@
 #include <set>
 
-#include <algo/utils/generators/random_generator.hpp>
-#include "algo/utils/generators/subset_generator.hpp"
+#include <algo/utils/generators/random.hpp>
+#include "algo/utils/generators/subset.hpp"
 
 #include "tests/testing/asserts.hpp"
 

@@ -3,7 +3,7 @@
 #include <cassert>
 #include <set>
 
-#include <algo/utils/generators/random_generator.hpp>
+#include <algo/utils/generators/random.hpp>
 
 namespace algo::utils::generators {
 struct SubsetGenerator {

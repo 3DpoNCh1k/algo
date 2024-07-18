@@ -2,8 +2,8 @@
 #include <set>
 #include <vector>
 
-#include <algo/utils/generators/random_generator.hpp>
-#include "algo/utils/generators/tree_generator.hpp"
+#include <algo/utils/generators/random.hpp>
+#include "algo/utils/generators/tree.hpp"
 
 #include "tests/testing/asserts.hpp"
 

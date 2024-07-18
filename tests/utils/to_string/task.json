@@ -1,7 +1,7 @@
 {
   "tests": [
     {
-      "target": "to_string.cpp",
+      "target": "unit.cpp",
       "profile": "DebugLocalDebug"
     }
   ]

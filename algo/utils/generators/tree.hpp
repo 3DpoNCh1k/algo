@@ -2,7 +2,7 @@
 #include <utility>
 #include <vector>
 
-#include <algo/utils/generators/random_generator.hpp>
+#include <algo/utils/generators/random.hpp>
 
 namespace algo::utils::generators {
 
