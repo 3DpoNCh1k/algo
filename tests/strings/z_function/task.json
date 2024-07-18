@@ -1,5 +1,12 @@
 {
-  "link": "https://judge.yosupo.jp/problem/zalgorithm",
-  "library-checker-problems": "string/zalgorithm",
-  "solution": "z_function.cpp"
+  "library-checker": {
+    "link": "https://judge.yosupo.jp/problem/zalgorithm",
+    "path": "string/zalgorithm",
+    "targets": [
+      {
+        "solution": "z_function.cpp",
+        "profile": "Release"
+      }
+    ]
+  }
 }

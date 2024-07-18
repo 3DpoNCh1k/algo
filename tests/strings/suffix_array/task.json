@@ -1,5 +1,12 @@
 {
-  "link": "https://judge.yosupo.jp/problem/suffixarray",
-  "library-checker-problems": "string/suffixarray",
-  "solution": "suffix_array.cpp"
+  "library-checker": {
+    "link": "https://judge.yosupo.jp/problem/suffixarray",
+    "path": "string/suffixarray",
+    "targets": [
+      {
+        "solution": "suffix_array.cpp",
+        "profile": "Release"
+      }
+    ]
+  }
 }

@@ -1,5 +1,12 @@
 {
-  "link": "https://https://judge.yosupo.jp/problem/scc",
-  "library-checker-problems": "graph/scc",
-  "solution": "scc.cpp"
+  "library-checker": {
+    "link": "https://judge.yosupo.jp/problem/scc",
+    "path": "graph/scc",
+    "targets": [
+      {
+        "solution": "scc.cpp",
+        "profile": "Release"
+      }
+    ]
+  }
 }

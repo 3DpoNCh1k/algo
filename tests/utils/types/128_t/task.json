@@ -1,5 +1,12 @@
 {
-  "link": "https://judge.yosupo.jp/problem/many_aplusb_128bit",
-  "library-checker-problems": "sample/many_aplusb_128bit",
-  "solution": "types.cpp"
+  "library-checker": {
+    "link": "https://judge.yosupo.jp/problem/many_aplusb_128bit",
+    "path": "sample/many_aplusb_128bit",
+    "targets": [
+      {
+        "solution": "types.cpp",
+        "profile": "Release"
+      }
+    ]
+  }
 }

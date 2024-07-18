@@ -1,5 +1,12 @@
 {
-  "link": "https://judge.yosupo.jp/problem/predecessor_problem",
-  "library-checker-problems": "datastructure/predecessor_problem",
-  "solution": "predecessor.cpp"
+  "library-checker": {
+    "link": "https://judge.yosupo.jp/problem/predecessor_problem",
+    "path": "datastructure/predecessor_problem",
+    "targets": [
+      {
+        "solution": "predecessor.cpp",
+        "profile": "Release"
+      }
+    ]
+  }
 }

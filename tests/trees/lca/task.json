@@ -1,5 +1,12 @@
 {
-  "link": "https://judge.yosupo.jp/problem/lca",
-  "library-checker-problems": "graph/lca",
-  "solution": "lca.cpp"
+  "library-checker": {
+    "link": "https://judge.yosupo.jp/problem/lca",
+    "path": "graph/lca",
+    "targets": [
+      {
+        "solution": "lca.cpp",
+        "profile": "Release"
+      }
+    ]
+  }
 }

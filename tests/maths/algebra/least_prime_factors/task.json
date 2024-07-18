@@ -1,4 +1,6 @@
 {
-  "link": "https://codeforces.com/group/CYMPFXi8zA/contest/279284/problem/B",
-  "solution": "least_prime_factors.cpp"
+  "codeforces": {
+    "link": "https://codeforces.com/group/CYMPFXi8zA/contest/279284/problem/B",
+    "solution": "least_prime_factors.cpp"
+  }
 }

@@ -1,5 +1,12 @@
 {
-  "link": "https://judge.yosupo.jp/problem/range_affine_point_get",
-  "library-checker-problems": "datastructure/range_affine_point_get",
-  "solution": "lazy.cpp"
+  "library-checker": {
+    "link": "https://judge.yosupo.jp/problem/range_affine_point_get",
+    "path": "datastructure/range_affine_point_get",
+    "targets": [
+      {
+        "solution": "lazy.cpp",
+        "profile": "Release"
+      }
+    ]
+  }
 }

@@ -1,5 +1,12 @@
 {
-  "link": "https://judge.yosupo.jp/problem/unionfind",
-  "library-checker-problems": "datastructure/unionfind",
-  "solution": "dsu.cpp"
+  "library-checker": {
+    "link": "https://judge.yosupo.jp/problem/unionfind",
+    "path": "datastructure/unionfind",
+    "targets": [
+      {
+        "solution": "dsu.cpp",
+        "profile": "Release"
+      }
+    ]
+  }
 }

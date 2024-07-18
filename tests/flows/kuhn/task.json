@@ -1,5 +1,12 @@
 {
-  "link": "https://judge.yosupo.jp/problem/bipartitematching",
-  "library-checker-problems": "graph/bipartitematching",
-  "solution": "kuhn.cpp"
+  "library-checker": {
+    "link": "https://judge.yosupo.jp/problem/bipartitematching",
+    "path": "graph/bipartitematching",
+    "targets": [
+      {
+        "solution": "kuhn.cpp",
+        "profile": "Release"
+      }
+    ]
+  }
 }

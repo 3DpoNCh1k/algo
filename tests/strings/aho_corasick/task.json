@@ -1,4 +1,6 @@
 {
-  "link": "https://codeforces.com/group/CYMPFXi8zA/contest/261526/problem/I",
-  "solution": "aho_corasick.cpp"
+  "codeforces": {
+    "link": "https://codeforces.com/group/CYMPFXi8zA/contest/261526/problem/I",
+    "solution": "aho_corasick.cpp"
+  }
 }

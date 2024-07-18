@@ -1,5 +1,5 @@
 {
-  "library-checker-task": {
+  "library-checker": {
     "link": "https://judge.yosupo.jp/problem/point_add_range_sum",
     "path": "datastructure/point_add_range_sum",
     "targets": [
