@@ -39,7 +39,6 @@ struct Node {
         });
   };
 
-  // template <typename OperationAtIndex>
   void Apply(const Operation& op) {
     utils::meta::ForLoop<0, std::tuple_size_v<StatisticsTuple> - 1>(
         [&](auto index_number) {
@@ -48,26 +47,12 @@ struct Node {
         });
   }
 
-  // template <typename Statistics>
-  // Statistics Get() const {
-  //   auto& stat = std::get<Statistics>(statistics);
-  //   dbg("Node.Get", L, R, stat.result);
-  //   return stat;
-  // }
-
   template <typename Statistics>
   Statistics Get(Statistics) const {
     auto& stat = std::get<Statistics>(statistics);
     dbg("Node.Get", L, R, stat.result);
     return stat;
   }
-
-  // template <typename StatisticsFromRange>
-  // typename StatisticsFromRange::Statistics GetFromRange(
-  //     const StatisticsFromRange& range) {
-  //   auto& stat = std::get<StatisticsFromRange::Statistics>(statistics);
-  //   return stat;
-  // }
 
   std::string ToString() const {
     std::stringstream ss;

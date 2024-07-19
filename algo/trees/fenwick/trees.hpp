@@ -1,7 +1,5 @@
 #pragma once
 
-#include <type_traits>
-#include <utility>
 #include "algo/trees/fenwick/operations/operation.hpp"
 #include "algo/trees/fenwick/statistics/statistics.hpp"
 #include <algo/trees/fenwick/details/fenwick_tree.hpp>
@@ -13,15 +11,7 @@ namespace algo::trees::fenwick {
 
 template <typename FenwickTreeImpl>
 struct FenwickTree {
-  // using Operation = typename FenwickTreeImpl::Operation;
-  // using Statistics = typename Node::Statistics;
   static constexpr int Dimension = FenwickTreeImpl::Dimension;
-
-  // using IndexOperation =
-  //     decltype(std::declval<operations::Apply<Operation>>().At(1));
-
-  // using T = FenwickTreeImpl;
-
   FenwickTreeImpl impl;
 
   FenwickTree() = delete;

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <vector>
 #include <algo/utils/debug.hpp>
 namespace algo::trees::fenwick::statistics {
 
