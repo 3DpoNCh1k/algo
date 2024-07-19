@@ -3,13 +3,12 @@
 #include <array>
 #include <utility>
 #include <vector>
+
 namespace algo::graphs {
 struct Grid {
   Grid(int k_row, int k_column)
       : k_row_(k_row),
-        k_col_(k_column){
-
-        };
+        k_col_(k_column){};
 
   using Neighbor = std::pair<int, int>;
 
@@ -52,5 +51,4 @@ struct Grid {
   constexpr static std::array<int, 4> DeltaColumn4 = {0, 1, 0, -1};
   const int k_row_, k_col_;
 };
-
 }  // namespace algo::graphs
