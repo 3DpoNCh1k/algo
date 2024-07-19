@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include "algo/utils/bits.hpp"
 
 namespace algo::trees::segment_tree::details {
 
@@ -18,10 +19,7 @@ struct StaticTree {
   int B = -1;
   int ROOT = -1;
   explicit StaticTree(int n) {
-    B = 1;
-    while (B < n) {
-      B <<= 1;
-    }
+    B = utils::bits::PowerOfTwoThatAtLeast(u64(n));
     ROOT = 1;
 
     nodes.resize(2 * B);
