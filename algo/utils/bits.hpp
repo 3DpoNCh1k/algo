@@ -20,7 +20,6 @@ constexpr std::enable_if_t<IsU64<T>, bool> IsPowerOfTwo(T x) {
 
 template <typename T>
 constexpr std::enable_if_t<IsU64<T>, int> IndexOfLeastSignificantBit(T x) {
-  // 0 -> -1
   return __builtin_ffsll(x) - 1;
 };
 
