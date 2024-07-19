@@ -1,12 +1,17 @@
 #include <algorithm>
+#include <deque>
 #include <iostream>
-#include <map>
 #include <vector>
 
 #include <algo/graphs/scc.hpp>
-#include <algo/utils/debug.hpp>
+#include "algo/graphs/degrees.hpp"
+
+using namespace algo::graphs;
 
 int main() {
+  std::ios::sync_with_stdio(false);
+  std::cin.tie(nullptr);
+
   int n, m;
   std::cin >> n >> m;
   std::vector<std::vector<int>> graph(n);
@@ -17,24 +22,49 @@ int main() {
     graph[u].push_back(v);
   }
 
-  auto scc = algo::graphs::SCC(graph);
-  std::vector<int> component;
-  std::set<std::pair<int, int>> edges;
-  scc.Solve(component, edges);
+  auto scc = SCC(graph);
+  auto condensation = scc.Condense();
+  auto& condensation_graph = condensation.first;
+  auto& components = condensation.second;
+  int k_component = components.size();
 
-  // dbg(component);
+  // Determinated order of output
 
-  std::map<int, std::vector<int>> component_map;
-  for (int u = 0; u < n; ++u) {
-    component_map[component[u]].push_back(u);
+  auto in_degree = algo::graph::InDegrees(condensation_graph);
+  for (auto& component : components) {
+    std::sort(component.begin(), component.end());
+  }
+  std::deque<int> q;
+  for (int c = 0; c < k_component; ++c) {
+    if (in_degree[c] == 0) {
+      q.push_back(c);
+    }
   }
 
-  std::cout << component_map.size() << std::endl;
-  for (auto [key, component] : component_map) {
-    std::cout << component.size();
-    for (auto u : component) {
-      std::cout << " " << u;
+  std::cout << k_component << std::endl;
+  while (!q.empty()) {
+    std::sort(q.begin(), q.end(), [&components](int c0, int c1) {
+      return components[c0][0] < components[c1][0];
+    });
+    for (int c : q) {
+      auto& component = components[c];
+      std::cout << component.size();
+      for (auto u : component) {
+        std::cout << " " << u;
+      }
+      std::cout << std::endl;
     }
-    std::cout << std::endl;
+
+    std::deque<int> next;
+    for (int c : q) {
+      for (int nc : condensation_graph[c]) {
+        in_degree[nc]--;
+        if (in_degree[nc] == 0) {
+          next.push_back(nc);
+        }
+      }
+    }
+
+    q = next;
   }
 }
