@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <cassert>
 
 #define ASSERT_TRUE(condition) \
@@ -14,6 +15,13 @@
 #define ASSERT_GE(a, b) ASSERT_TRUE((a) >= (b))
 #define ASSERT_LT(a, b) ASSERT_TRUE((a) < (b))
 #define ASSERT_LE(a, b) ASSERT_TRUE((a) <= (b))
+
+#define ASSERT_CONTAINS(container, value)                           \
+  {                                                                 \
+    auto it = std::find(container.begin(), container.end(), value); \
+    bool contains = it != container.end();                          \
+    assert(contains);                                               \
+  }
 
 #define STATIC_ASSERT_TRUE(condition) \
   { static_assert(condition); }
