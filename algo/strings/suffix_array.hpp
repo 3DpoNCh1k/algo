@@ -1,110 +1,141 @@
 #pragma once
 
+#include <algorithm>
 #include <cassert>
 #include <string>
+#include <utility>
 #include <vector>
+#include "algo/utils/bits.hpp"
 
 namespace algo::strings {
 struct SuffixArray {
-  const int AS = 256;  // Alphabet size, can be 26 + 1;
-  std::string s;
-  std::vector<int> sa, isa, ce, cnt;
-  explicit SuffixArray(const std::string& s)
-      : s(s){};
+  explicit SuffixArray(const std::string& s) {
+    auto [min_it, max_it] = std::minmax_element(s.begin(), s.end());
+    int min = *min_it;
+    int max = *max_it;
+    int shift = -min + 1;
+    for (unsigned char ch : s) {
+      auto value = ch + shift;
+      str_.push_back(value);
+    }
+    str_.push_back(0);
+    n_ = str_.size();
+  };
 
-  std::vector<int> Solve() {
-    s.push_back(0);  // !
-    int n = (int)s.size(), log = 0;
-    while ((1 << log) < n) {
-      log++;
-    }
-    sa.assign(n, 0), isa.assign(n, 0), ce.assign(n, 0), cnt.assign(AS, 0);
-    // suf_ar, inv_suf_ar, class_eq, cnt
-
-    for (int i = 0; i < n; ++i) {
-      cnt[s[i]]++;
-    }
-    for (int i = 1; i < AS; ++i) {
-      cnt[i] += cnt[i - 1];
-    }
-    for (int i = n - 1; i >= 0; --i) {
-      sa[--cnt[s[i]]] = i;
-    }
-    ce[sa[0]] = 0;
-    int n_ce = 1;
-
-    for (int i = 1; i < n; ++i) {
-      if (s[sa[i]] != s[sa[i - 1]]) {
-        ce[sa[i]] = n_ce++;
-      } else {
-        ce[sa[i]] = ce[sa[i - 1]];
-      }
+  std::vector<int> GetSuffixArray() {
+    suffix_array_.resize(n_);
+    std::vector<int> equivalence_class(n_);
+    for (int i = 0; i < n_; ++i) {
+      suffix_array_[i] = i;
+      equivalence_class[i] = str_[i];
     }
 
-    for (int it = 1; it <= log; ++it) {
-      int len = 1 << it;
-      std::vector<int> buf(n);
-      for (int i = 0; i < n; ++i) {
-        buf[i] = (sa[i] - (len >> 1) + n) % n;
+    std::vector<int> suffixes_ordered_by_lowest_part(n_);
+    int max_length = utils::bits::PowerOfTwoThatAtLeast(u64(n_));
+
+    for (int length = 1; length <= max_length; length *= 2) {
+      int part_length = length / 2;
+      for (int pos = 0; pos < n_; ++pos) {
+        suffixes_ordered_by_lowest_part[pos] =
+            IndexOfHighestPart(suffix_array_[pos], part_length);
       }
-      cnt.clear(), cnt.resize(n_ce);
-      for (int i = 0; i < n; ++i) {
-        cnt[ce[buf[i]]]++;
-      }
-      for (int i = 1; i < n_ce; ++i) {
-        cnt[i] += cnt[i - 1];
-      }
-      for (int i = n - 1; i >= 0; --i) {
-        sa[--cnt[ce[buf[i]]]] = buf[i];
-      }
-      buf[sa[0]] = 0;
-      n_ce = 1;
-      for (int i = 1; i < n; ++i) {
-        int fir = sa[i], pfir = sa[i - 1];
-        int sec = (fir + (len >> 1)) % n, psec = (pfir + (len >> 1)) % n;
-        if (ce[fir] == ce[pfir] && ce[sec] == ce[psec]) {
-          buf[fir] = buf[pfir];
-        } else {
-          buf[fir] = n_ce++;
-        }
-      }
-      swap(ce, buf);
+
+      StableCountingSort(suffixes_ordered_by_lowest_part, equivalence_class,
+                         suffix_array_);
+
+      equivalence_class =
+          CalculateEquivalenceClasses(suffix_array_, [&](int suffix_index) {
+            return std::make_pair(equivalence_class[suffix_index],
+                                  equivalence_class[IndexOfLowestPart(
+                                      suffix_index, part_length)]);
+          });
     }
 
-    // sa[0] - nth suffix (pb(0))
-    return std::vector(sa.begin() + 1, sa.end());
-    // return sa;
+    return std::vector(suffix_array_.begin() + 1, suffix_array_.end());
   }
 
-  std::vector<int> LcpArray() {
-    int n = sa.size();
-    assert(n == (int)s.size());
-    std::vector<int> lcp(n - 1);
-    isa.assign(n, 0);
-    for (int i = 0; i < n; ++i) {
-      isa[sa[i]] = i;
+  // Kasai's algorithm
+  std::vector<int> GetLcpArray() {
+    std::vector<int> lcp(n_ - 1);
+    std::vector<int> inversed_suffix_array(n_, 0);
+    for (int pos = 0; pos < n_; ++pos) {
+      inversed_suffix_array[suffix_array_[pos]] = pos;
     }
-    int cur_lcp = 0;
-    for (int i = 0; i < n; ++i) {
-      int p = isa[i];
-      if (p == 0) {
+    int current_lcp = 0;
+    for (int suffix_index = 0; suffix_index < n_; ++suffix_index) {
+      int pos = inversed_suffix_array[suffix_index];
+      if (pos == 0) {
         continue;
       }
-      int j = sa[p - 1];
-      // or just s[i+cur_lcp]==s[j+cur_lcp], i.e s[-1] = 0
-      while (i + cur_lcp < n && j + cur_lcp < n &&
-             s[i + cur_lcp] == s[j + cur_lcp]) {
-        cur_lcp++;
+      int previous_suffix_index = suffix_array_[pos - 1];
+
+      while (suffix_index + current_lcp < n_ &&
+             previous_suffix_index + current_lcp < n_ &&
+             str_[suffix_index + current_lcp] ==
+                 str_[previous_suffix_index + current_lcp]) {
+        current_lcp++;
       }
 
-      lcp[p - 1] = cur_lcp;
-      cur_lcp--;
-      cur_lcp = std::max(cur_lcp, 0);
+      lcp[pos - 1] = current_lcp;
+      current_lcp--;
+      current_lcp = std::max(current_lcp, 0);
     }
 
-    // lcp[0] - lcp(sa[0], sa[1]) - must be 0
-    // or return vector(lcp.begin() + 1, lcp.end());
-    return lcp;
+    return std::vector(lcp.begin() + 1, lcp.end());
   }
+
+ private:
+  int IndexOfHighestPart(int lowest_part_index, int part_length) {
+    return (lowest_part_index - part_length + n_) % n_;
+  }
+
+  int IndexOfLowestPart(int highest_part_index, int part_length) {
+    return (highest_part_index + part_length) % n_;
+  }
+
+  void StableCountingSort(const std::vector<int>& values,
+                          const std::vector<int>& keys,
+                          std::vector<int>& sorted_values) {
+    int n = values.size();
+    int key_count = (*std::max_element(keys.begin(), keys.end())) + 1;
+    std::vector<int> counter(key_count, 0);
+    for (int value : values) {
+      counter[keys[value]]++;
+    }
+    for (int key = 1; key < key_count; ++key) {
+      counter[key] += counter[key - 1];
+    }
+    for (int pos = n - 1; pos >= 0; --pos) {
+      int value = values[pos];
+      int new_pos = --counter[keys[value]];
+      sorted_values[new_pos] = value;
+    }
+  }
+
+  template <typename F>
+  std::vector<int> CalculateEquivalenceClasses(const std::vector<int>& values,
+                                               F&& key_function) {
+    int n = values.size();
+    std::vector<int> equivalence_class(n);
+    equivalence_class[values[0]] = 0;
+    int k_equivalence_class = 1;
+    auto previous_key = key_function(values[0]);
+
+    for (int pos = 1; pos < n; ++pos) {
+      auto current_key = key_function(values[pos]);
+      if (current_key != previous_key) {
+        k_equivalence_class++;
+      }
+
+      equivalence_class[values[pos]] = k_equivalence_class - 1;
+      previous_key = current_key;
+    }
+
+    return std::move(equivalence_class);
+  }
+
+  int n_;
+  std::vector<int> str_;
+  std::vector<int> suffix_array_;
 };
 }  // namespace algo::strings
