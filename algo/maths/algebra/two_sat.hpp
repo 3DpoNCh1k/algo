@@ -1,97 +1,71 @@
 #pragma once
 
 #include <cassert>
+#include <cstdlib>
 #include <set>
 #include <vector>
+#include "algo/graphs/scc.hpp"
 
 namespace algo::maths::algebra {
 struct TwoSat {
+  using Clause = std::pair<int, int>;
   using Graph = std::vector<std::vector<int>>;
+  using Solution = std::set<int>;
+  using Result = std::pair<bool, Solution>;
   Graph dependency_graph;
-  Graph dependency_graph_inversed;
-  std::vector<int> visited;
-  std::vector<int> order;
   std::vector<int> value;
 
-  int variable_count;
-  bool has_contradiction = false;
+  int k_variable;
 
-  explicit TwoSat(Graph dependency_graph_0) {
-    dependency_graph = std::move(dependency_graph_0);
-    int vertex_count = dependency_graph.size();
-    // Assume that #vertices == 2 * #variables
-    // #variables == n
-    // Variables have indices in range: [0...n-1] and corresponding negations
-    // have [n...2*n-1]
-    assert((vertex_count % 2) == 0);
-    variable_count = vertex_count / 2;
-    dependency_graph_inversed.assign(vertex_count, {});
-    visited.assign(vertex_count, 0);
-    for (int u = 0; u < vertex_count; ++u) {
-      for (int v : dependency_graph[u]) {
-        dependency_graph_inversed[v].push_back(u);
-      }
+  explicit TwoSat(int n, const std::vector<Clause>& clauses)
+      : k_variable(n) {
+    dependency_graph.resize(2 * k_variable);
+    for (auto [a, b] : clauses) {
+      int u = VariableToVertex(a);
+      int v = VariableToVertex(b);
+      dependency_graph[VertexNegation(u)].push_back(v);
+      dependency_graph[VertexNegation(v)].push_back(u);
     }
   }
 
-  void dfs(int v) {
-    visited[v] = 1;
-    for (int u : dependency_graph_inversed[v]) {
-      if (visited[u] == 0) {
-        dfs(u);
-      }
+  int VariableToVertex(int var) {
+    if (var > 0) {
+      return var - 1;
+    } else {
+      auto vertex = std::abs(var) - 1;
+      return VertexNegation(vertex);
     }
-    order.push_back(v);
   }
 
-  void dfs2(int v, int c) {
-    visited[v] = 1;
-    int nv = v < variable_count ? v + variable_count : v - variable_count;
-    if (visited[nv] == 1) {
-      has_contradiction = true;
+  int VertexNegation(int vertex) {
+    if (vertex < k_variable) {
+      return vertex + k_variable;
     }
-
-    value[v] = c;
-    value[nv] = 1 ^ c;
-
-    for (int u : dependency_graph[v]) {
-      if (visited[u] == 0) {
-        dfs2(u, c);
-      }
-    }
-    visited[v] = 2;
+    return vertex - k_variable;
   }
 
-  // ans - set TRUE vertices
-  bool Solve(std::set<int>& ret_ans) {
-    for (int i = 2 * variable_count - 1; i >= 0; --i) {
-      if (visited[i] == 0) {
-        dfs(i);
+  Result Solve() {
+    auto scc = graphs::SCC(dependency_graph);
+    auto [condenstaion_graph, components] = scc.Condense();
+    value.assign(dependency_graph.size(), -1);
+    for (const auto& component : components) {
+      if (value[component[0]] == -1) {
+        for (int v : component) {
+          if (value[v] != -1) {
+            return Result(false, {});
+          }
+          value[v] = 0;
+          value[VertexNegation(v)] = 1;
+        }
       }
     }
-    visited.assign(2 * variable_count, 0);
-    value.resize(2 * variable_count, -1);
-
-    for (int i = 2 * variable_count - 1; i >= 0; i--) {
-      int u = order[i];
-      if (visited[u] != 0) {
-        continue;
-      }
-      int c = value[u];
-      if (value[u] == -1) {
-        // if not marked -> mark as positive
-        c = 1;
-      }
-      dfs2(u, c);
-    }
-
-    ret_ans.clear();
-    for (int i = 0; i < variable_count; ++i) {
-      if (value[i] != 0) {
-        ret_ans.insert(i);
+    Solution solution;
+    for (int v = 0; v < k_variable; ++v) {
+      if (value[v] == 1) {
+        solution.insert(v + 1);
       }
     }
-    return !has_contradiction;
+    return Result(true, solution);
   }
 };
 
