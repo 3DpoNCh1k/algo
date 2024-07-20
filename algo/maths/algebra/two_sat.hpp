@@ -12,22 +12,42 @@ struct TwoSat {
   using Graph = std::vector<std::vector<int>>;
   using Solution = std::set<int>;
   using Result = std::pair<bool, Solution>;
-  Graph dependency_graph;
-  std::vector<int> value;
-
-  int k_variable;
-
   explicit TwoSat(int n, const std::vector<Clause>& clauses)
-      : k_variable(n) {
-    dependency_graph.resize(2 * k_variable);
+      : k_variable_(n) {
+    dependency_graph_.resize(2 * k_variable_);
     for (auto [a, b] : clauses) {
       int u = VariableToVertex(a);
       int v = VariableToVertex(b);
-      dependency_graph[VertexNegation(u)].push_back(v);
-      dependency_graph[VertexNegation(v)].push_back(u);
+      dependency_graph_[VertexNegation(u)].push_back(v);
+      dependency_graph_[VertexNegation(v)].push_back(u);
     }
   }
 
+  Result Solve() {
+    auto scc = graphs::SCC(dependency_graph_);
+    auto [condenstaion_graph, components] = scc.Condense();
+    value_.assign(dependency_graph_.size(), -1);
+    for (const auto& component : components) {
+      if (value_[component[0]] == -1) {
+        for (int v : component) {
+          if (value_[v] != -1) {
+            return Result(false, {});
+          }
+          value_[v] = 0;
+          value_[VertexNegation(v)] = 1;
+        }
+      }
+    }
+    Solution solution;
+    for (int v = 0; v < k_variable_; ++v) {
+      if (value_[v] == 1) {
+        solution.insert(v + 1);
+      }
+    }
+    return Result(true, solution);
+  }
+
+ private:
   int VariableToVertex(int var) {
     if (var > 0) {
       return var - 1;
@@ -38,35 +58,15 @@ struct TwoSat {
   }
 
   int VertexNegation(int vertex) {
-    if (vertex < k_variable) {
-      return vertex + k_variable;
+    if (vertex < k_variable_) {
+      return vertex + k_variable_;
     }
-    return vertex - k_variable;
+    return vertex - k_variable_;
   }
 
-  Result Solve() {
-    auto scc = graphs::SCC(dependency_graph);
-    auto [condenstaion_graph, components] = scc.Condense();
-    value.assign(dependency_graph.size(), -1);
-    for (const auto& component : components) {
-      if (value[component[0]] == -1) {
-        for (int v : component) {
-          if (value[v] != -1) {
-            return Result(false, {});
-          }
-          value[v] = 0;
-          value[VertexNegation(v)] = 1;
-        }
-      }
-    }
-    Solution solution;
-    for (int v = 0; v < k_variable; ++v) {
-      if (value[v] == 1) {
-        solution.insert(v + 1);
-      }
-    }
-    return Result(true, solution);
-  }
+  int k_variable_;
+  Graph dependency_graph_;
+  std::vector<int> value_;
 };
 
 }  // namespace algo::maths::algebra
