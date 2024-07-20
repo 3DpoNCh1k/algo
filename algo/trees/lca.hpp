@@ -1,71 +1,79 @@
 #pragma once
 
 #include <vector>
+#include "algo/utils/bits.hpp"
 
 namespace algo::trees {
 struct LowestCommonAncestor {
-  std::vector<std::vector<int>> g, parent;
-  std::vector<int> h, t_in, t_out;
-  int n, LOG, root, t;
+  using Graph = std::vector<std::vector<int>>;
 
-  LowestCommonAncestor(){};
-  explicit LowestCommonAncestor(const std::vector<int>& P, int root = 0)
-      : root(root) {
-    n = P.size();  // with parent of root
-    g.assign(n, {}), h.assign(n, 0), t_in.assign(n, 0), t_out.assign(n, 0);
-    LOG = 0;
-    while ((1 << LOG) < n) {
-      ++LOG;
-    }
+  explicit LowestCommonAncestor(const std::vector<int>& parent)
+      : n_(parent.size()) {
+    auto max_power = utils::bits::IndexOfMostSignificantBit(
+        utils::bits::PowerOfTwoThatAtLeast(u64(n_)));
 
-    parent.assign(n, std::vector<int>(LOG + 1));
-    // assume root = 0
-    for (int i = 1; i <= n - 1; ++i) {
-      int p = P[i];
-      //--p; // 0 indexed
-      parent[i][0] = p;
-      g[p].push_back(i);
-      g[i].push_back(p);
-    }
-    parent[root][0] = root;
-    t = 0;
-  }
+    k_ancestor_ = max_power + 1;
 
-  void dfs(int v) {
-    t_in[v] = t++;
-    for (int i = 1; i <= LOG; ++i) {
-      parent[v][i] = parent[parent[v][i - 1]][i - 1];
-    }
-    int par = parent[v][0];
-    for (int u : g[v]) {
-      if (u != par) {
-        h[u] = h[v] + 1;
-        dfs(u);
+    ancestors_.assign(n_, std::vector<int>(k_ancestor_, -1));
+    graph_.resize(n_);
+
+    for (int v = 0; v < n_; ++v) {
+      if (parent[v] == -1) {
+        root_ = v;
+        ancestors_[root_][0] = root_;
+      } else {
+        ancestors_[v][0] = parent[v];
+        graph_[parent[v]].push_back(v);
       }
     }
-    t_out[v] = t++;
+  }
+
+  void DFS(int v) {
+    t_in_[v] = t_++;
+    for (int i = 1; i < k_ancestor_; ++i) {
+      ancestors_[v][i] = ancestors_[ancestors_[v][i - 1]][i - 1];
+    }
+    for (int u : graph_[v]) {
+      height_[u] = height_[v] + 1;
+      DFS(u);
+    }
+    t_out_[v] = t_++;
   }
 
   void Solve() {
-    dfs(root);
+    t_ = 0;
+    t_in_.resize(n_);
+    t_out_.resize(n_);
+    height_.resize(n_);
+    height_[root_] = 0;
+    DFS(root_);
   }
 
   int GetLCA(int u, int v) {
-    //--u, --v; // 0 indexed
-    if (t_in[u] > t_in[v]) {
+    if (t_in_[u] > t_in_[v]) {
       std::swap(u, v);
     }
-    if (t_out[u] > t_out[v]) {
-      return u;  // + 1;
+    if (t_out_[u] > t_out_[v]) {
+      return u;
     }
-    for (int i = LOG; i >= 0; --i) {
-      int p = parent[u][i];
-      if (t_out[p] < t_out[v]) {
+    for (int i = k_ancestor_ - 1; i >= 0; --i) {
+      int p = ancestors_[u][i];
+      if (t_out_[p] < t_out_[v]) {
         u = p;
       }
     }
-    return parent[u][0];  // + 1;
+    return ancestors_[u][0];
   }
+
+ private:
+  int n_;
+  int k_ancestor_;
+  int root_;
+  Graph graph_;
+  std::vector<std::vector<int>> ancestors_;
+  std::vector<int> height_;
+  std::vector<int> t_in_, t_out_;
+  int t_;
 };
 
 using LCA = LowestCommonAncestor;
