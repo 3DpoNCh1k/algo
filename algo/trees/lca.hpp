@@ -9,8 +9,7 @@ struct LowestCommonAncestor {
 
   explicit LowestCommonAncestor(const std::vector<int>& parent)
       : n_(parent.size()) {
-    auto max_power = utils::bits::IndexOfMostSignificantBit(
-        utils::bits::PowerOfTwoThatAtLeast(u64(n_)));
+    auto max_power = utils::bits::ExponentOfPowerOfTwoThatAtLeast(u64(n_));
 
     k_ancestor_ = max_power + 1;
 

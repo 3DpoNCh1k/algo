@@ -14,11 +14,6 @@ constexpr std::enable_if_t<IsU64<T>, int> CountOfOnes(T x) {
 };
 
 template <typename T>
-constexpr std::enable_if_t<IsU64<T>, bool> IsPowerOfTwo(T x) {
-  return x && !(x & (x - 1));
-};
-
-template <typename T>
 constexpr std::enable_if_t<IsU64<T>, int> IndexOfLeastSignificantBit(T x) {
   return __builtin_ffsll(x) - 1;
 };
@@ -39,11 +34,20 @@ constexpr std::enable_if_t<IsU64<T>, u64> MostSignificantBitOnly(T x) {
 };
 
 template <typename T>
-constexpr std::enable_if_t<IsU64<T>, u64> PowerOfTwoThatAtLeast(T x) {
-  if (IsPowerOfTwo(x)) {
-    return x;
-  }
-  return 1LL << (IndexOfMostSignificantBit(x) + 1);
+constexpr std::enable_if_t<IsU64<T>, bool> IsPowerOfTwo(T x) {
+  return x && !(x & (x - 1));
 };
 
+template <typename T>
+constexpr std::enable_if_t<IsU64<T>, u64> ExponentOfPowerOfTwoThatAtLeast(T x) {
+  if (IsPowerOfTwo(x)) {
+    return IndexOfMostSignificantBit(x);
+  }
+  return IndexOfMostSignificantBit(x) + 1;
+};
+
+template <typename T>
+constexpr std::enable_if_t<IsU64<T>, u64> PowerOfTwoThatAtLeast(T x) {
+  return 1LL << ExponentOfPowerOfTwoThatAtLeast(x);
+};
 }  // namespace algo::utils::bits

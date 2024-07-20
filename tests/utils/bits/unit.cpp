@@ -87,6 +87,22 @@ void TestMostSignificantBitOnly() {
   }
 }
 
+void TestExponentOfPowerOfTwoThatAtLeast() {
+  {
+    algo::utils::meta::ForLoop<0, 63>([](auto int_number) {
+      constexpr auto Value = 1LL << int_number.Value;
+      STATIC_ASSERT_EQ(ExponentOfPowerOfTwoThatAtLeast(u64(Value)),
+                       int_number.Value);
+    });
+  }
+  {
+    STATIC_ASSERT_EQ(ExponentOfPowerOfTwoThatAtLeast(u64(0)), 0);
+    STATIC_ASSERT_EQ(ExponentOfPowerOfTwoThatAtLeast(u64(3)), 2);
+    STATIC_ASSERT_EQ(ExponentOfPowerOfTwoThatAtLeast(u64(5)), 3);
+    STATIC_ASSERT_EQ(ExponentOfPowerOfTwoThatAtLeast(u64(6)), 3);
+  }
+}
+
 void TestPowerOfTwoThatAtLeast() {
   {
     algo::utils::meta::ForLoop<0, 63>([](auto int_number) {
@@ -109,5 +125,6 @@ int main() {
   TestLeastSignificantBitOnly();
   TestIndexOfMostSignificantBit();
   TestMostSignificantBitOnly();
+  TestExponentOfPowerOfTwoThatAtLeast();
   TestPowerOfTwoThatAtLeast();
 }
