@@ -1,0 +1,8 @@
+{
+  "tests": [
+    {
+      "target": "stress.cpp",
+      "profile": "Debug"
+    }
+  ]
+}
