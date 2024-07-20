@@ -21,18 +21,17 @@ struct DisjointSetUnion {
   }
 
   void Merge(int u, int v) {
-    int pu = Find(u);
-    int pv = Find(v);
-    if (pu == pv) {
+    int parent_u = Find(u);
+    int parent_v = Find(v);
+    if (parent_u == parent_v) {
       return;
     }
-    if (height[pu] < height[pv]) {
-      parent[pu] = pv;
-    } else {
-      parent[pv] = pu;
-      if (height[pu] == height[pv]) {
-        height[pu]++;
-      }
+    if (height[parent_u] < height[parent_v]) {
+      std::swap(parent_u, parent_v);
+    }
+    parent[parent_v] = parent_u;
+    if (height[parent_u] == height[parent_v]) {
+      height[parent_u]++;
     }
   }
 };

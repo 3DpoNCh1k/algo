@@ -1,11 +1,13 @@
 #include <iostream>
 #include <algo/data_structures/dsu.hpp>
 
+using namespace algo::data_structures;
+
 int main() {
   int n, q;
   std::cin >> n >> q;
 
-  algo::data_structures::DSU dsu(n);
+  DSU dsu(n);
 
   for (int i = 0; i < q; ++i) {
     int t, u, v;
