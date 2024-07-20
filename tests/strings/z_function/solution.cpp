@@ -4,9 +4,9 @@
 int main() {
   std::string s;
   std::cin >> s;
-  auto lcps = algo::strings::ZFunction(s);
-  for (int i = 0; i < lcps.size(); ++i) {
-    std::cout << lcps[i] << (i + 1 == lcps.size() ? "" : " ");
+  auto length = algo::strings::ZFunction(s);
+  for (int i = 0; i < length.size(); ++i) {
+    std::cout << length[i] << (i + 1 == length.size() ? "" : " ");
   }
   std::cout << std::endl;
 }

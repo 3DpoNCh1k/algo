@@ -4,28 +4,29 @@
 #include <vector>
 
 namespace algo::strings {
+/*
+For every suffix of `s` calculates the length of the common prefix with `s`
+*/
 std::vector<int> ZFunction(const std::string& s) {
   int n = s.size();
-  std::vector<int> zf(n);
-  zf[0] = n;
+  std::vector<int> length(n);
+  length[0] = n;
   int l = 0, r = 0;
   for (int i = 1; i < n; ++i) {
-    int cv = 0;
+    int current_length = 0;
     if (r >= i) {
-      cv = std::min(zf[i - l], r - i + 1);
+      current_length = std::min(length[i - l], r - i + 1);
     }
-    while (i + cv < n && s[i + cv] == s[cv]) {
-      cv++;
+    while (i + current_length < n &&
+           s[i + current_length] == s[current_length]) {
+      current_length++;
     }
-    zf[i] = cv;
-    if (i + zf[i] - 1 > r) {
-      l = i, r = i + zf[i] - 1;
+    length[i] = current_length;
+    if (i + length[i] - 1 > r) {
+      l = i;
+      r = i + length[i] - 1;
     }
   }
-  return zf;
+  return length;
 }
-
-// alias
-constexpr auto LongestCommonPrefixes = ZFunction;
-
 }  // namespace algo::strings
