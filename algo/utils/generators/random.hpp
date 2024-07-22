@@ -12,15 +12,23 @@ struct RandomGenerator {
   RandomGenerator() {
     Reset(std::chrono::steady_clock::now().time_since_epoch().count());
   }
+
   explicit RandomGenerator(u32 seed) {
     Reset(seed);
   }
+
   void Reset(u32 seed) {
     engine_.seed(seed);
   }
+
   i64 GetInt(i64 a, i64 b) {
     return std::uniform_int_distribution<i64>(a, b)(engine_);
   }
+
+  char GetChar(char a, char b) {
+    return GetInt(a, b);
+  }
+
   bool GetBool() {
     return GetInt(0, 1) == 0;
   }

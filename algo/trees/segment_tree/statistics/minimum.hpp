@@ -24,8 +24,6 @@ Minimum UpdateStatistics(const Minimum& stat, const operations::SetAddOp& op) {
     new_stat.result = op.set;
   }
   new_stat.result += op.add;
-  // dbg("UpdateStatistics", stat.L, stat.R, op.should_set, op.set, op.add);
-  // dbg("UpdateStatistics", stat.result, new_stat.result);
   return new_stat;
 };
 

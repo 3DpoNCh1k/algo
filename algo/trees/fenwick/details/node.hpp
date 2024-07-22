@@ -3,7 +3,6 @@
 #include <sstream>
 #include <tuple>
 
-#include <algo/utils/debug.hpp>
 #include <algo/utils/meta.hpp>
 
 namespace algo::trees::fenwick::details {
@@ -50,7 +49,6 @@ struct Node {
   template <typename Statistics>
   Statistics Get(Statistics) const {
     auto& stat = std::get<Statistics>(statistics);
-    dbg("Node.Get", L, R, stat.result);
     return stat;
   }
 

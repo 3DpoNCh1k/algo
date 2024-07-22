@@ -1,6 +1,5 @@
 #pragma once
 
-#include <algo/utils/debug.hpp>
 namespace algo::trees::fenwick::operations {
 template <typename Statistics, typename Operation>
 Statistics UpdateStatistics(const Statistics& stat, const Operation& op);

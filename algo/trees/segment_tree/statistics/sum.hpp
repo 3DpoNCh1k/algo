@@ -18,8 +18,6 @@ struct Sum : Base {
 Sum UpdateStatistics(const Sum& stat, const operations::AddOp& op) {
   auto new_stat = stat;
   new_stat.result += (new_stat.R - new_stat.L + 1) * op.add;
-  // dbg("UpdateStatistics", stat.L, stat.R, op.add);
-  // dbg("UpdateStatistics", stat.result, new_stat.result);
   return new_stat;
 };
 

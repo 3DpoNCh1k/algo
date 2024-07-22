@@ -8,8 +8,8 @@
 using namespace algo::utils::generators;
 
 void TestGetFromRange() {
-  auto subset_generator = SubsetGenerator();
-  auto random_generator = RandomGenerator();
+  auto random_generator = RandomGenerator(0);
+  auto subset_generator = SubsetGenerator(random_generator);
   {
     const int from = -10;
     const int to = 10;

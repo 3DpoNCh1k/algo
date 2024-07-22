@@ -1,6 +1,5 @@
 #pragma once
 
-#include <algo/utils/debug.hpp>
 namespace algo::trees::fenwick::statistics {
 
 template <typename S, typename Stats>

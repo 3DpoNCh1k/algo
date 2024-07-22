@@ -113,14 +113,14 @@ void TestGraph() {
 }
 
 void TestGetEdges() {
-  auto tree_generator = TreeGenerator();
-  auto random_generator = RandomGenerator();
+  auto random = RandomGenerator(0);
+  auto tree_generator = TreeGenerator(random);
   {
     const int from = 1;
     const int to = 10;
     const int rep_count = 50;
     for (int rep = 0; rep < rep_count; ++rep) {
-      int n = random_generator.GetInt(from, to);
+      int n = random.GetInt(from, to);
       auto edges = tree_generator.GetEdges(n);
       ASSERT_EQ(int(edges.size()), n - 1);
       for (auto edge : edges) {
