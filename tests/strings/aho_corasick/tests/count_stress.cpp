@@ -44,7 +44,7 @@ struct CountTester : Tester {
   void Test(const std::string& s) {
     aho_corasick.Scan(s);
     brute_force.Scan(s);
-    duel.Combat();
+    duel.Combat(s);
     aho_corasick.ResetAllStatistics();
   }
 };

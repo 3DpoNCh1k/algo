@@ -18,7 +18,7 @@ struct Duel {
         aho_corasick(aho_corasick) {
   }
 
-  void Combat() {
+  void Combat(const std::string& s) {
     for (int pattern_index = 0; pattern_index < patterns.size();
          ++pattern_index) {
       auto stat = aho_corasick.template Get<Statistics>(pattern_index);

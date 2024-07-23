@@ -26,5 +26,9 @@ struct Count : Base {
   bool operator==(const Count& that) const {
     return result == that.result;
   }
+
+  bool operator!=(const Count& that) const {
+    return !(*this == that);
+  }
 };
 }  // namespace algo::strings::aho_corasick::statistics

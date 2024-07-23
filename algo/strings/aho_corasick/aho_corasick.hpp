@@ -38,7 +38,11 @@ struct AhoCorasick {
       if (trie.IsTerminal(trie_node_index)) {
         pattern_node_index = trie_to_pattern[trie_node_index];
       } else {
-        pattern_node_index = trie.GetLongestTerminalSuffix(trie_node_index);
+        int longest_trie_node_index =
+            trie.GetLongestTerminalSuffix(trie_node_index);
+        if (longest_trie_node_index != -1) {
+          pattern_node_index = trie_to_pattern[longest_trie_node_index];
+        }
       }
       if (pattern_node_index != -1) {
         pattern_nodes[pattern_node_index].UpdateAsLongest(i);

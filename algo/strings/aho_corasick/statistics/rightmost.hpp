@@ -29,6 +29,10 @@ struct Rightmost : Base {
     return result == that.result;
   }
 
+  bool operator!=(const Rightmost& that) const {
+    return !(*this == that);
+  }
+
  private:
   void FoundEndingAt(int index) {
     int start_index = index - pattern.size() + 1;

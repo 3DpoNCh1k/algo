@@ -67,8 +67,8 @@ struct LeftmostAndRightmostTester : Tester {
     aho_corasick.Scan(s);
     leftmost_brute_force.Scan(s);
     rightmost_brute_force.Scan(s);
-    leftmost_duel.Combat();
-    rightmost_duel.Combat();
+    leftmost_duel.Combat(s);
+    rightmost_duel.Combat(s);
     aho_corasick.ResetAllStatistics();
   }
 };

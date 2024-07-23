@@ -5,6 +5,10 @@
       "profile": "Debug"
     },
     {
+      "target": "leftmost_unit.cpp",
+      "profile": "Debug"
+    },
+    {
       "target": "count_stress.cpp",
       "profile": "Debug"
     },
