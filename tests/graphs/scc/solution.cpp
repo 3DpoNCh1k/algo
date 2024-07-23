@@ -22,8 +22,7 @@ int main() {
     graph[u].push_back(v);
   }
 
-  auto scc = SCC(graph);
-  auto condensation = scc.Condense();
+  auto condensation = StronglyConnectedComponents(graph);
   auto& condensation_graph = condensation.first;
   auto& components = condensation.second;
   int k_component = components.size();

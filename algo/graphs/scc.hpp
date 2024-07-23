@@ -5,39 +5,24 @@
 #include <vector>
 
 namespace algo::graphs {
-struct StronglyConnectedComponents {
-  using Graph = std::vector<std::vector<int>>;
-  using Components = std::vector<std::vector<int>>;
-  using Condensation = std::pair<Graph, Components>;
 
-  explicit StronglyConnectedComponents(const Graph& g0)
+using Graph = std::vector<std::vector<int>>;
+using Components = std::vector<std::vector<int>>;
+using Condensation = std::pair<Graph, Components>;
+
+namespace scc::details {
+struct SCCImpl {
+  explicit SCCImpl(const Graph& g0)
       : g_(g0),
         n_(g_.size()) {
-    CreateInversedGraph();
-    OrderVertices();
-    ExtractComponents();
   }
 
   // Kosaraju's algorithm
   Condensation Condense() {
-    Components components;
-    components.resize(k_component_);
-    std::set<std::pair<int, int>> edges;
-    for (int v = 0; v < n_; ++v) {
-      components[component_[v]].push_back(v);
-      for (int u : g_[v]) {
-        if (component_[v] != component_[u]) {
-          edges.emplace(component_[v], component_[u]);
-        }
-      }
-    }
-
-    Graph graph;
-    graph.resize(k_component_);
-    for (auto [v, u] : edges) {
-      graph[v].push_back(u);
-    }
-    return Condensation(std::move(graph), std::move(components));
+    CreateInversedGraph();
+    OrderVertices();
+    ExtractComponents();
+    return Harvest();
   }
 
  private:
@@ -73,6 +58,27 @@ struct StronglyConnectedComponents {
     }
   }
 
+  Condensation Harvest() {
+    Components components;
+    components.resize(k_component_);
+    std::set<std::pair<int, int>> edges;
+    for (int v = 0; v < n_; ++v) {
+      components[component_[v]].push_back(v);
+      for (int u : g_[v]) {
+        if (component_[v] != component_[u]) {
+          edges.emplace(component_[v], component_[u]);
+        }
+      }
+    }
+
+    Graph graph;
+    graph.resize(k_component_);
+    for (auto [v, u] : edges) {
+      graph[v].push_back(u);
+    }
+    return Condensation(std::move(graph), std::move(components));
+  };
+
   void OrderDfs(int v) {
     visited_[v] = true;
     for (int u : g_[v]) {
@@ -103,7 +109,10 @@ struct StronglyConnectedComponents {
   std::vector<int> component_;
   int k_component_;
 };
+}  // namespace scc::details
 
-using SCC = StronglyConnectedComponents;
+Condensation StronglyConnectedComponents(const Graph& g) {
+  return scc::details::SCCImpl(g).Condense();
+}
 
 }  // namespace algo::graphs

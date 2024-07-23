@@ -4,20 +4,18 @@
 
 namespace algo::data_structures {
 struct DisjointSetUnion {
-  std::vector<int> parent, height;
-
   explicit DisjointSetUnion(int n) {
-    parent.resize(n), height.resize(n, 1);
+    parent_.resize(n), height_.resize(n, 1);
     for (int i = 0; i < n; ++i) {
-      parent[i] = i;
+      parent_[i] = i;
     }
   }
 
   int Find(int v) {
-    if (parent[v] == v) {
+    if (parent_[v] == v) {
       return v;
     }
-    return parent[v] = Find(parent[v]);
+    return parent_[v] = Find(parent_[v]);
   }
 
   void Merge(int u, int v) {
@@ -26,14 +24,17 @@ struct DisjointSetUnion {
     if (parent_u == parent_v) {
       return;
     }
-    if (height[parent_u] < height[parent_v]) {
+    if (height_[parent_u] < height_[parent_v]) {
       std::swap(parent_u, parent_v);
     }
-    parent[parent_v] = parent_u;
-    if (height[parent_u] == height[parent_v]) {
-      height[parent_u]++;
+    parent_[parent_v] = parent_u;
+    if (height_[parent_u] == height_[parent_v]) {
+      height_[parent_u]++;
     }
   }
+
+ private:
+  std::vector<int> parent_, height_;
 };
 
 using DSU = DisjointSetUnion;

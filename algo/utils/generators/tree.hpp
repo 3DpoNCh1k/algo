@@ -10,22 +10,22 @@ namespace algo::utils::generators {
 
 struct TreeGenerator {
   using Edge = std::pair<int, int>;
-  RandomGenerator random;
+
   explicit TreeGenerator(RandomGenerator& random)
-      : random(random) {
+      : random_(random) {
   }
 
   std::vector<Edge> GetEdges(int n) {
     std::vector<Edge> edges;
     for (int i = 1; i < n; ++i) {
-      edges.emplace_back(random.GetInt(0, i - 1), i);
+      edges.emplace_back(random_.GetInt(0, i - 1), i);
     }
 
-    std::shuffle(edges.begin(), edges.end(), random.GetEngine());
+    std::shuffle(edges.begin(), edges.end(), random_.GetEngine());
 
     std::vector<int> permutation(n);
     std::iota(permutation.begin(), permutation.end(), 0);
-    std::shuffle(permutation.begin(), permutation.end(), random.GetEngine());
+    std::shuffle(permutation.begin(), permutation.end(), random_.GetEngine());
 
     for (Edge& edge : edges) {
       // Rename
@@ -33,12 +33,15 @@ struct TreeGenerator {
       edge.second = permutation[edge.second];
 
       // Change the order of edge ends
-      if (random.GetBool()) {
+      if (random_.GetBool()) {
         std::swap(edge.first, edge.second);
       }
     }
 
     return edges;
   }
+
+ private:
+  RandomGenerator random_;
 };
 }  // namespace algo::utils::generators

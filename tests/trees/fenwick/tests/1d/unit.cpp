@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <algo/trees/fenwick/operations/operation.hpp>
 #include <algo/trees/fenwick/statistics/base.hpp>
 #include "algo/trees/fenwick/statistics/statistics.hpp"

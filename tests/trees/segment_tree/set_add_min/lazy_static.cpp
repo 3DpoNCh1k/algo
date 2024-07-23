@@ -25,7 +25,6 @@ int main() {
       algo::trees::segment_tree::LazyPropagationStaticSegmentTree<
           Operation<operations::SetAddOp>, Statistics<statistics::Minimum>>(n);
   for (int i = 0; i < n; ++i) {
-    dbg("set", i, i, a[i]);
     segment_tree.ApplyAtIndex(i, operations::SetOp{true, a[i]});
   }
 

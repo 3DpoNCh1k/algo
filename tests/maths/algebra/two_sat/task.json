@@ -8,11 +8,5 @@
         "profile": "Release"
       }
     ]
-  },
-  "examples": [
-    {
-      "solution": "solution.cpp",
-      "profile": "Release"
-    }
-  ]
+  }
 }

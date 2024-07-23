@@ -7,11 +7,9 @@
 
 namespace algo::utils::generators {
 struct SubsetGenerator {
-  RandomGenerator& random;
   explicit SubsetGenerator(RandomGenerator& random)
-      : random(random) {
+      : random_(random) {
   }
-  static constexpr int REP = 100;
 
   std::set<i64> GetFromRange(i64 from, i64 to, int count) {
     assert(count <= (to - from + 1));
@@ -19,7 +17,7 @@ struct SubsetGenerator {
     for (int i = 0; i < count; ++i) {
       bool found = false;
       for (int rep = 0; rep < REP; ++rep) {
-        auto value = random.GetInt(from, to);
+        auto value = random_.GetInt(from, to);
         if (taken.find(value) == taken.end()) {
           taken.insert(value);
           found = true;
@@ -36,6 +34,10 @@ struct SubsetGenerator {
     assert(taken.size() == count);
     return taken;
   }
+
+ private:
+  RandomGenerator& random_;
+  static constexpr int REP = 100;
 };
 
 }  // namespace algo::utils::generators

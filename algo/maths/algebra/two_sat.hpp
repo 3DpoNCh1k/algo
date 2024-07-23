@@ -24,8 +24,8 @@ struct TwoSat {
   }
 
   Result Solve() {
-    auto scc = graphs::SCC(dependency_graph_);
-    auto [condenstaion_graph, components] = scc.Condense();
+    auto [condenstaion_graph, components] =
+        graphs::StronglyConnectedComponents(dependency_graph_);
     value_.assign(dependency_graph_.size(), -1);
     for (const auto& component : components) {
       if (value_[component[0]] == -1) {

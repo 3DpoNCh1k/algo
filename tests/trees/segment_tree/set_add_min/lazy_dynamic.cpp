@@ -26,7 +26,6 @@ int main() {
           Operation<operations::SetAddOp>, Statistics<statistics::Minimum>>(
           0, n - 1);
   for (int i = 0; i < n; ++i) {
-    dbg("set", i, i, a[i]);
     segment_tree.ApplyAtIndex(i, operations::SetOp{true, a[i]});
   }
 
