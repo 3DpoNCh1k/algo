@@ -2,7 +2,6 @@
 
 #include <sstream>
 
-#include <algo/utils/debug.hpp>
 #include <algo/utils/meta.hpp>
 #include "algo/trees/segment_tree/details/nodes/base.hpp"
 

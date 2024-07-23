@@ -1,12 +1,16 @@
 {
   "tests": [
     {
+      "target": "count_unit.cpp",
+      "profile": "Debug"
+    },
+    {
       "target": "count_stress.cpp",
-      "profile": "DebugLocalDebug"
+      "profile": "Debug"
     },
     {
       "target": "leftmost_and_rightmost_stress.cpp",
-      "profile": "DebugLocalDebug"
+      "profile": "Debug"
     }
   ]
 }
