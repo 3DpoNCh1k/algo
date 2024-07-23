@@ -1,14 +1,12 @@
 #include <iostream>
 
 #include <algo/strings/suffix_array.hpp>
+#include "algo/utils/join.hpp"
 
 int main() {
   std::string s;
   std::cin >> s;
   auto suffix_array = algo::strings::SuffixArray(s);
-
-  for (int i = 0; i < suffix_array.size(); ++i) {
-    std::cout << suffix_array[i] << (i + 1 == suffix_array.size() ? "" : " ");
-  }
-  std::cout << std::endl;
+  std::cout << algo::utils::JoinToString(suffix_array, {.separator = " "})
+            << "\n";
 }

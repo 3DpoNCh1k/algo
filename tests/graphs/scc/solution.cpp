@@ -5,6 +5,7 @@
 
 #include <algo/graphs/scc.hpp>
 #include <algo/graphs/degrees.hpp>
+#include "algo/utils/join.hpp"
 
 using namespace algo::graphs;
 
@@ -47,11 +48,9 @@ int main() {
     });
     for (int c : q) {
       auto& component = components[c];
-      std::cout << component.size();
-      for (auto u : component) {
-        std::cout << " " << u;
-      }
-      std::cout << std::endl;
+      std::cout << component.size() << " "
+                << algo::utils::JoinToString(component, {.separator = " "})
+                << "\n";
     }
 
     std::deque<int> next;
