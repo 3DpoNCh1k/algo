@@ -8,8 +8,9 @@
 #include "algo/utils/bits.hpp"
 
 namespace algo::strings {
-struct SuffixArray {
-  explicit SuffixArray(const std::string& s) {
+namespace details {
+struct SuffixArrayImpl {
+  explicit SuffixArrayImpl(const std::string& s) {
     auto [min_it, max_it] = std::minmax_element(s.begin(), s.end());
     int min = *min_it;
     int max = *max_it;
@@ -22,11 +23,11 @@ struct SuffixArray {
     n_ = str_.size();
   };
 
-  std::vector<int> GetSuffixArray() {
-    suffix_array_.resize(n_);
+  std::vector<int> Calculate() {
+    std::vector<int> suffix_array(n_);
     std::vector<int> equivalence_class(n_);
     for (int i = 0; i < n_; ++i) {
-      suffix_array_[i] = i;
+      suffix_array[i] = i;
       equivalence_class[i] = str_[i];
     }
 
@@ -37,51 +38,21 @@ struct SuffixArray {
       int part_length = length / 2;
       for (int pos = 0; pos < n_; ++pos) {
         suffixes_ordered_by_lowest_part[pos] =
-            IndexOfHighestPart(suffix_array_[pos], part_length);
+            IndexOfHighestPart(suffix_array[pos], part_length);
       }
 
       StableCountingSort(suffixes_ordered_by_lowest_part, equivalence_class,
-                         suffix_array_);
+                         suffix_array);
 
       equivalence_class =
-          CalculateEquivalenceClasses(suffix_array_, [&](int suffix_index) {
+          CalculateEquivalenceClasses(suffix_array, [&](int suffix_index) {
             return std::make_pair(equivalence_class[suffix_index],
                                   equivalence_class[IndexOfLowestPart(
                                       suffix_index, part_length)]);
           });
     }
 
-    return std::vector(suffix_array_.begin() + 1, suffix_array_.end());
-  }
-
-  // Kasai's algorithm
-  std::vector<int> GetLcpArray() {
-    std::vector<int> lcp(n_ - 1);
-    std::vector<int> inversed_suffix_array(n_, 0);
-    for (int pos = 0; pos < n_; ++pos) {
-      inversed_suffix_array[suffix_array_[pos]] = pos;
-    }
-    int current_lcp = 0;
-    for (int suffix_index = 0; suffix_index < n_; ++suffix_index) {
-      int pos = inversed_suffix_array[suffix_index];
-      if (pos == 0) {
-        continue;
-      }
-      int previous_suffix_index = suffix_array_[pos - 1];
-
-      while (suffix_index + current_lcp < n_ &&
-             previous_suffix_index + current_lcp < n_ &&
-             str_[suffix_index + current_lcp] ==
-                 str_[previous_suffix_index + current_lcp]) {
-        current_lcp++;
-      }
-
-      lcp[pos - 1] = current_lcp;
-      current_lcp--;
-      current_lcp = std::max(current_lcp, 0);
-    }
-
-    return std::vector(lcp.begin() + 1, lcp.end());
+    return std::vector(suffix_array.begin() + 1, suffix_array.end());
   }
 
  private:
@@ -136,6 +107,11 @@ struct SuffixArray {
 
   int n_;
   std::vector<int> str_;
-  std::vector<int> suffix_array_;
 };
+}  // namespace details
+
+std::vector<int> SuffixArray(const std::string& s) {
+  return details::SuffixArrayImpl(s).Calculate();
+}
+
 }  // namespace algo::strings

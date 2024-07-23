@@ -2,42 +2,32 @@
 
 #include <algo/strings/suffix_array.hpp>
 #include "algo/utils/generators/random.hpp"
+#include "algo/utils/generators/string.hpp"
+
 #include "tests/testing/asserts.hpp"
 
 struct Tester {
   algo::utils::generators::RandomGenerator random;
-  int max_n;
+  int max_len;
   explicit Tester(int n)
-      : max_n(n) {
+      : max_len(n),
+        random(0) {
   }
 
   void Test(int k_rep) {
+    algo::utils::generators::AsciiStringGenerator string_generator(random);
     for (int rep = 0; rep < k_rep; ++rep) {
-      int n = random.GetInt(1, max_n);
-      std::string s;
-      for (int i = 0; i < n; ++i) {
-        char ch = random.GetInt(0, 255);
-        s.push_back(ch);
-      }
-      Check(s);
+      int len = random.GetInt(0, max_len);
+      Check(string_generator.Get(len));
     }
   };
 
   void Check(const std::string& s) {
     auto suffix_array = algo::strings::SuffixArray(s);
-
-    auto order = suffix_array.GetSuffixArray();
-    auto correct_order = CalculateSuffixArray(s);
-    ASSERT_EQ(order.size(), correct_order.size());
-    for (int i = 0; i < order.size(); ++i) {
-      ASSERT_EQ(order[i], correct_order[i]);
-    }
-
-    auto lcp = suffix_array.GetLcpArray();
-    auto correct_lcp = CalculateLcpArray(order, s);
-    ASSERT_EQ(lcp.size(), correct_lcp.size());
-    for (int i = 0; i < lcp.size(); ++i) {
-      ASSERT_EQ(lcp[i], correct_lcp[i]);
+    auto correct_suffix_array = CalculateSuffixArray(s);
+    ASSERT_EQ(suffix_array.size(), correct_suffix_array.size());
+    for (int i = 0; i < suffix_array.size(); ++i) {
+      ASSERT_EQ(suffix_array[i], correct_suffix_array[i]);
     }
   }
 
@@ -55,26 +45,10 @@ struct Tester {
     }
     return order;
   };
-
-  std::vector<int> CalculateLcpArray(const std::vector<int>& suffix_array,
-                                     const std::string& s) {
-    int n = s.size();
-    std::vector<int> lcp;
-    for (int i = 0; i < n - 1; ++i) {
-      int cur_suffix = suffix_array[i];
-      int next_suffix = suffix_array[i + 1];
-      int l = 0;
-      while (cur_suffix + l < n && next_suffix + l < n &&
-             s[cur_suffix + l] == s[next_suffix + l]) {
-        ++l;
-      }
-      lcp.push_back(l);
-    }
-    return lcp;
-  };
 };
 
 int main() {
-  Tester(10).Test(1000);
-  Tester(100).Test(100);
+  Tester(10).Test(10'000);
+  Tester(100).Test(1000);
+  Tester(1000).Test(1000);
 }
