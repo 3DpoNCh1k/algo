@@ -1,0 +1,12 @@
+{
+  "codeforces": {
+    "link": "https://codeforces.com/group/QmrArgR1Jp/contest/254626/problem/F",
+    "solution": "solution.cpp"
+  },
+  "examples": [
+    {
+      "solution": "solution.cpp",
+      "profile": "Release"
+    }
+  ]
+}
