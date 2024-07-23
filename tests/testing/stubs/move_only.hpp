@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 struct MoveOnly {
   MoveOnly() = default;
 
@@ -8,4 +10,10 @@ struct MoveOnly {
 
   MoveOnly& operator=(const MoveOnly& that) = delete;
   MoveOnly& operator=(MoveOnly&& that) = delete;
+};
+
+struct MoveOnlyWithToString : MoveOnly {
+  std::string ToString() const {
+    return "I'm MoveOnlyWithToString!";
+  }
 };
