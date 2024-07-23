@@ -1,7 +1,7 @@
 #pragma once
 
 #include <algo/strings/aho_corasick/statistics/base.hpp>
-#include "algo/utils/types/fundamentals.hpp"
+#include <algo/utils/types/fundamentals.hpp>
 
 namespace algo::strings::aho_corasick::statistics {
 struct Count : Base {

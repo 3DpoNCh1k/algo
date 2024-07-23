@@ -2,8 +2,8 @@
 
 #include <algo/strings/aho_corasick/aho_corasick.hpp>
 #include <algo/strings/aho_corasick/statistics/count.hpp>
-#include "algo/utils/debug.hpp"
-#include "tests/testing/asserts.hpp"
+#include <algo/utils/debug.hpp>
+#include <tests/testing/asserts.hpp>
 
 using namespace algo::strings::aho_corasick;
 using namespace algo::strings::aho_corasick::statistics;

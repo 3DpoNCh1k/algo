@@ -5,7 +5,7 @@
 #include <string>
 #include <utility>
 #include <vector>
-#include "algo/utils/bits.hpp"
+#include <algo/utils/bits.hpp>
 
 namespace algo::strings {
 namespace details {

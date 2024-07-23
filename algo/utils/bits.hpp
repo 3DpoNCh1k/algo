@@ -1,7 +1,7 @@
 #pragma once
 
 #include <type_traits>
-#include "algo/utils/types/fundamentals.hpp"
+#include <algo/utils/types/fundamentals.hpp>
 
 namespace algo::utils::bits {
 

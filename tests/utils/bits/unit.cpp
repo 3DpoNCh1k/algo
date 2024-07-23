@@ -1,6 +1,6 @@
 #include <algo/utils/bits.hpp>
-#include "algo/utils/meta.hpp"
-#include "tests/testing/asserts.hpp"
+#include <algo/utils/meta.hpp>
+#include <tests/testing/asserts.hpp>
 
 using namespace algo::utils::bits;
 

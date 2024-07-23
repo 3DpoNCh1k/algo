@@ -3,9 +3,9 @@
 #include <string>
 #include <sstream>
 
-#include "algo/utils/types/fundamentals.hpp"
-#include "algo/trees/segment_tree/operations/add.hpp"
-#include "algo/trees/segment_tree/operations/set.hpp"
+#include <algo/utils/types/fundamentals.hpp>
+#include <algo/trees/segment_tree/operations/add.hpp>
+#include <algo/trees/segment_tree/operations/set.hpp>
 
 namespace algo::trees::segment_tree::operations {
 struct SetAddOp {

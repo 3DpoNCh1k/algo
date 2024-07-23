@@ -7,8 +7,8 @@
 #include <algo/trees/segment_tree/details/segment_tree.hpp>
 
 #include <tuple>
-#include "algo/trees/segment_tree/details/nodes/eager.hpp"
-#include "algo/trees/segment_tree/details/nodes/lazy.hpp"
+#include <algo/trees/segment_tree/details/nodes/eager.hpp>
+#include <algo/trees/segment_tree/details/nodes/lazy.hpp>
 
 namespace algo::trees::segment_tree {
 template <typename Operation, typename StatisticsTuple>

@@ -4,7 +4,7 @@
 #include <vector>
 
 #include <algo/graphs/scc.hpp>
-#include "algo/graphs/degrees.hpp"
+#include <algo/graphs/degrees.hpp>
 
 using namespace algo::graphs;
 

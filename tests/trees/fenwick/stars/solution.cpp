@@ -3,8 +3,8 @@
 #include <string>
 
 #include <algo/trees/fenwick/trees.hpp>
-#include "algo/trees/fenwick/operations/add.hpp"
-#include "algo/trees/fenwick/statistics/sum.hpp"
+#include <algo/trees/fenwick/operations/add.hpp>
+#include <algo/trees/fenwick/statistics/sum.hpp>
 
 using namespace std;
 using namespace algo::trees::fenwick;

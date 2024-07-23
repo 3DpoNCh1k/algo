@@ -3,7 +3,7 @@
 #include <sstream>
 
 #include <algo/utils/meta.hpp>
-#include "algo/trees/segment_tree/details/nodes/base.hpp"
+#include <algo/trees/segment_tree/details/nodes/base.hpp>
 
 namespace algo::trees::segment_tree::details {
 

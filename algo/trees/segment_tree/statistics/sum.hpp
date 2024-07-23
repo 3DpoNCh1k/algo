@@ -1,8 +1,8 @@
 #pragma once
 
-#include "algo/trees/segment_tree/statistics/base.hpp"
-#include "algo/trees/segment_tree/operations/add.hpp"
-#include "algo/utils/types/fundamentals.hpp"
+#include <algo/trees/segment_tree/statistics/base.hpp>
+#include <algo/trees/segment_tree/operations/add.hpp>
+#include <algo/utils/types/fundamentals.hpp>
 namespace algo::trees::segment_tree::statistics {
 
 struct Sum : Base {

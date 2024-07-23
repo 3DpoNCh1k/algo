@@ -2,10 +2,10 @@
 
 #include <algo/strings/suffix_array.hpp>
 #include <algo/strings/lcp_array.hpp>
-#include "algo/utils/generators/random.hpp"
-#include "algo/utils/generators/string.hpp"
+#include <algo/utils/generators/random.hpp>
+#include <algo/utils/generators/string.hpp>
 
-#include "tests/testing/asserts.hpp"
+#include <tests/testing/asserts.hpp>
 
 struct Tester {
   algo::utils::generators::RandomGenerator random;

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include "algo/utils/types/fundamentals.hpp"
+#include <algo/utils/types/fundamentals.hpp>
 #include <algo/utils/debug.hpp>
 #include <algo/trees/fenwick/operations/add.hpp>
 #include <algo/trees/fenwick/operations/operation.hpp>

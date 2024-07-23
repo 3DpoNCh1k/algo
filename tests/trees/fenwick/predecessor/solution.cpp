@@ -5,7 +5,7 @@
 #include <algo/trees/fenwick/operations/operation.hpp>
 #include <algo/trees/fenwick/statistics/sum.hpp>
 #include <algo/trees/fenwick/statistics/statistics.hpp>
-#include "algo/trees/fenwick/trees.hpp"
+#include <algo/trees/fenwick/trees.hpp>
 
 using namespace algo::trees::fenwick;
 using namespace operations;

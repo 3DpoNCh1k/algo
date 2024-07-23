@@ -3,9 +3,9 @@
 #include <vector>
 
 #include <algo/utils/generators/random.hpp>
-#include "algo/utils/generators/tree.hpp"
+#include <algo/utils/generators/tree.hpp>
 
-#include "tests/testing/asserts.hpp"
+#include <tests/testing/asserts.hpp>
 
 using namespace algo::utils::generators;
 

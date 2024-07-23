@@ -2,8 +2,8 @@
 #include <string>
 
 #include <algo/ranges/prefix_sums.hpp>
-#include "algo/utils/generators/random.hpp"
-#include "tests/testing/asserts.hpp"
+#include <algo/utils/generators/random.hpp>
+#include <tests/testing/asserts.hpp>
 
 using namespace algo::ranges;
 

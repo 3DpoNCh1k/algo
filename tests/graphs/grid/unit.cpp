@@ -1,7 +1,7 @@
 #include <utility>
 
 #include <algo/graphs/grid.hpp>
-#include "tests/testing/asserts.hpp"
+#include <tests/testing/asserts.hpp>
 
 using namespace algo::graphs;
 

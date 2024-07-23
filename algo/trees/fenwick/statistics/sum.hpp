@@ -1,8 +1,8 @@
 #pragma once
 
-#include "algo/trees/fenwick/statistics/base.hpp"
-#include "algo/trees/fenwick/operations/add.hpp"
-#include "algo/utils/types/fundamentals.hpp"
+#include <algo/trees/fenwick/statistics/base.hpp>
+#include <algo/trees/fenwick/operations/add.hpp>
+#include <algo/utils/types/fundamentals.hpp>
 namespace algo::trees::fenwick::statistics {
 
 struct Sum : Base {

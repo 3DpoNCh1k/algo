@@ -3,7 +3,7 @@
 #include <string>
 #include <sstream>
 
-#include "algo/utils/types/fundamentals.hpp"
+#include <algo/utils/types/fundamentals.hpp>
 namespace algo::trees::segment_tree::operations {
 struct AddOp {
   i64 add = 0;

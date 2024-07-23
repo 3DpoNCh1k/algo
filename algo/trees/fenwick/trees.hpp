@@ -1,7 +1,7 @@
 #pragma once
 
-#include "algo/trees/fenwick/operations/operation.hpp"
-#include "algo/trees/fenwick/statistics/statistics.hpp"
+#include <algo/trees/fenwick/operations/operation.hpp>
+#include <algo/trees/fenwick/statistics/statistics.hpp>
 #include <algo/trees/fenwick/details/fenwick_tree.hpp>
 #include <algo/trees/fenwick/details/node.hpp>
 

@@ -3,7 +3,7 @@
 #include <vector>
 #include <cassert>
 
-#include "algo/utils/types/fundamentals.hpp"
+#include <algo/utils/types/fundamentals.hpp>
 
 namespace algo::trees::segment_tree::details {
 

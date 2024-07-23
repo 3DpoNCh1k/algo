@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "algo/utils/bits.hpp"
+#include <algo/utils/bits.hpp>
 
 namespace algo::trees {
 struct LowestCommonAncestor {

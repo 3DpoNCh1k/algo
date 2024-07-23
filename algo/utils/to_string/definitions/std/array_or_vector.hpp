@@ -6,7 +6,7 @@
 
 #include <algo/utils/to_string/declarations/all.hpp>
 #include <algo/utils/traits/traits.hpp>
-#include "algo/utils/traits/std/dimension.hpp"
+#include <algo/utils/traits/std/dimension.hpp>
 
 namespace algo::utils {
 template <class T>

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "algo/utils/types/fundamentals.hpp"
+#include <algo/utils/types/fundamentals.hpp>
 namespace algo::ranges {
 struct PrefixSums {
   template <typename T>

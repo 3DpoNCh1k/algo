@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <set>
 #include <vector>
-#include "algo/graphs/scc.hpp"
+#include <algo/graphs/scc.hpp>
 
 namespace algo::maths::algebra {
 struct TwoSat {

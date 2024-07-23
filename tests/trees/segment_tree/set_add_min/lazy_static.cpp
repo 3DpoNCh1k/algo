@@ -4,10 +4,10 @@
 #include <vector>
 #include <string>
 
-#include "algo/trees/segment_tree/trees.hpp"
-#include "algo/trees/segment_tree/operations/set_add.hpp"
-#include "algo/trees/segment_tree/statistics/minimum.hpp"
-#include "algo/utils/types/fundamentals.hpp"
+#include <algo/trees/segment_tree/trees.hpp>
+#include <algo/trees/segment_tree/operations/set_add.hpp>
+#include <algo/trees/segment_tree/statistics/minimum.hpp>
+#include <algo/utils/types/fundamentals.hpp>
 
 using namespace algo::trees::segment_tree;
 

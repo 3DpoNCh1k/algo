@@ -1,6 +1,6 @@
 #include <cstdlib>
 #include <iostream>
-#include "algo/trees/linkcut.hpp"
+#include <algo/trees/linkcut.hpp>
 
 int main() {
   std::ios::sync_with_stdio(false);

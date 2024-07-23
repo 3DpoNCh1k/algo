@@ -2,8 +2,8 @@
 
 #include <algo/trees/fenwick/operations/operation.hpp>
 #include <algo/trees/fenwick/statistics/base.hpp>
-#include "algo/trees/fenwick/statistics/statistics.hpp"
-#include "tests/testing/asserts.hpp"
+#include <algo/trees/fenwick/statistics/statistics.hpp>
+#include <tests/testing/asserts.hpp>
 
 using namespace algo::trees::fenwick;
 

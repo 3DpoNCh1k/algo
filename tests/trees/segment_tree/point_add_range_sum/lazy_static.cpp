@@ -1,9 +1,9 @@
 #include <iostream>
 #include <vector>
-#include "algo/utils/types/fundamentals.hpp"
-#include "algo/trees/segment_tree/trees.hpp"
-#include "algo/trees/segment_tree/operations/add.hpp"
-#include "algo/trees/segment_tree/statistics/sum.hpp"
+#include <algo/utils/types/fundamentals.hpp>
+#include <algo/trees/segment_tree/trees.hpp>
+#include <algo/trees/segment_tree/operations/add.hpp>
+#include <algo/trees/segment_tree/statistics/sum.hpp>
 
 using namespace algo::trees::segment_tree;
 

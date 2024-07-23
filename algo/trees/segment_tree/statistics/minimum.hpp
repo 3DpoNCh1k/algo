@@ -2,9 +2,9 @@
 
 #include <algorithm>
 #include <limits>
-#include "algo/trees/segment_tree/operations/set_add.hpp"
-#include "algo/trees/segment_tree/statistics/base.hpp"
-#include "algo/utils/types/fundamentals.hpp"
+#include <algo/trees/segment_tree/operations/set_add.hpp>
+#include <algo/trees/segment_tree/statistics/base.hpp>
+#include <algo/utils/types/fundamentals.hpp>
 
 namespace algo::trees::segment_tree::statistics {
 
