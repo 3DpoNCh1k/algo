@@ -78,8 +78,6 @@ struct Tester {
   }
 
   void Test(int k_query) {
-    dbg("Test");
-    dbg(tree);
     for (int q = 0; q < k_query; ++q) {
       if (random.GetBool()) {
         Update();
@@ -93,8 +91,6 @@ struct Tester {
     int u = random.GetInt(0, n - 1);
     int v = random.GetInt(0, n - 1);
     int value = random.GetInt(-1e9, 1e9);
-    // int value = random.GetInt(-1, 1);
-    dbg("Update", u, v, value);
     auto op = operations::AddOp{value};
     if (u == v && random.GetBool()) {
       hld.ApplyAtVertex(v, op);
@@ -107,13 +103,10 @@ struct Tester {
   void Ask() {
     int u = random.GetInt(0, n - 1);
     int v = random.GetInt(0, n - 1);
-    dbg("Ask", u, v);
     auto stat = (u == v && random.GetBool())
                     ? hld.GetFromVertex<statistics::Sum>(v)
                     : hld.GetFromPath<statistics::Sum>(u, v);
     auto correct_stat = brute_force.Get(u, v);
-    dbg(stat.result);
-    dbg(correct_stat.result);
     ASSERT_EQ(stat.result, correct_stat.result);
   }
 };

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <algo/trees/segment_tree/trees.hpp>
-#include "algo/utils/debug.hpp"
 
 namespace algo::trees::decompositions {
 
@@ -13,24 +12,11 @@ struct HeavyLightDecomposition {
 
   using InputTree = std::vector<std::vector<int>>;
 
-  int root;
-  int n;
-  const InputTree& input_tree;
-  SegmentTree segment_tree;
-
-  std::vector<int> height;
-  std::vector<int> parent;
-  std::vector<int> size;
-
-  std::vector<int> index;
-  int next_index;
-  std::vector<int> top;
-
   explicit HeavyLightDecomposition(const InputTree& tree)
-      : root(0),
-        n(tree.size()),
-        input_tree(tree),
-        segment_tree(n) {
+      : root_(0),
+        n_(tree.size()),
+        input_tree_(tree),
+        segment_tree_(n_) {
     AllocateMemory();
     BuildPaths();
   }
@@ -54,111 +40,114 @@ struct HeavyLightDecomposition {
   }
 
  private:
-  void Apply(int u, int v, const Operation& op) {
-    while (top[u] != top[v]) {
-      if (height[top[u]] < height[top[v]]) {
-        std::swap(u, v);
-      }
-      int l = index[top[u]];
-      int r = index[u];
-      dbg("Apply.Different paths", l, r);
-      segment_tree.template ApplyOnRange(l, r, op);
-      u = parent[top[u]];
-    }
-    if (height[u] < height[v]) {
-      std::swap(u, v);
-    }
-    int l = index[v];
-    int r = index[u];
-    dbg("Apply.Same path", l, r);
-    segment_tree.template ApplyOnRange(l, r, op);
-  };
-
-  template <typename Statistics>
-  Statistics Get(int u, int v) {
-    dbg("Get", u, v);
-    auto result = Statistics{};
-    while (top[u] != top[v]) {
-      if (height[top[u]] < height[top[v]]) {
-        std::swap(u, v);
-      }
-      int l = index[top[u]];
-      int r = index[u];
-      dbg("Get.Different paths", l, r);
-      result =
-          result.Merge(segment_tree.template GetFromRange<Statistics>(l, r));
-      u = parent[top[u]];
-    }
-    if (height[u] < height[v]) {
-      std::swap(u, v);
-    }
-    int l = index[v];
-    int r = index[u];
-    dbg("Get.Same path", l, r);
-    result = result.Merge(segment_tree.template GetFromRange<Statistics>(l, r));
-    return result;
-  };
-
   void AllocateMemory() {
-    parent.resize(n);
-    height.resize(n);
-    size.resize(n);
+    parent_.resize(n_);
+    height_.resize(n_);
+    size_.resize(n_);
 
-    index.resize(n);
-    top.resize(n);
+    index_.resize(n_);
+    top_.resize(n_);
   }
 
   void BuildPaths() {
-    parent[root] = -1;
-    height[root] = 0;
-    CalculateVertexInfo(root);
-    dbg(parent);
-    dbg(height);
-    dbg(size);
+    parent_[root_] = -1;
+    height_[root_] = 0;
+    CalculateVertexInfo(root_);
 
-    top[root] = root;
-    index[root] = 0;
-    next_index = 1;
-    CalculatePaths(root);
-
-    dbg(index);
-    dbg(top);
+    top_[root_] = root_;
+    index_[root_] = 0;
+    next_index_ = 1;
+    CalculatePaths(root_);
   }
 
   void CalculateVertexInfo(int v) {
-    size[v] = 1;
-    for (int u : input_tree[v]) {
-      if (u != parent[v]) {
-        parent[u] = v;
-        height[u] = height[v] + 1;
+    size_[v] = 1;
+    for (int u : input_tree_[v]) {
+      if (u != parent_[v]) {
+        parent_[u] = v;
+        height_[u] = height_[v] + 1;
         CalculateVertexInfo(u);
-        size[v] += size[u];
+        size_[v] += size_[u];
       }
     }
   }
 
   void CalculatePaths(int v) {
     int heavy_child = -1;
-    for (int u : input_tree[v]) {
-      if (u != parent[v]) {
-        if (heavy_child == -1 || size[heavy_child] < size[u]) {
+    for (int u : input_tree_[v]) {
+      if (u != parent_[v]) {
+        if (heavy_child == -1 || size_[heavy_child] < size_[u]) {
           heavy_child = u;
         }
       }
     }
     if (heavy_child != -1) {
-      top[heavy_child] = top[v];
-      index[heavy_child] = next_index++;
+      top_[heavy_child] = top_[v];
+      index_[heavy_child] = next_index_++;
       CalculatePaths(heavy_child);
     }
-    for (int u : input_tree[v]) {
-      if (u != parent[v] && u != heavy_child) {
-        top[u] = u;
-        index[u] = next_index++;
+    for (int u : input_tree_[v]) {
+      if (u != parent_[v] && u != heavy_child) {
+        top_[u] = u;
+        index_[u] = next_index_++;
         CalculatePaths(u);
       }
     }
   }
+
+  void Apply(int u, int v, const Operation& op) {
+    while (top_[u] != top_[v]) {
+      if (height_[top_[u]] < height_[top_[v]]) {
+        std::swap(u, v);
+      }
+      int l = index_[top_[u]];
+      int r = index_[u];
+      segment_tree_.template ApplyOnRange(l, r, op);
+      u = parent_[top_[u]];
+    }
+    if (height_[u] < height_[v]) {
+      std::swap(u, v);
+    }
+    int l = index_[v];
+    int r = index_[u];
+    segment_tree_.template ApplyOnRange(l, r, op);
+  };
+
+  template <typename Statistics>
+  Statistics Get(int u, int v) {
+    auto result = Statistics{};
+    while (top_[u] != top_[v]) {
+      if (height_[top_[u]] < height_[top_[v]]) {
+        std::swap(u, v);
+      }
+      int l = index_[top_[u]];
+      int r = index_[u];
+      result =
+          result.Merge(segment_tree_.template GetFromRange<Statistics>(l, r));
+      u = parent_[top_[u]];
+    }
+    if (height_[u] < height_[v]) {
+      std::swap(u, v);
+    }
+    int l = index_[v];
+    int r = index_[u];
+    result =
+        result.Merge(segment_tree_.template GetFromRange<Statistics>(l, r));
+    return result;
+  };
+
+  int root_;
+  int n_;
+  const InputTree& input_tree_;
+  SegmentTree segment_tree_;
+
+  std::vector<int> height_;
+  std::vector<int> parent_;
+  std::vector<int> size_;
+
+  std::vector<int> index_;
+  int next_index_;
+  std::vector<int> top_;
 };
 
 template <typename Operation, typename StatisticsTuple>
