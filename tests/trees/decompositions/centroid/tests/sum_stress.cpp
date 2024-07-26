@@ -74,12 +74,14 @@ struct Tester {
 
   void Update() {
     int u = random.GetInt(0, n - 1);
+    dbg("Update", u);
     centroids.ChangeColor(u);
     brute_force.ChangeColor(u);
   }
 
   void Ask() {
     int u = random.GetInt(0, n - 1);
+    dbg("Ask", u);
     auto result = centroids.GetSum(u);
     auto correct_result = brute_force.GetSum(u);
     dbg(u);
@@ -105,13 +107,15 @@ void Test(int k_rep, int min_tree_size, int max_tree_size, int k_query) {
     int n = random.GetInt(min_tree_size, max_tree_size);
     auto edges = tree_generator.GetEdges(n);
     auto tree = ConvertToTree(edges, n);
+    dbg("Test", tree);
     auto tester = Tester(random, tree);
     tester.Test(k_query);
   }
 }
 
 int main() {
-  Test(100, 1, 3, 3);
-  // Test(1000, 1, 10, 100);
-  // Test(50, 100, 500, 1000);
+  // Test(100, 1, 3, 3);
+  // Test(1000, 1, 50, 100);
+  Test(1000, 1, 10, 100);
+  Test(50, 100, 500, 1000);
 }
