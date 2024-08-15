@@ -1,10 +1,10 @@
 #pragma once
 
-#include <string>
 namespace algo::strings::aho_corasick::statistics {
+template <typename String>
 struct Base {
-  std::string pattern;
-  void SetPattern(const std::string& p) {
+  String pattern;
+  void SetPattern(const String& p) {
     pattern = p;
   }
 };

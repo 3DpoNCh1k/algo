@@ -3,7 +3,8 @@
 #include <algo/strings/aho_corasick/statistics/base.hpp>
 
 namespace algo::strings::aho_corasick::statistics {
-struct Leftmost : Base {
+template <typename String>
+struct Leftmost : Base<String> {
   int result = -1;
 
   Leftmost() {
@@ -35,7 +36,7 @@ struct Leftmost : Base {
 
  private:
   void FoundEndingAt(int index) {
-    int start_index = index - pattern.size() + 1;
+    int start_index = index - this->pattern.size() + 1;
     if (result == -1 || start_index < result) {
       result = start_index;
     }

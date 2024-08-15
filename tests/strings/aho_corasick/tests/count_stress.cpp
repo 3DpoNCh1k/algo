@@ -9,7 +9,9 @@
 #include "helpers/duel.hpp"
 
 using namespace algo::strings::aho_corasick;
-using namespace algo::strings::aho_corasick::statistics;
+
+using String = std::string;
+using Count = algo::strings::aho_corasick::statistics::Count<String>;
 
 struct CountBruteForce : BruteForce {
   explicit CountBruteForce(const Patterns& patterns)
@@ -29,7 +31,7 @@ struct CountBruteForce : BruteForce {
 
 struct CountTester : Tester {
   using BruteForceType = CountBruteForce;
-  using AhoCorasickType = AhoCorasick<Statistics<Count>>;
+  using AhoCorasickType = AhoCorasick<Statistics<Count>, String>;
   BruteForceType brute_force;
   AhoCorasickType aho_corasick;
   Duel<BruteForceType, AhoCorasickType, Count> duel;

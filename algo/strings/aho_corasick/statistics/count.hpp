@@ -4,7 +4,8 @@
 #include <algo/utils/types/fundamentals.hpp>
 
 namespace algo::strings::aho_corasick::statistics {
-struct Count : Base {
+template <typename String>
+struct Count : Base<String> {
   i64 result = 0;
 
   Count() {

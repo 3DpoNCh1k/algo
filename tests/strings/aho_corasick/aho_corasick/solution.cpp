@@ -5,7 +5,9 @@
 #include <algo/strings/aho_corasick/statistics/rightmost.hpp>
 
 using namespace algo::strings::aho_corasick;
-using namespace algo::strings::aho_corasick::statistics;
+using String = std::u32string;
+using Leftmost = algo::strings::aho_corasick::statistics::Leftmost<String>;
+using Rightmost = algo::strings::aho_corasick::statistics::Rightmost<String>;
 
 int main() {
   std::ios::sync_with_stdio(false);
@@ -13,15 +15,27 @@ int main() {
 
   int n;
   std::cin >> n;
-  std::vector<std::string> patterns(n);
-  for (int i = 0; i < n; ++i) {
-    std::cin >> patterns[i];
+  std::string s;
+  std::vector<String> patterns(n);
+  for (int p = 0; p < n; ++p) {
+    std::cin >> s;
+    patterns[p].resize(s.size());
+    for (int i = 0; i < s.size(); ++i) {
+      patterns[p][i] = s[i];
+    }
   }
-  std::string t;
-  std::cin >> t;
 
-  auto aho_corasick = AhoCorasick<Statistics<Leftmost, Rightmost>>(patterns);
+  String t;
+  std::cin >> s;
+  t.resize(s.size());
+  for (int i = 0; i < s.size(); ++i) {
+    t[i] = s[i];
+  }
+
+  auto aho_corasick =
+      AhoCorasick<Statistics<Leftmost, Rightmost>, String>(patterns);
   aho_corasick.Scan(t);
+
   for (int i = 0; i < n; ++i) {
     std::cout << aho_corasick.Get<Leftmost>(i).result << " "
               << aho_corasick.Get<Rightmost>(i).result << "\n";

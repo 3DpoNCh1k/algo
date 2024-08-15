@@ -3,17 +3,18 @@
 #include <map>
 
 namespace algo::strings::trie {
+template <typename Letter>
 struct TrieNode {
-  TrieNode(int parent, char letter)
+  TrieNode(int parent, Letter letter)
       : parent(parent),
         letter(letter) {
   }
   int parent;
-  char letter;
-  std::map<char, int> children;
+  Letter letter;
+  std::map<Letter, int> children;
   bool is_terminal = false;
 
-  std::map<char, int> cache;
+  std::map<Letter, int> cache;
   int longest_suffix = -1;
   int longest_terminal_suffix = -1;
 
@@ -22,11 +23,11 @@ struct TrieNode {
     return it != children.end();
   }
 
-  int GetChild(char c) {
+  int GetChild(Letter c) {
     return children[c];
   }
 
-  void AddChild(char c, int index) {
+  void AddChild(Letter c, int index) {
     children[c] = index;
   }
 };

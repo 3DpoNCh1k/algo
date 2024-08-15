@@ -10,7 +10,9 @@
 #include "helpers/duel.hpp"
 
 using namespace algo::strings::aho_corasick;
-using namespace algo::strings::aho_corasick::statistics;
+using String = std::string;
+using Leftmost = algo::strings::aho_corasick::statistics::Leftmost<String>;
+using Rightmost = algo::strings::aho_corasick::statistics::Rightmost<String>;
 
 struct LeftmostBruteForce : BruteForce {
   explicit LeftmostBruteForce(const Patterns& patterns)
@@ -47,7 +49,7 @@ struct RightmostBruteForce : BruteForce {
 };
 
 struct LeftmostAndRightmostTester : Tester {
-  using AhoCorasickType = AhoCorasick<Statistics<Leftmost, Rightmost>>;
+  using AhoCorasickType = AhoCorasick<Statistics<Leftmost, Rightmost>, String>;
   LeftmostBruteForce leftmost_brute_force;
   RightmostBruteForce rightmost_brute_force;
   AhoCorasickType aho_corasick;

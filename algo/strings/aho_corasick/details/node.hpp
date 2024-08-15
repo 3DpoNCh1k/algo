@@ -7,9 +7,9 @@
 
 namespace algo::strings::aho_corasick::details {
 
-template <typename StatisticsTuple>
+template <typename StatisticsTuple, typename String>
 struct Node {
-  explicit Node(const std::string& pattern) {
+  explicit Node(const String& pattern) {
     utils::meta::ForLoop<0, std::tuple_size_v<StatisticsTuple> - 1>(
         [&](auto index_number) {
           auto& stat = std::get<index_number.Value>(statistics_);

@@ -6,12 +6,14 @@
 #include <tests/testing/asserts.hpp>
 
 using namespace algo::strings::aho_corasick;
-using namespace algo::strings::aho_corasick::statistics;
+
+using String = std::string;
+using Leftmost = algo::strings::aho_corasick::statistics::Leftmost<String>;
 
 void Test() {
   {
     std::vector<std::string> patterns = {"b", "abc"};
-    AhoCorasick<Statistics<Leftmost>> aho_corasick(patterns);
+    AhoCorasick<Statistics<Leftmost>, String> aho_corasick(patterns);
     std::string s = "abde";
     aho_corasick.Scan(s);
     {

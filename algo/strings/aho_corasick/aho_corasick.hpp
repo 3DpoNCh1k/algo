@@ -3,7 +3,6 @@
 #include <algorithm>
 #include <functional>
 #include <map>
-#include <string>
 #include <vector>
 
 #include <algo/strings/aho_corasick/details/node.hpp>
@@ -11,17 +10,17 @@
 
 namespace algo::strings::aho_corasick {
 
-template <typename StatisticsTuple>
+template <typename StatisticsTuple, typename String>
 struct AhoCorasick {
-  using Patterns = std::vector<std::string>;
-  using PatternNode = details::Node<StatisticsTuple>;
+  using Pattern = String;
+  using PatternNode = details::Node<StatisticsTuple, String>;
 
-  explicit AhoCorasick(const Patterns& patterns) {
+  explicit AhoCorasick(const std::vector<Pattern>& patterns) {
     AllocateMemory(patterns);
     BuildTrie(patterns);
   }
 
-  void Scan(const std::string& s) {
+  void Scan(const String& s) {
     int trie_node_index = trie_.GetRoot();
     for (int i = 0; i < s.size(); ++i) {
       auto letter = s[i];
@@ -56,7 +55,7 @@ struct AhoCorasick {
   }
 
  private:
-  void AllocateMemory(const Patterns& patterns) {
+  void AllocateMemory(const std::vector<Pattern>& patterns) {
     input_pattern_to_pattern_.reserve(patterns.size());
     pattern_nodes_.reserve(patterns.size());
     pattern_lengths_.reserve(patterns.size());
@@ -68,7 +67,7 @@ struct AhoCorasick {
     trie_.Reserve(max_trie_size);
   }
 
-  void BuildTrie(const Patterns& patterns) {
+  void BuildTrie(const std::vector<Pattern>& patterns) {
     for (const auto& pattern : patterns) {
       int trie_node_index = trie_.AddString(pattern);
       if (IsNewPattern(trie_node_index)) {
@@ -83,14 +82,14 @@ struct AhoCorasick {
     return trie_to_pattern_.find(trie_node_index) == trie_to_pattern_.end();
   }
 
-  void AddPattern(int trie_node_index, const std::string& pattern) {
+  void AddPattern(int trie_node_index, const String& pattern) {
     int pattern_node_index = AddPatternNode(pattern);
     trie_to_pattern_[trie_node_index] = pattern_node_index;
     pattern_to_trie_[pattern_node_index] = trie_node_index;
     pattern_lengths_.emplace_back(pattern.size(), pattern_node_index);
   }
 
-  int AddPatternNode(const std::string& pattern) {
+  int AddPatternNode(const String& pattern) {
     pattern_nodes_.emplace_back(pattern);
     return pattern_nodes_.size() - 1;
   }
@@ -111,7 +110,7 @@ struct AhoCorasick {
     }
   }
 
-  trie::Trie trie_;
+  trie::Trie<String> trie_;
 
   std::vector<PatternNode> pattern_nodes_;
   std::vector<std::pair<int, int>> pattern_lengths_;

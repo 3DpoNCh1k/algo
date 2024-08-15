@@ -6,7 +6,9 @@
 #include <vector>
 
 namespace algo::strings::trie {
+template <typename String>
 struct Trie {
+  using Letter = typename String::value_type;
   Trie() {
     root_ = 0;
     AddNode(root_, 0);
@@ -16,7 +18,7 @@ struct Trie {
     nodes_.reserve(size);
   }
 
-  int AddString(const std::string& s) {
+  int AddString(const String& s) {
     int current_index = root_;
     for (char c : s) {
       if (!nodes_[current_index].HasChild(c)) {
@@ -96,7 +98,7 @@ struct Trie {
   }
 
   int root_;
-  std::vector<TrieNode> nodes_;
+  std::vector<TrieNode<Letter>> nodes_;
 };
 
 };  // namespace algo::strings::trie
