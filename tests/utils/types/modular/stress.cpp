@@ -4,9 +4,9 @@
 
 using namespace algo::utils;
 
-template <typename InternalType, InternalType Mod>
+template <typename ValueType, ValueType Mod>
 struct Tester {
-  using ModularType = Modular<InternalType, Mod>;
+  using ModularType = Modular<ValueType, Mod>;
 
   static constexpr i64 MOD = Mod;
   static const i64 MinValue = -10;

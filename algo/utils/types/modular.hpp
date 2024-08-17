@@ -5,17 +5,17 @@
 #include <algo/utils/types/fundamentals.hpp>
 
 namespace algo::utils {
-template <typename InternalType, InternalType Mod,
-          typename = std::enable_if_t<std::is_integral_v<InternalType> &&
-                                      std::is_signed_v<InternalType>>>
+template <typename ValueType, ValueType Mod,
+          typename = std::enable_if_t<std::is_integral_v<ValueType> &&
+                                      std::is_signed_v<ValueType>>>
 struct Modular {
-  static constexpr InternalType MOD = Mod;
-  InternalType value = 0;
+  static constexpr ValueType MOD = Mod;
+  ValueType value = 0;
 
   Modular(){};
   template <typename T,
             typename = std::enable_if_t<std::is_integral_v<T> &&
-                                        std::is_signed_v<InternalType>>>
+                                        std::is_signed_v<ValueType>>>
   // NOLINTNEXTLINE
   Modular(T v) {
     v %= MOD;
@@ -80,9 +80,15 @@ struct Modular {
     return value >= 0 && value < MOD;
   }
 
-  InternalType GetValue() {
+  ValueType GetValue() {
     return value;
   }
+
+  std::string ToString() const {
+    std::stringstream ss;
+    ss << "(" << value << " % " << MOD << ")";
+    return ss.str();
+  };
 };
 
 template <typename T, typename ModularInternalType, ModularInternalType Mod>
