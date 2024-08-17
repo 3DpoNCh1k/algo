@@ -1,5 +1,6 @@
 #pragma once
 
+#include <complex>
 #include <cstdint>
 
 // NOLINTBEGIN
@@ -12,3 +13,5 @@ using u32 = uint32_t;
 using i64 = int64_t;
 using u64 = uint64_t;
 // NOLINTEND
+using Real = long double;
+using Complex = std::complex<Real>;
