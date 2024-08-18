@@ -1,16 +1,13 @@
 #include <iostream>
 #include <vector>
 
-#include <algo/maths/algebra/fft.hpp>
+#include <algo/maths/algebra/fft/fft.hpp>
 #include <algo/utils/debug.hpp>
-
-// NOLINTBEGIN
-using ld = long double;
-using clx = std::complex<ld>;
-// NOLINTEND
+#include "algo/utils/bits.hpp"
+#include "algo/utils/types/fundamentals.hpp"
 
 struct Number {
-  std::vector<clx> coefs;
+  std::vector<Complex> coefs;
   int sign = 1;
 
   void Normalize() {
@@ -49,14 +46,17 @@ int main() {
   std::string first, second;
   std::cin >> first >> second;
 
-  auto get_number = [](std::string const& s) {
+  int n =
+      algo::utils::bits::PowerOfTwoThatAtLeast(first.size() + second.size());
+
+  auto get_number = [n](std::string const& s) {
     auto number = Number();
     int start = 0;
     if (s[0] == '-') {
       number.sign = -1;
       start = 1;
     }
-    number.coefs.resize(algo::maths::algebra::FFT::mxN);
+    number.coefs.resize(n);
     for (int i = s.size() - 1; i >= start; --i) {
       int j = s.size() - 1 - i;
       number.coefs[j] = s[i] - '0';
@@ -67,24 +67,11 @@ int main() {
   auto first_number = get_number(first);
   auto second_number = get_number(second);
 
-  auto fft = algo::maths::algebra::FFT();
-
-  std::vector<clx> first_values(fft.mxN);
-  std::vector<clx> second_values(fft.mxN);
-
-  fft.DoFFT(first_values, first_number.coefs);
-  fft.DoFFT(second_values, second_number.coefs);
-
-  std::vector<clx> result_values(fft.mxN);
-  for (int i = 0; i < result_values.size(); ++i) {
-    result_values[i] = first_values[i] * second_values[i];
-  }
+  auto fft = algo::maths::algebra::fft::FFT(n);
 
   auto result_number = Number();
-  result_number.coefs.resize(fft.mxN);
+  result_number.coefs = fft.Multiply(first_number.coefs, second_number.coefs);
   result_number.sign = first_number.sign * second_number.sign;
-  fft.DoInverseFFT(result_number.coefs, result_values);
-
   result_number.Normalize();
   std::cout << result_number.ToString() << std::endl;
 }

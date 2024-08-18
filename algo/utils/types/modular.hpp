@@ -1,8 +1,10 @@
 #pragma once
 
 #include <type_traits>
+#include <cassert>
 
 #include <algo/utils/types/fundamentals.hpp>
+#include <algo/maths/algebra/modular_inverse.hpp>
 
 namespace algo::utils {
 template <typename ValueType, ValueType Mod,
@@ -66,7 +68,18 @@ struct Modular {
   }
   // *
 
-  // TODO: operator/
+  // *
+  Modular operator/(const Modular& that) const {
+    auto inverse = maths::algebra::ModularInverse(that.value, MOD);
+    assert(inverse != -1);
+    return (value * inverse) % MOD;
+  }
+
+  Modular& operator/=(const Modular& that) {
+    *this = *this / that;
+    return *this;
+  }
+  // *
 
   bool operator==(const Modular& that) const {
     return value == that.value;
@@ -80,7 +93,7 @@ struct Modular {
     return value >= 0 && value < MOD;
   }
 
-  ValueType GetValue() {
+  ValueType GetValue() const {
     return value;
   }
 
@@ -91,33 +104,37 @@ struct Modular {
   };
 };
 
-template <typename T, typename ModularInternalType, ModularInternalType Mod>
-Modular<ModularInternalType, Mod> operator+(
-    const T& that, const Modular<ModularInternalType, Mod>& modular) {
+template <typename T, typename ValueType, ValueType Mod>
+Modular<ValueType, Mod> operator+(const T& that,
+                                  const Modular<ValueType, Mod>& modular) {
   return modular + that;
 }
 
-template <typename T, typename ModularInternalType, ModularInternalType Mod>
-Modular<ModularInternalType, Mod> operator-(
-    const T& that, const Modular<ModularInternalType, Mod>& modular) {
-  return Modular<ModularInternalType, Mod>(that) - modular;
+template <typename T, typename ValueType, ValueType Mod>
+Modular<ValueType, Mod> operator-(const T& that,
+                                  const Modular<ValueType, Mod>& modular) {
+  return Modular<ValueType, Mod>(that) - modular;
 }
 
-template <typename T, typename ModularInternalType, ModularInternalType Mod>
-Modular<ModularInternalType, Mod> operator*(
-    const T& that, const Modular<ModularInternalType, Mod>& modular) {
+template <typename T, typename ValueType, ValueType Mod>
+Modular<ValueType, Mod> operator*(const T& that,
+                                  const Modular<ValueType, Mod>& modular) {
   return modular * that;
 }
 
-template <typename T, typename ModularInternalType, ModularInternalType Mod>
-bool operator==(const T& that,
-                const Modular<ModularInternalType, Mod>& modular) {
+template <typename T, typename ValueType, ValueType Mod>
+Modular<ValueType, Mod> operator/(const T& that,
+                                  const Modular<ValueType, Mod>& modular) {
+  return modular / that;
+}
+
+template <typename T, typename ValueType, ValueType Mod>
+bool operator==(const T& that, const Modular<ValueType, Mod>& modular) {
   return modular == that;
 }
 
-template <typename T, typename ModularInternalType, ModularInternalType Mod>
-bool operator!=(const T& that,
-                const Modular<ModularInternalType, Mod>& modular) {
+template <typename T, typename ValueType, ValueType Mod>
+bool operator!=(const T& that, const Modular<ValueType, Mod>& modular) {
   return modular != that;
 }
 

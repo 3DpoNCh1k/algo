@@ -1,0 +1,16 @@
+{
+  "tests": [
+    {
+      "target": "root_unit.cpp",
+      "profile": "Release"
+    },
+    {
+      "target": "ntt_unit.cpp",
+      "profile": "DebugLocalDebug"
+    },
+    {
+      "target": "ntt_stress.cpp",
+      "profile": "DebugLocalDebug"
+    }
+  ]
+}
