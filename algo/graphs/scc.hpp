@@ -4,11 +4,9 @@
 #include <utility>
 #include <vector>
 
-namespace algo::graphs {
+#include <algo/graphs/entities.hpp>
 
-using Graph = std::vector<std::vector<int>>;
-using Components = std::vector<std::vector<int>>;
-using Condensation = std::pair<Graph, Components>;
+namespace algo::graphs {
 
 namespace scc::details {
 struct SCCImpl {

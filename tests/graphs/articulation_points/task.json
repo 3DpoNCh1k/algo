@@ -1,0 +1,12 @@
+{
+  "tests": [
+    {
+      "target": "unit.cpp",
+      "profile": "DebugLocalDebug"
+    },
+    {
+      "target": "stress.cpp",
+      "profile": "Debug"
+    }
+  ]
+}
