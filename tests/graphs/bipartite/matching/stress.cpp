@@ -10,10 +10,12 @@ using namespace algo::graphs;
 using namespace algo::graphs::bipartite;
 
 struct Tester {
+  bool use_kuhn;
   int max_n, max_m, max_e;
   algo::utils::generators::RandomGenerator random;
-  Tester(int n, int m, int e)
-      : max_n(n),
+  Tester(bool use_kuhn, int n, int m, int e)
+      : use_kuhn(use_kuhn),
+        max_n(n),
         max_m(m),
         max_e(e),
         random(n ^ m ^ e){};
@@ -21,7 +23,7 @@ struct Tester {
   void Test(int k_rep) {
     for (int rep = 0; rep < k_rep; ++rep) {
       auto g = GenerateGraph();
-      auto matching = Matching(g);
+      auto matching = Matching(g, use_kuhn);
       auto max_size = GetMatchingSize(g);
       ASSERT_EQ(matching.size(), max_size);
       Validate(matching, g);
@@ -83,9 +85,21 @@ struct Tester {
   };
 };
 
+void TestKuhn() {
+  Tester(true, 10, 10, 10).Test(1000);
+  Tester(true, 5, 5, 10).Test(1000);
+  Tester(true, 5, 10, 15).Test(100);
+  Tester(true, 10, 5, 15).Test(100);
+}
+
+void TestDinitz() {
+  Tester(false, 10, 10, 10).Test(1000);
+  Tester(false, 5, 5, 10).Test(1000);
+  Tester(false, 5, 10, 15).Test(100);
+  Tester(false, 10, 5, 15).Test(100);
+}
+
 int main() {
-  Tester(10, 10, 10).Test(1000);
-  Tester(5, 5, 10).Test(1000);
-  Tester(5, 10, 15).Test(100);
-  Tester(10, 5, 15).Test(100);
+  TestKuhn();
+  TestDinitz();
 }

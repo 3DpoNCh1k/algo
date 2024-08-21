@@ -5,7 +5,7 @@
 
 using namespace algo::graphs;
 
-void Test() {
+void Test(bool use_kuhn) {
   /*
   0 -> {0, 1}
   1 -> {0}
@@ -18,9 +18,7 @@ void Test() {
     }
   };
   // clang-format on
-
-  auto matching = bipartite::Matching(g);
-  dbg(matching);
+  auto matching = bipartite::Matching(g, use_kuhn);
 
   ASSERT_EQ(matching.size(), 2);
   {
@@ -33,6 +31,14 @@ void Test() {
   }
 }
 
+void TestKuhn() {
+  Test(true);
+}
+void TestDinitz() {
+  Test(false);
+}
+
 int main() {
-  Test();
+  TestKuhn();
+  TestDinitz();
 }

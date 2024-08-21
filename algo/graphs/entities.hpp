@@ -5,6 +5,8 @@
 #include <vector>
 #include <utility>
 
+#include <algo/utils/to_string/to_string.hpp>
+
 namespace algo::graphs {
 
 struct UndirectedEdge {
@@ -106,6 +108,14 @@ struct BipartiteGraph {
     }
     return edges;
   }
+
+  std::string ToString() const {
+    std::stringstream ss;
+    ss << "Bipartite graph" << " "
+       << utils::ToString(std::make_pair(n_left_side, n_right_side)) << "\n";
+    ss << utils::ToString(g);
+    return ss.str();
+  };
 };
 
 std::pair<int, Edges> ToEdges(const AdjacencyList& g) {

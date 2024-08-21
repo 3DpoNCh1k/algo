@@ -17,8 +17,8 @@ int main() {
   }
 
   auto matching = algo::graphs::bipartite::Matching(g);
-  std::cout << matching.size() << std::endl;
+  std::cout << matching.size() << "\n";
   for (auto [v, u] : matching) {
-    std::cout << v << " " << u << std::endl;
+    std::cout << v << " " << u << "\n";
   }
 }
