@@ -6,6 +6,7 @@
 #include <utility>
 
 #include <algo/utils/to_string/to_string.hpp>
+#include "algo/utils/types/fundamentals.hpp"
 
 namespace algo::graphs {
 
@@ -49,6 +50,25 @@ struct DirectedEdge {
     ss << "(" << from << " -> " << to << ")";
     return ss.str();
   };
+};
+
+struct DirectedEdgeWithCost : DirectedEdge {
+  DirectedEdgeWithCost(int from, int to, i64 cost)
+      : DirectedEdge(from, to),
+        cost(cost) {
+  }
+
+  bool operator==(const DirectedEdgeWithCost& that) const {
+    return from == that.from && to == that.to && cost == that.cost;
+  }
+
+  std::string ToString() const {
+    std::stringstream ss;
+    ss << "(" << from << " -> " << to << ")" << " cost: " << cost;
+    return ss.str();
+  };
+
+  i64 cost;
 };
 
 using Graph = std::vector<std::vector<int>>;
@@ -116,6 +136,37 @@ struct BipartiteGraph {
     ss << utils::ToString(g);
     return ss.str();
   };
+};
+
+struct BipartiteGraphWithCost {
+  BipartiteGraphWithCost(int n_left_side, int n_right_side)
+      : n_left_side(n_left_side),
+        n_right_side(n_right_side) {
+    g.resize(n_left_side);
+  }
+
+  BipartiteGraphWithCost(const BipartiteGraphWithCost& g) = default;
+  BipartiteGraphWithCost(BipartiteGraphWithCost&& g) = default;
+
+  BipartiteGraphWithCost& operator=(const BipartiteGraphWithCost& g) = default;
+  BipartiteGraphWithCost& operator=(BipartiteGraphWithCost&& g) = default;
+
+  void AddEdge(int from, int to, i64 cost) {
+    g[from].push_back(edges.size());
+    edges.emplace_back(from, to, cost);
+  }
+
+  auto& operator[](int i) {
+    return g[i];
+  }
+
+  auto& operator[](int i) const {
+    return g[i];
+  }
+
+  int n_left_side, n_right_side;
+  EdgeAdjacencyList g;
+  std::vector<DirectedEdgeWithCost> edges;
 };
 
 std::pair<int, Edges> ToEdges(const AdjacencyList& g) {
