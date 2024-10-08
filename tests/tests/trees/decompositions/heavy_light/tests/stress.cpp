@@ -3,6 +3,7 @@
 #include <algo/trees/decompositions/heavy_light.hpp>
 #include "algo/trees/segment_tree/trees.hpp"
 #include "tests/framework/asserts.hpp"
+#include "tests/framework/test.hpp"
 
 #include <algo/utils/generators/random.hpp>
 #include <algo/utils/generators/tree.hpp>
@@ -120,7 +121,7 @@ Tree ConvertToTree(const std::vector<TreeGenerator::Edge>& edges, int n) {
   return tree;
 };
 
-void Test(int k_rep, int min_tree_size, int max_tree_size, int k_query) {
+void Stress(int k_rep, int min_tree_size, int max_tree_size, int k_query) {
   RandomGenerator random(0);
   TreeGenerator tree_generator(random);
   for (int rep = 0; rep < k_rep; ++rep) {
@@ -132,7 +133,12 @@ void Test(int k_rep, int min_tree_size, int max_tree_size, int k_query) {
   }
 }
 
-int main() {
-  Test(1000, 1, 10, 100);
-  Test(50, 100, 500, 1000);
+TEST(StressSmall) {
+  Stress(1000, 1, 10, 100);
 }
+
+TEST(StressBig) {
+  Stress(50, 100, 500, 1000);
+}
+
+RUN_ALL_TESTS()

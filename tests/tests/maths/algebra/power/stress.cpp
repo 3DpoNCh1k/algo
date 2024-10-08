@@ -2,6 +2,7 @@
 #include "algo/utils/generators/random.hpp"
 #include "algo/utils/types/modular.hpp"
 #include "tests/framework/asserts.hpp"
+#include "tests/framework/test.hpp"
 
 template <typename T>
 T LinearPower(T value, int power) {
@@ -35,11 +36,24 @@ void TestBig(int k_rep) {
   }
 };
 
-int main() {
+TEST(StressIntSmall) {
   TestSmall<i64>();
-  TestSmall<algo::utils::Modular_2>();
-  TestSmall<algo::utils::Modular_1_000_000_007>();
+}
 
+TEST(StressModular2Small) {
+  TestSmall<algo::utils::Modular_2>();
+}
+
+TEST(StressModularBigPrimeSmall) {
+  TestSmall<algo::utils::Modular_1_000_000_007>();
+}
+
+TEST(StressModular2Big) {
   TestBig<algo::utils::Modular_2>(100);
+}
+
+TEST(StressModularBigPrimeBig) {
   TestBig<algo::utils::Modular_1_000_000_007>(100);
 }
+
+RUN_ALL_TESTS()

@@ -3,6 +3,7 @@
 #include <algo/trees/fenwick/trees.hpp>
 #include <algo/utils/generators/random.hpp>
 #include <tests/framework/asserts.hpp>
+#include "tests/framework/test.hpp"
 
 using namespace algo::trees::fenwick;
 using namespace operations;
@@ -58,12 +59,16 @@ struct AddAndSumTester {
   }
 };
 
-void TestAddAndSum() {
-  { AddAndSumTester(5).Test(10, -10, 10); }
-  { AddAndSumTester(333).Test(100, -1000, 10); }
-  { AddAndSumTester(11111).Test(1000, -1e9, 1e9); }
+TEST(StressSmall) {
+  AddAndSumTester(5).Test(10, -10, 10);
 }
 
-int main() {
-  TestAddAndSum();
+TEST(StressMedium) {
+  AddAndSumTester(333).Test(100, -1000, 10);
 }
+
+TEST(StressBig) {
+  AddAndSumTester(11111).Test(1000, -1e9, 1e9);
+}
+
+RUN_ALL_TESTS()

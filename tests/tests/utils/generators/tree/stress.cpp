@@ -6,6 +6,7 @@
 #include <algo/utils/generators/tree.hpp>
 
 #include <tests/framework/asserts.hpp>
+#include "tests/framework/test.hpp"
 
 using namespace algo::utils::generators;
 
@@ -60,7 +61,7 @@ struct Graph {
   }
 };
 
-void TestGraph() {
+TEST(Graph) {
   {
     auto edges = std::vector<std::pair<int, int>>({});
     auto graph = Graph(edges);
@@ -112,7 +113,7 @@ void TestGraph() {
   }
 }
 
-void TestGetEdges() {
+TEST(GetEdges) {
   auto random = RandomGenerator(0);
   auto tree_generator = TreeGenerator(random);
   {
@@ -137,7 +138,4 @@ void TestGetEdges() {
   }
 }
 
-int main() {
-  TestGraph();
-  TestGetEdges();
-}
+RUN_ALL_TESTS()

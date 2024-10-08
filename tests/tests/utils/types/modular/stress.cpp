@@ -1,6 +1,8 @@
 #include <algo/utils/types/modular.hpp>
 #include <algo/utils/types/fundamentals.hpp>
 #include <tests/framework/asserts.hpp>
+#include "algo/utils/meta.hpp"
+#include "tests/framework/test.hpp"
 
 using namespace algo::utils;
 
@@ -143,34 +145,22 @@ struct Tester {
   }
 };
 
-void Test64() {
-  Tester<i64, 1>().Test();
-  Tester<i64, 2>().Test();
-  Tester<i64, 3>().Test();
-  Tester<i64, 4>().Test();
-  Tester<i64, 5>().Test();
-  Tester<i64, 6>().Test();
-  Tester<i64, 7>().Test();
-  Tester<i64, 8>().Test();
-  Tester<i64, 9>().Test();
-  Tester<i64, 10>().Test();
+TEST(From1To10i64) {
+  meta::ForLoop<1, 10>([](auto int_number) {
+    Tester<i64, int_number.Value>().Test();
+  });
 }
 
-void Test32() {
+TEST(13i32) {
   Tester<i32, 13>().Test();
 }
 
-void Test16() {
+TEST(17i16) {
   Tester<i16, 17>().Test();
 }
 
-void Test8() {
+TEST(37i8) {
   Tester<i8, 37>().Test();
 }
 
-int main() {
-  Test8();
-  Test16();
-  Test32();
-  Test64();
-}
+RUN_ALL_TESTS()

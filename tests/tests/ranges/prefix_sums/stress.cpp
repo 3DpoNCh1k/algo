@@ -4,6 +4,7 @@
 #include <algo/ranges/prefix_sums.hpp>
 #include <algo/utils/generators/random.hpp>
 #include <tests/framework/asserts.hpp>
+#include "tests/framework/test.hpp"
 
 using namespace algo::ranges;
 
@@ -63,7 +64,7 @@ struct Tester {
   }
 };
 
-void Test(int rep, int max_n, int from, int to, int k_queries) {
+void Stress(int rep, int max_n, int from, int to, int k_queries) {
   algo::utils::generators::RandomGenerator random;
   for (int r = 0; r < rep; ++r) {
     int n = random.GetInt(1, max_n);
@@ -75,7 +76,12 @@ void Test(int rep, int max_n, int from, int to, int k_queries) {
   }
 }
 
-int main() {
-  Test(10, 100, -100, 100, 1000);
-  Test(10, 1000, -1e9, 1e9, 1000);
+TEST(StressSmall) {
+  Stress(10, 100, -100, 100, 1000);
 }
+
+TEST(StressBig) {
+  Stress(10, 1000, -1e9, 1e9, 1000);
+}
+
+RUN_ALL_TESTS()

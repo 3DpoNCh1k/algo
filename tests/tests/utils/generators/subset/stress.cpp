@@ -4,10 +4,11 @@
 #include <algo/utils/generators/subset.hpp>
 
 #include <tests/framework/asserts.hpp>
+#include "tests/framework/test.hpp"
 
 using namespace algo::utils::generators;
 
-void TestGetFromRange() {
+TEST(StressGetFromRange) {
   auto random_generator = RandomGenerator(0);
   auto subset_generator = SubsetGenerator(random_generator);
   {
@@ -28,6 +29,4 @@ void TestGetFromRange() {
   }
 }
 
-int main() {
-  TestGetFromRange();
-}
+RUN_ALL_TESTS()

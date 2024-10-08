@@ -4,6 +4,7 @@
 #include "algo/utils/debug.hpp"
 #include "helpers.hpp"
 #include "tests/framework/asserts.hpp"
+#include "tests/framework/test.hpp"
 
 struct MultiplyTester {
   int from, to;
@@ -120,37 +121,34 @@ struct ScalarProductTester {
   };
 };
 
-void TestMultiply() {
-  {
-    auto tester = MultiplyTester(-10, 10);
-    tester.Test(1000, 10);
-  }
-  {
-    auto tester = MultiplyTester(-1e3, 1e3);
-    tester.Test(10, 1000);
-  }
-  {
-    auto tester = MultiplyTester(-1e3, 1e3);
-    tester.Test(100, 100);
-  }
+TEST(MultiplySmall) {
+  auto tester = MultiplyTester(-10, 10);
+  tester.Test(1000, 10);
 }
 
-void TestScalarProducts() {
-  {
-    auto tester = ScalarProductTester(-10, 10);
-    tester.Test(1000, 10);
-  }
-  {
-    auto tester = ScalarProductTester(-1e3, 1e3);
-    tester.Test(10, 1000);
-  }
-  {
-    auto tester = ScalarProductTester(-1e3, 1e3);
-    tester.Test(100, 100);
-  }
+TEST(MultiplyMedium) {
+  auto tester = MultiplyTester(-1e3, 1e3);
+  tester.Test(100, 100);
 }
 
-int main() {
-  TestMultiply();
-  TestScalarProducts();
+TEST(MultiplyBig) {
+  auto tester = MultiplyTester(-1e3, 1e3);
+  tester.Test(10, 1000);
 }
+
+TEST(ScalarProductsSmall) {
+  auto tester = ScalarProductTester(-10, 10);
+  tester.Test(1000, 10);
+}
+
+TEST(ScalarProductsMedium) {
+  auto tester = ScalarProductTester(-1e3, 1e3);
+  tester.Test(100, 100);
+}
+
+TEST(ScalarProductsBig) {
+  auto tester = ScalarProductTester(-1e3, 1e3);
+  tester.Test(10, 1000);
+}
+
+RUN_ALL_TESTS()

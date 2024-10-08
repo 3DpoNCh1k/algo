@@ -5,6 +5,7 @@
 #include <algo/utils/generators/string.hpp>
 
 #include <tests/framework/asserts.hpp>
+#include "tests/framework/test.hpp"
 
 struct Tester {
   algo::utils::generators::RandomGenerator random;
@@ -47,8 +48,16 @@ struct Tester {
   };
 };
 
-int main() {
+TEST(StressSmall) {
   Tester(10).Test(10'000);
+}
+
+TEST(StressMedium) {
   Tester(100).Test(1000);
+}
+
+TEST(StressBig) {
   Tester(1000).Test(1000);
 }
+
+RUN_ALL_TESTS()
