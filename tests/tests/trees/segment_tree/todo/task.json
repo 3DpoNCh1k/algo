@@ -1,7 +1,0 @@
-{
-  "library-checker": {
-    "link": "https://judge.yosupo.jp/problem/range_affine_point_get",
-    "path": "datastructure/range_affine_point_get",
-    "targets": []
-  }
-}
