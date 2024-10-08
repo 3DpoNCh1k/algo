@@ -5,7 +5,7 @@
 #include <algo/utils/generators/random.hpp>
 #include <algo/utils/generators/tree.hpp>
 
-#include <tests/testing/asserts.hpp>
+#include <tests/framework/asserts.hpp>
 
 using namespace algo::utils::generators;
 

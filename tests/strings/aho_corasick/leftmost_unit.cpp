@@ -3,7 +3,7 @@
 #include <algo/strings/aho_corasick/aho_corasick.hpp>
 #include <algo/strings/aho_corasick/statistics/leftmost.hpp>
 #include <algo/utils/debug.hpp>
-#include <tests/testing/asserts.hpp>
+#include <tests/framework/asserts.hpp>
 
 using namespace algo::strings::aho_corasick;
 

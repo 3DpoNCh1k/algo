@@ -3,7 +3,7 @@
 
 #include "algo/utils/debug.hpp"
 #include "helpers.hpp"
-#include "tests/testing/asserts.hpp"
+#include "tests/framework/asserts.hpp"
 
 struct MultiplyTester {
   int from, to;

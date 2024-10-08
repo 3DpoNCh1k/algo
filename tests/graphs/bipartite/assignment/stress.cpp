@@ -5,7 +5,7 @@
 #include <algo/graphs/bipartite/assignment.hpp>
 #include "algo/utils/generators/random.hpp"
 #include "algo/utils/types/fundamentals.hpp"
-#include "tests/testing/asserts.hpp"
+#include "tests/framework/asserts.hpp"
 
 using namespace algo::graphs;
 using namespace algo::graphs::bipartite;

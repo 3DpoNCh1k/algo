@@ -1,6 +1,6 @@
 #include <algo/utils/types/modular.hpp>
 #include <algo/utils/types/fundamentals.hpp>
-#include <tests/testing/asserts.hpp>
+#include <tests/framework/asserts.hpp>
 
 using namespace algo::utils;
 

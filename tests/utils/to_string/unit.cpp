@@ -7,15 +7,16 @@
 #include <string>
 
 #include <algo/utils/to_string/to_string.hpp>
-#include <tests/testing/stubs/dummies.hpp>
-#include <tests/testing/asserts.hpp>
+#include <tests/framework/stubs/dummies.hpp>
+#include <tests/framework/asserts.hpp>
+#include "tests/framework/test.hpp"
 
 using algo::utils::ToString;
 
 #define CHECK_TO_STRING(object, expected) \
   { ASSERT_EQ(ToString(object), expected); }
 
-void TestPair() {
+TEST(Pair) {
   {
     auto p = std::make_pair(1, 2);
     CHECK_TO_STRING(p, "(1, 2)");
@@ -26,7 +27,7 @@ void TestPair() {
   }
 }
 
-void TestArray() {
+TEST(Array) {
   {
     auto a = std::array<int, 0>();
     CHECK_TO_STRING(a, "[]");
@@ -52,7 +53,7 @@ void TestArray() {
   }
 }
 
-void TestVector() {
+TEST(Vector) {
   {
     auto v = std::vector<int>();
     CHECK_TO_STRING(v, "[]");
@@ -78,43 +79,34 @@ void TestVector() {
   }
 }
 
-void TestBitset() {
+TEST(Bitset) {
   std::string bit_string = "00110010";
   auto b = std::bitset<8>(bit_string);
   CHECK_TO_STRING(b, bit_string);
 }
 
-void TestString() {
+TEST(String) {
   std::string s = "Hello, world!";
   CHECK_TO_STRING(s, s);
 }
 
-void TestVectorBool() {
+TEST(VectorBool) {
   {
     auto v = std::vector<bool>({false, true, false});
     CHECK_TO_STRING(v, "010");
   }
 }
 
-void TestStd() {
-  TestPair();
-  TestArray();
-  TestBitset();
-  TestString();
-  TestVector();
-  TestVectorBool();
-}
-
-void TestHasToString() {
+TEST(HasToString) {
   CHECK_TO_STRING(DummyWithToString(), "I'm DummyWithToString!");
 }
 
-void TestToStringable() {
+TEST(ToStringable) {
   CHECK_TO_STRING(123, "123");
   CHECK_TO_STRING(123L, "123");
 }
 
-void TestIterable() {
+TEST(Iterable) {
   {
     auto s = std::set<int>({1, 2, 3});
     std::string expected = "{1, 2, 3}";
@@ -158,17 +150,11 @@ void TestIterable() {
   }
 }
 
-void TestFundamentals() {
+TEST(Fundamentals) {
   CHECK_TO_STRING(false, "false");
   CHECK_TO_STRING(true, "true");
   CHECK_TO_STRING("Hi", "Hi");
   CHECK_TO_STRING('a', "a");
 }
 
-int main() {
-  TestStd();
-  TestHasToString();
-  TestToStringable();
-  TestIterable();
-  TestFundamentals();
-}
+RUN_ALL_TESTS()

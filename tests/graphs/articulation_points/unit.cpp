@@ -3,9 +3,10 @@
 #include <algo/graphs/entities.hpp>
 #include "algo/graphs/articulation_points.hpp"
 #include "algo/utils/debug.hpp"
-#include "tests/testing/asserts.hpp"
+#include "tests/framework/asserts.hpp"
+#include "tests/framework/test.hpp"
 
-void TestTree() {
+TEST(Tree) {
   // 0 - 1 - 2
   // clang-format off
   std::vector<std::vector<int>> g = {
@@ -19,7 +20,7 @@ void TestTree() {
   ASSERT_CONTAINS(articulation_points, 1);
 };
 
-void TestGraph() {
+TEST(Graph) {
   /*
       1 ---- 4
      / \    / \
@@ -41,7 +42,4 @@ void TestGraph() {
   ASSERT_CONTAINS(articulation_points, 4);
 };
 
-int main() {
-  TestTree();
-  TestGraph();
-}
+RUN_ALL_TESTS()

@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include <tests/testing/asserts.hpp>
+#include <tests/framework/asserts.hpp>
 
 template <typename BruteForce, typename AhoCorasick, typename Statistics>
 struct Duel {

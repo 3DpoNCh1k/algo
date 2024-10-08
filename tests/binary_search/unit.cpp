@@ -1,9 +1,10 @@
 #include <algo/binary_search/binary_search.hpp>
-#include "tests/testing/asserts.hpp"
+#include "tests/framework/asserts.hpp"
+#include <tests/framework/test.hpp>
 
 using namespace algo::binary_search;
 
-void TestFindFirstTrue() {
+TEST(FindFirstTrue) {
   {
     std::vector<bool> value = {false, false, false};
     auto result = FindFirstTrue(0, 2, [&value](int i) {
@@ -34,7 +35,7 @@ void TestFindFirstTrue() {
   }
 }
 
-void TestFindLastTrue() {
+TEST(FindLastTrue) {
   {
     std::vector<bool> value = {false, false, false};
     auto result = FindLastTrue(0, 2, [&value](int i) {
@@ -65,7 +66,7 @@ void TestFindLastTrue() {
   }
 }
 
-void TestFindFirstFalse() {
+TEST(FindFirstFalse) {
   {
     std::vector<bool> value = {true, true, true};
     auto result = FindFirstFalse(0, 2, [&value](int i) {
@@ -96,7 +97,7 @@ void TestFindFirstFalse() {
   }
 }
 
-void TestFindLastFalse() {
+TEST(FindLastFalse) {
   {
     std::vector<bool> value = {false, false, false};
     auto result = FindLastFalse(0, 2, [&value](int i) {
@@ -127,9 +128,4 @@ void TestFindLastFalse() {
   }
 }
 
-int main() {
-  TestFindFirstTrue();
-  TestFindLastTrue();
-  TestFindFirstFalse();
-  TestFindLastFalse();
-}
+RUN_ALL_TESTS()

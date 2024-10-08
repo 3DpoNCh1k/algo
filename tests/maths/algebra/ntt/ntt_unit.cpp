@@ -1,5 +1,5 @@
 #include "algo/utils/debug.hpp"
-#include "tests/testing/asserts.hpp"
+#include "tests/framework/asserts.hpp"
 
 #include <algo/maths/algebra/ntt/roots.hpp>
 #include <algo/maths/algebra/ntt/ntt.hpp>

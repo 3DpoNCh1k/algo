@@ -3,14 +3,15 @@
 #include <algo/trees/fenwick/operations/operation.hpp>
 #include <algo/trees/fenwick/statistics/base.hpp>
 #include <algo/trees/fenwick/statistics/statistics.hpp>
-#include <tests/testing/asserts.hpp>
+#include <tests/framework/asserts.hpp>
+#include "tests/framework/test.hpp"
 
 using namespace algo::trees::fenwick;
 
 using std::cout;
 using std::endl;
 
-void Test() {
+TEST(Simple) {
   double op = 0;
   int i = 1;
   int j = 2;
@@ -49,6 +50,4 @@ void Test() {
   }
 };
 
-int main() {
-  Test();
-}
+RUN_ALL_TESTS()

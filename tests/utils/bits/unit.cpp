@@ -1,17 +1,18 @@
 #include <algo/utils/bits.hpp>
 #include <algo/utils/meta.hpp>
-#include <tests/testing/asserts.hpp>
+#include <tests/framework/asserts.hpp>
+#include "tests/framework/test.hpp"
 
 using namespace algo::utils::bits;
 
-void TestCountOfOnes() {
+TEST(CountOfOnes) {
   STATIC_ASSERT_EQ(CountOfOnes(u64(0)), 0);
   STATIC_ASSERT_EQ(CountOfOnes(u64(1)), 1);
   STATIC_ASSERT_EQ(CountOfOnes(u64(-1)), 64);
   STATIC_ASSERT_EQ(CountOfOnes(u64(123)), 6);
 }
 
-void TestIsPowerOfTwo() {
+TEST(IsPowerOfTwo) {
   {
     algo::utils::meta::ForLoop<0, 63>([](auto int_number) {
       constexpr auto Value = 1LL << int_number.Value;
@@ -26,7 +27,7 @@ void TestIsPowerOfTwo() {
   }
 }
 
-void TestIndexOfLeastSignificantBit() {
+TEST(IndexOfLeastSignificantBit) {
   {
     algo::utils::meta::ForLoop<0, 63>([](auto int_number) {
       constexpr auto Value = 1LL << int_number.Value;
@@ -42,7 +43,7 @@ void TestIndexOfLeastSignificantBit() {
   }
 }
 
-void TestLeastSignificantBitOnly() {
+TEST(LeastSignificantBitOnly) {
   {
     algo::utils::meta::ForLoop<0, 63>([](auto int_number) {
       constexpr auto Value = 1LL << int_number.Value;
@@ -57,7 +58,7 @@ void TestLeastSignificantBitOnly() {
   }
 }
 
-void TestIndexOfMostSignificantBit() {
+TEST(IndexOfMostSignificantBit) {
   {
     algo::utils::meta::ForLoop<0, 63>([](auto int_number) {
       constexpr auto Value = 1LL << int_number.Value;
@@ -72,7 +73,7 @@ void TestIndexOfMostSignificantBit() {
   }
 }
 
-void TestMostSignificantBitOnly() {
+TEST(MostSignificantBitOnly) {
   {
     algo::utils::meta::ForLoop<0, 63>([](auto int_number) {
       constexpr auto Value = 1LL << int_number.Value;
@@ -87,7 +88,7 @@ void TestMostSignificantBitOnly() {
   }
 }
 
-void TestExponentOfPowerOfTwoThatAtLeast() {
+TEST(ExponentOfPowerOfTwoThatAtLeast) {
   {
     algo::utils::meta::ForLoop<0, 63>([](auto int_number) {
       constexpr auto Value = 1LL << int_number.Value;
@@ -103,7 +104,7 @@ void TestExponentOfPowerOfTwoThatAtLeast() {
   }
 }
 
-void TestPowerOfTwoThatAtLeast() {
+TEST(PowerOfTwoThatAtLeast) {
   {
     algo::utils::meta::ForLoop<0, 63>([](auto int_number) {
       constexpr auto Value = 1LL << int_number.Value;
@@ -118,13 +119,4 @@ void TestPowerOfTwoThatAtLeast() {
   }
 }
 
-int main() {
-  TestCountOfOnes();
-  TestIsPowerOfTwo();
-  TestIndexOfLeastSignificantBit();
-  TestLeastSignificantBitOnly();
-  TestIndexOfMostSignificantBit();
-  TestMostSignificantBitOnly();
-  TestExponentOfPowerOfTwoThatAtLeast();
-  TestPowerOfTwoThatAtLeast();
-}
+RUN_ALL_TESTS()

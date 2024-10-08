@@ -3,7 +3,7 @@
 #include <algo/trees/decompositions/centroid.hpp>
 #include "algo/trees/segment_tree/trees.hpp"
 #include "algo/utils/debug.hpp"
-#include "tests/testing/asserts.hpp"
+#include "tests/framework/asserts.hpp"
 
 #include <algo/utils/generators/random.hpp>
 #include <algo/utils/generators/tree.hpp>

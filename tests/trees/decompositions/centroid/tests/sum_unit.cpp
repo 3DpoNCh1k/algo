@@ -6,7 +6,7 @@
 #include "algo/trees/segment_tree/statistics/minimum.hpp"
 #include "algo/trees/segment_tree/trees.hpp"
 #include "algo/utils/debug.hpp"
-#include "tests/testing/asserts.hpp"
+#include "tests/framework/asserts.hpp"
 
 using namespace algo::trees::decompositions;
 using namespace algo::trees::segment_tree;

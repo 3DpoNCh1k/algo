@@ -1,11 +1,12 @@
 #include <algo/graphs/bipartite/assignment.hpp>
 #include "algo/graphs/entities.hpp"
 #include "algo/utils/debug.hpp"
-#include "tests/testing/asserts.hpp"
+#include "tests/framework/asserts.hpp"
+#include "tests/framework/test.hpp"
 
 using namespace algo::graphs;
 
-void Test() {
+TEST(Simple) {
   // {
   //   BipartiteGraphWithCost grid(2, 2);
   //   grid.AddEdge(0, 0, 0);
@@ -66,6 +67,4 @@ void Test() {
   }
 }
 
-int main() {
-  Test();
-}
+RUN_ALL_TESTS()

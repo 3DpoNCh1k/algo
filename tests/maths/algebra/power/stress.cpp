@@ -1,7 +1,7 @@
 #include <algo/maths/algebra/power.hpp>
 #include "algo/utils/generators/random.hpp"
 #include "algo/utils/types/modular.hpp"
-#include "tests/testing/asserts.hpp"
+#include "tests/framework/asserts.hpp"
 
 template <typename T>
 T LinearPower(T value, int power) {

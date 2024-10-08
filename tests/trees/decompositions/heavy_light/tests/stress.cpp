@@ -2,7 +2,7 @@
 #include <algo/trees/segment_tree/statistics/sum.hpp>
 #include <algo/trees/decompositions/heavy_light.hpp>
 #include "algo/trees/segment_tree/trees.hpp"
-#include "tests/testing/asserts.hpp"
+#include "tests/framework/asserts.hpp"
 
 #include <algo/utils/generators/random.hpp>
 #include <algo/utils/generators/tree.hpp>

@@ -2,13 +2,14 @@
 #include <algo/trees/fenwick/statistics/sum.hpp>
 
 #include <algo/trees/fenwick/trees.hpp>
-#include <tests/testing/asserts.hpp>
+#include <tests/framework/asserts.hpp>
+#include "tests/framework/test.hpp"
 
 using namespace algo::trees::fenwick;
 using namespace operations;
 using namespace statistics;
 
-void Test() {
+TEST(Simple) {
   auto fenwick = Fenwick3D<Operation<AddOp>, Statistics<Sum>>(3, 3, 3);
   {
     auto add = AddOp{1};
@@ -34,6 +35,4 @@ void Test() {
   }
 };
 
-int main() {
-  Test();
-}
+RUN_ALL_TESTS()

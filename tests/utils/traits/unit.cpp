@@ -5,8 +5,9 @@
 
 #include <algo/utils/traits/traits.hpp>
 #include <algo/utils/preprocessor.hpp>
-#include <tests/testing/stubs/dummies.hpp>
-#include <tests/testing/asserts.hpp>
+#include <tests/framework/stubs/dummies.hpp>
+#include <tests/framework/asserts.hpp>
+#include "tests/framework/test.hpp"
 
 // NOLINTNEXTLINE
 using namespace algo::utils::traits;
@@ -57,31 +58,31 @@ using namespace algo::utils::traits;
     CHECK_ALL(is_std_array_v, T); \
   }
 
-void RunHasToStringTests() {
+TEST(HasToString) {
   CHECK_HAS_TO_STRING(DummyWithToString);
 }
 
-void RunIsToStringableTests() {
+TEST(IsToStringable) {
   CHECK_IS_TO_STRINGABLE(int);
 }
 
-void RunIterbaleTests() {
+TEST(Iterbale) {
   CHECK_IS_ITERBALE(std::vector<Dummy>);
   CHECK_IS_ITERBALE(std::set<int>);
   CHECK_IS_ITERBALE(AS_SINGLE_ARGUMENT(std::map<std::string, int>));
 }
 
-void RunVectorTests() {
+TEST(Vector) {
   CHECK_IS_STD_VECTOR(std::vector<int>);
   CHECK_IS_STD_VECTOR(std::vector<std::vector<int>>);
 }
 
-void RunArrayTests() {
+TEST(Array) {
   CHECK_IS_STD_ARRAY(AS_SINGLE_ARGUMENT(std::array<int, 0>));
   CHECK_IS_STD_ARRAY(AS_SINGLE_ARGUMENT(std::array<std::array<int, 0>, 1>));
 }
 
-void RunDimensionTest() {
+TEST(Dimension) {
   STATIC_ASSERT_EQ(dimension_v<int>, 0);
   STATIC_ASSERT_EQ(dimension_v<std::string>, 0);
   STATIC_ASSERT_EQ(dimension_v<std::set<int>>, 0);
@@ -94,15 +95,4 @@ void RunDimensionTest() {
       AS_SINGLE_ARGUMENT(dimension_v<std::array<std::vector<int>, 0>>), 2);
 };
 
-void RunTests() {
-  RunHasToStringTests();
-  RunIsToStringableTests();
-  RunIterbaleTests();
-  RunVectorTests();
-  RunArrayTests();
-  RunDimensionTest();
-}
-
-int main() {
-  RunTests();
-}
+RUN_ALL_TESTS()

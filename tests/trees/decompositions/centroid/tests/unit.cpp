@@ -6,12 +6,13 @@
 #include "algo/trees/segment_tree/statistics/minimum.hpp"
 #include "algo/trees/segment_tree/trees.hpp"
 #include "algo/utils/debug.hpp"
-#include "tests/testing/asserts.hpp"
+#include "tests/framework/asserts.hpp"
+#include "tests/framework/test.hpp"
 
 using namespace algo::trees::decompositions;
 using namespace algo::trees::segment_tree;
 
-void Test1() {
+TEST(Simple1) {
   using Tree = std::vector<std::vector<int>>;
   // 0 - 1
   Tree tree = {{1}, {0}};
@@ -30,7 +31,7 @@ void Test1() {
   }
 }
 
-void Test2() {
+TEST(Simple2) {
   using Tree = std::vector<std::vector<int>>;
   // 0 - 1 - 2
   // clang-format off
@@ -60,7 +61,4 @@ void Test2() {
   }
 }
 
-int main() {
-  Test1();
-  Test2();
-}
+RUN_ALL_TESTS()

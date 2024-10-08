@@ -1,14 +1,15 @@
 #include <algo/utils/meta.hpp>
-#include <tests/testing/asserts.hpp>
+#include <tests/framework/asserts.hpp>
+#include "tests/framework/test.hpp"
 
 using namespace algo::utils::meta;
 
-void TestIntNumber() {
+TEST(IntNumber) {
   STATIC_ASSERT_EQ(IntNumber<-1>::Value, -1);
   STATIC_ASSERT_EQ(IntNumber<1>::Value, 1);
 }
 
-void TestConcat() {
+TEST(Concat) {
   {
     constexpr auto SeqA = IntSeq<1, 2>{};
     constexpr auto SeqB = IntSeq<3, 4>{};
@@ -43,7 +44,7 @@ void TestConcat() {
   }
 }
 
-void TestIntRange() {
+TEST(IntRange) {
   {
     constexpr auto RangeSeq = IntRange<0, 0>();
     constexpr auto Expected = IntSeq<0>();
@@ -80,16 +81,11 @@ constexpr void CalculateSum() {
   ASSERT_EQ(s, S);
 }
 
-constexpr void TestForLoop() {
+TEST(ForLoop) {
   CalculateSum<1, 3>();
   CalculateSum<-15, 17>();
   CalculateSum<0, 0>();
   CalculateSum<1, 0>();
 }
 
-int main() {
-  TestIntNumber();
-  TestConcat();
-  TestIntRange();
-  TestForLoop();
-}
+RUN_ALL_TESTS()

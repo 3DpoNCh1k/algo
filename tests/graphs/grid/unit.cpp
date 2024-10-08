@@ -1,11 +1,12 @@
 #include <utility>
 
 #include <algo/graphs/grid.hpp>
-#include <tests/testing/asserts.hpp>
+#include <tests/framework/asserts.hpp>
+#include "tests/framework/test.hpp"
 
 using namespace algo::graphs;
 
-void TestNeighbors4() {
+TEST(Neighbors4) {
   {
     auto neighbors = Grid(1, 1).Neighbors4(0, 0);
     ASSERT_TRUE(neighbors.empty());
@@ -66,7 +67,7 @@ void TestNeighbors4() {
   }
 }
 
-void TestNeighbors8() {
+TEST(Neighbors8) {
   {
     auto neighbors = Grid(1, 1).Neighbors8(0, 0);
     ASSERT_TRUE(neighbors.empty());
@@ -146,7 +147,4 @@ void TestNeighbors8() {
   }
 }
 
-int main() {
-  TestNeighbors4();
-  TestNeighbors8();
-}
+RUN_ALL_TESTS()

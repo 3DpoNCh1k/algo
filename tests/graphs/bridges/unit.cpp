@@ -3,9 +3,10 @@
 #include <algo/graphs/entities.hpp>
 #include <algo/graphs/bridges.hpp>
 #include "algo/utils/debug.hpp"
-#include "tests/testing/asserts.hpp"
+#include "tests/framework/asserts.hpp"
+#include "tests/framework/test.hpp"
 
-void TestTree() {
+TEST(Tree) {
   // 0 - 1 - 2
   // clang-format off
   std::vector<std::vector<int>> g = {
@@ -26,7 +27,7 @@ void TestTree() {
   }
 };
 
-void TestGraph() {
+TEST(Graph) {
   /*
       1 ---- 4
      / \    / \
@@ -50,7 +51,4 @@ void TestGraph() {
   }
 };
 
-int main() {
-  TestTree();
-  TestGraph();
-}
+RUN_ALL_TESTS()

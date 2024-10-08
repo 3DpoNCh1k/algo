@@ -2,13 +2,14 @@
 #include <set>
 
 #include <algo/utils/join.hpp>
-#include <tests/testing/stubs/move_only.hpp>
-#include <tests/testing/stubs/dummies.hpp>
-#include "tests/testing/asserts.hpp"
+#include <tests/framework/stubs/move_only.hpp>
+#include <tests/framework/stubs/dummies.hpp>
+#include "tests/framework/asserts.hpp"
+#include <tests/framework/test.hpp>
 
 using namespace algo::utils;
 
-void TestOne() {
+TEST(One) {
   auto dummy_string = DummyWithToString().ToString();
   std::vector<DummyWithToString> dummies = {DummyWithToString()};
   {
@@ -45,7 +46,7 @@ void TestOne() {
   }
 }
 
-void TestMany() {
+TEST(Many) {
   {
     std::vector<int> v = {1, 2, 3};
     auto result = JoinToString(v);
@@ -66,7 +67,7 @@ void TestMany() {
   }
 }
 
-void TestManyWithTransform() {
+TEST(ManyWithTransform) {
   {
     std::vector<int> v = {1, 2, 3};
     auto result = JoinToString(v, [](int i) {
@@ -93,8 +94,4 @@ void TestManyWithTransform() {
   }
 }
 
-int main() {
-  TestOne();
-  TestMany();
-  TestManyWithTransform();
-}
+RUN_ALL_TESTS()

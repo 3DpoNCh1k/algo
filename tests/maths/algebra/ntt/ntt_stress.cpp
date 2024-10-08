@@ -1,7 +1,7 @@
 #include <algo/utils/generators/random.hpp>
 #include "algo/maths/algebra/power.hpp"
 #include "algo/utils/types/modular.hpp"
-#include "tests/testing/asserts.hpp"
+#include "tests/framework/asserts.hpp"
 
 #include <algo/maths/algebra/ntt/roots.hpp>
 #include <algo/maths/algebra/ntt/ntt.hpp>

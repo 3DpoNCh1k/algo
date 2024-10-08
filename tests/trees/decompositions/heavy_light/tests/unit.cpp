@@ -4,12 +4,13 @@
 #include <algo/trees/decompositions/heavy_light.hpp>
 #include "algo/trees/segment_tree/trees.hpp"
 #include "algo/utils/debug.hpp"
-#include "tests/testing/asserts.hpp"
+#include "tests/framework/asserts.hpp"
+#include "tests/framework/test.hpp"
 
 using namespace algo::trees::decompositions;
 using namespace algo::trees::segment_tree;
 
-void Test1() {
+TEST(Simple1) {
   using Tree = std::vector<std::vector<int>>;
   // 0 - 1 - 2
   Tree tree = {{1}, {0, 2}, {1}};
@@ -51,7 +52,7 @@ void Test1() {
   }
 }
 
-void Test2() {
+TEST(Simple2) {
   using Tree = std::vector<std::vector<int>>;
   /*
        0
@@ -99,7 +100,7 @@ void Test2() {
   }
 }
 
-void Test3() {
+TEST(Simple3) {
   using Tree = std::vector<std::vector<int>>;
   /*
        0
@@ -134,8 +135,4 @@ void Test3() {
   }
 }
 
-int main() {
-  Test1();
-  Test2();
-  Test3();
-}
+RUN_ALL_TESTS()

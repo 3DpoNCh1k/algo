@@ -1,10 +1,11 @@
 #include <algo/flows/max_flow.hpp>
 #include "algo/utils/debug.hpp"
-#include "tests/testing/asserts.hpp"
+#include "tests/framework/asserts.hpp"
+#include "tests/framework/test.hpp"
 
 using namespace algo::flows;
 
-void Test() {
+TEST(Simple) {
   auto network = ResidualNetwork(4, 0, 3);
   network.Add(0, 1, 1);
   network.Add(0, 2, 1);
@@ -14,6 +15,4 @@ void Test() {
   ASSERT_EQ(F, 2);
 };
 
-int main() {
-  Test();
-}
+RUN_ALL_TESTS()

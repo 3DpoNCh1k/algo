@@ -1,7 +1,8 @@
 #include <algo/graphs/bipartite/matching.hpp>
 #include "algo/graphs/entities.hpp"
 #include "algo/utils/debug.hpp"
-#include "tests/testing/asserts.hpp"
+#include "tests/framework/asserts.hpp"
+#include "tests/framework/test.hpp"
 
 using namespace algo::graphs;
 
@@ -31,14 +32,11 @@ void Test(bool use_kuhn) {
   }
 }
 
-void TestKuhn() {
+TEST(Kuhn) {
   Test(true);
 }
-void TestDinitz() {
+TEST(Dinitz) {
   Test(false);
 }
 
-int main() {
-  TestKuhn();
-  TestDinitz();
-}
+RUN_ALL_TESTS()

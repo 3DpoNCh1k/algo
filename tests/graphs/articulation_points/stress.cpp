@@ -4,7 +4,7 @@
 #include <algo/graphs/entities.hpp>
 #include <algo/graphs/articulation_points.hpp>
 #include "algo/utils/generators/random.hpp"
-#include "tests/testing/asserts.hpp"
+#include "tests/framework/asserts.hpp"
 
 using namespace algo::graphs;
 

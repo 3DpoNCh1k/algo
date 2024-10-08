@@ -5,7 +5,7 @@
 #include <algo/utils/generators/random.hpp>
 #include <algo/utils/generators/string.hpp>
 
-#include <tests/testing/asserts.hpp>
+#include <tests/framework/asserts.hpp>
 
 struct Tester {
   algo::utils::generators::RandomGenerator random;

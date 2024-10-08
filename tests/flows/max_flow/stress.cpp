@@ -3,7 +3,7 @@
 #include "algo/flows/entities.hpp"
 #include "algo/flows/max_flow.hpp"
 #include "algo/utils/generators/random.hpp"
-#include "tests/testing/asserts.hpp"
+#include "tests/framework/asserts.hpp"
 
 using namespace algo::flows;
 

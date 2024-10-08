@@ -1,5 +1,5 @@
 #include "algo/utils/types/modular.hpp"
-#include "tests/testing/asserts.hpp"
+#include "tests/framework/asserts.hpp"
 
 #include <algo/maths/algebra/ntt/roots.hpp>
 #include "helpers.hpp"
