@@ -1,3 +1,5 @@
+#pragma once
+
 #include <algorithm>
 
 #include <algo/graphs/entities.hpp>

@@ -1,3 +1,5 @@
+#pragma once
+
 #include <algo/graphs/entities.hpp>
 #include <algo/graphs/bipartite/details/hungarian.hpp>
 #include <vector>

@@ -1,3 +1,5 @@
+#pragma once
+
 #include <algo/graphs/entities.hpp>
 #include <algo/graphs/bipartite/details/kuhn.hpp>
 #include <algo/graphs/bipartite/details/dinitz.hpp>
