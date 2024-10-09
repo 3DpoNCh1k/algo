@@ -27,6 +27,7 @@ struct Edge : Properties... {
 
 template <typename... Properties>
 struct UndirectedEdgeWith : Edge<orientation::Undirected, Properties...> {
+  using Orientation = orientation::Undirected;
   UndirectedEdgeWith(int u, int v, Properties... props)
       : Edge<orientation::Undirected, Properties...>(
             orientation::Undirected(u, v), props...) {
@@ -37,6 +38,7 @@ using UndirectedEdge = UndirectedEdgeWith<>;
 
 template <typename... Properties>
 struct DirectedEdgeWith : Edge<orientation::Directed, Properties...> {
+  using Orientation = orientation::Directed;
   DirectedEdgeWith(int from, int to, Properties... props)
       : Edge<orientation::Directed, Properties...>(
             orientation::Directed(from, to), props...) {

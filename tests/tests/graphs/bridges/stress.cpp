@@ -1,6 +1,7 @@
-#include <algo/graphs/entities.hpp>
+#include <algo/graphs/entity/graph.hpp>
 #include <algo/graphs/bridges.hpp>
 #include "algo/utils/random/random.hpp"
+#include "algo/utils/generators/graph.hpp"
 #include "tests/framework/asserts.hpp"
 #include "tests/framework/test.hpp"
 
@@ -8,24 +9,15 @@
 
 using namespace algo::graphs;
 using namespace algo::utils::random;
-
-AdjacencyList GenerateGraph(int n, int m) {
-  AdjacencyList g(n);
-  for (int i = 0; n > 0 && i < m; ++i) {
-    int u = RandomInt(0, n - 1);
-    int v = RandomInt(0, n - 1);
-    g[u].push_back(v);
-    g[v].push_back(u);
-  }
-  return g;
-};
+using namespace algo::utils::generators;
 
 void Stress(int k_rep, int max_n, int max_m) {
   auto correct = Correct{};
+  auto graph_generator = GraphGenerator();
   for (int rep = 0; rep < k_rep; ++rep) {
     int n = RandomInt(0, max_n);
     int m = RandomInt(0, max_m);
-    auto g = GenerateGraph(n, m);
+    auto g = graph_generator.UndirectedGraph(n, m);
     auto result = FindBridges(g);
     auto expected = correct.GetBridges(g);
     ASSERT_EQ(result.size(), expected.size());

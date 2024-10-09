@@ -1,10 +1,12 @@
 #pragma once
 
 #include <algo/graphs/details/dfs_walker.hpp>
-#include "algo/graphs/entities.hpp"
+#include <algo/graphs/entity/graph.hpp>
 
 namespace algo::graphs {
-std::vector<int> FindArticulationPoints(const AdjacencyList& g) {
+
+template <typename... EdgeProperties>
+auto FindArticulationPoints(const UndirectedGraphWith<EdgeProperties...>& g) {
   return details::DfsWalker(g).GetArticulationPoints();
 }
 }  // namespace algo::graphs

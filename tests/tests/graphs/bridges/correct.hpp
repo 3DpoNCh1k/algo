@@ -4,29 +4,31 @@
 #include <cassert>
 #include <deque>
 
-#include <algo/graphs/entities.hpp>
+#include <algo/graphs/entity/graph.hpp>
+#include "algo/graphs/entity/edge.hpp"
 
 using namespace algo::graphs;
 
 struct Correct {
-  Edges GetBridges(const AdjacencyList& g0) {
-    Edges bridges;
-    int n = g0.size();
+  auto GetBridges(const UndirectedGraph& g0) {
+    std::vector<UndirectedEdge> bridges;
+    int n = g0.n;
     for (int v = 0; v < n; ++v) {
-      for (int u : g0[v]) {
+      for (int e : g0.edge_list[v]) {
+        int u = g0.edges[e].Neighbor(v);
         if (v > u) {
           continue;
         }
         auto g = g0;
         {
-          auto it = std::find(g[v].begin(), g[v].end(), u);
-          assert(it != g[v].end());
-          g[v].erase(it);
+          auto it = std::find(g.edge_list[v].begin(), g.edge_list[v].end(), e);
+          assert(it != g.edge_list[v].end());
+          g.edge_list[v].erase(it);
         }
         {
-          auto it = std::find(g[u].begin(), g[u].end(), v);
-          assert(it != g[u].end());
-          g[u].erase(it);
+          auto it = std::find(g.edge_list[u].begin(), g.edge_list[u].end(), e);
+          assert(it != g.edge_list[u].end());
+          g.edge_list[u].erase(it);
         }
         if (!IsReachable(g, v, u)) {
           bridges.emplace_back(v, u);
@@ -36,9 +38,8 @@ struct Correct {
     return bridges;
   };
 
-  bool IsReachable(const AdjacencyList& g, int from, int to) {
-    int n = g.size();
-    std::vector<bool> visited(n, false);
+  bool IsReachable(const UndirectedGraph& g, int from, int to) {
+    std::vector<bool> visited(g.n, false);
     visited[from] = true;
     std::deque<int> q = {from};
     while (!q.empty()) {
@@ -49,7 +50,8 @@ struct Correct {
         return true;
       }
 
-      for (int u : g[v]) {
+      for (int e : g.edge_list[v]) {
+        int u = g.edges[e].Neighbor(v);
         if (!visited[u]) {
           visited[u] = true;
           q.push_back(u);

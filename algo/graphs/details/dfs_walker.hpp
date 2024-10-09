@@ -2,27 +2,23 @@
 
 #include <vector>
 
-#include <algo/graphs/entities.hpp>
-#include "algo/utils/debug.hpp"
+#include <algo/graphs/entity/graph.hpp>
 
 namespace algo::graphs::details {
 
+template <typename... EdgeProperties>
 struct DfsWalker {
-  explicit DfsWalker(const AdjacencyList& graph) {
-    auto [edges0, g0] = ToEdgeAdjacencyList(graph);
-    edges = std::move(edges0);
-    g = std::move(g0);
-    n = g.size();
+  using Graph = UndirectedGraphWith<EdgeProperties...>;
+  explicit DfsWalker(const Graph& graph)
+      : g(graph) {
     counter = 0;
-    index.assign(n, -1);
-    min_index.assign(n, n);
-    is_bridge.assign(edges.size(), false);
-    is_articulation_point.assign(n, false);
+    index.assign(g.n, -1);
+    min_index.assign(g.n, g.n);
+    is_bridge.assign(g.edges.size(), false);
+    is_articulation_point.assign(g.n, false);
   }
 
-  int n;
-  EdgeAdjacencyList g;
-  Edges edges;
+  const Graph& g;
 
   int counter;
   std::vector<int> index;
@@ -30,12 +26,12 @@ struct DfsWalker {
   std::vector<bool> is_bridge;
   std::vector<bool> is_articulation_point;
 
-  Edges GetBridges() {
+  std::vector<typename Graph::EdgeType> GetBridges() {
     Walk();
-    Edges bridges;
-    for (int e = 0; e < edges.size(); ++e) {
+    std::vector<typename Graph::EdgeType> bridges;
+    for (int e = 0; e < g.edges.size(); ++e) {
       if (is_bridge[e]) {
-        bridges.push_back(edges[e]);
+        bridges.push_back(g.edges[e]);
       }
     }
     return bridges;
@@ -44,17 +40,16 @@ struct DfsWalker {
   std::vector<int> GetArticulationPoints() {
     Walk();
     std::vector<int> articulation_points;
-    for (int v = 0; v < n; ++v) {
+    for (int v = 0; v < g.n; ++v) {
       if (is_articulation_point[v]) {
         articulation_points.push_back(v);
       }
     }
-    // dbg(articulation_points);
     return articulation_points;
   }
 
   void Walk() {
-    for (int v = 0; v < n; ++v) {
+    for (int v = 0; v < g.n; ++v) {
       if (index[v] == -1) {
         DFS(v, -1);
       }
@@ -65,12 +60,11 @@ struct DfsWalker {
     index[v] = counter++;
     min_index[v] = index[v];
     int k_child = 0;
-    for (int e : g[v]) {
+    for (int e : g.edge_list[v]) {
       if (e != parent_edge) {
-        int u = edges[e].Neighbor(v);
+        int u = g.edges[e].Neighbor(v);
         if (index[u] == -1) {
           k_child++;
-          // dbg("go", v, u);
           DFS(u, e);
           if (min_index[u] >= index[u]) {
             is_bridge[e] = true;

@@ -13,11 +13,11 @@ struct Undirected {
   int u;
   int v;
 
-  bool operator==(const Undirected& that) {
+  bool operator==(const Undirected& that) const {
     return (u == that.u && v == that.v) || (v == that.u && u == that.v);
   }
 
-  int Neighbor(int w) {
+  int Neighbor(int w) const {
     return w == u ? v : (w == v ? u : -1);
   }
 
@@ -36,7 +36,7 @@ struct Directed {
   int from;
   int to;
 
-  bool operator==(const Directed& that) {
+  bool operator==(const Directed& that) const {
     return from == that.from && to == that.to;
   }
 
