@@ -5,6 +5,7 @@
 #include <algo/maths/algebra/ntt/ntt.hpp>
 
 #include "helpers.hpp"
+#include "tests/framework/test.hpp"
 
 using namespace algo::maths::algebra::ntt;
 
@@ -50,52 +51,52 @@ void TestScalarProducts(std::vector<Modular> text, std::vector<Modular> pattern,
   ASSERT_EQ(result, expected);
 };
 
-int main() {
-  {
-    constexpr auto P = 3;
-    auto a = AsModulars<Modular<P>>({1});
-    auto b = AsModulars<Modular<P>>({2});
-    auto result = AsModulars<Modular<P>>({2});
-    TestMultiply(a, b, result);
-  }
-
-  {
-    constexpr auto P = 17;
-    auto a = AsModulars<Modular<P>>({1, 2, 3});
-    auto b = AsModulars<Modular<P>>({4, 5, 6});
-    auto result = AsModulars<Modular<P>>({4, 13, 11, 10, 1});
-    TestMultiply(a, b, result);
-  }
-
-  {
-    constexpr auto P = 17;
-    auto a = AsModulars<Modular<P>>({1, 2, 3, 4, 5, 6});
-    auto b = AsModulars<Modular<P>>({7, 8, 9});
-    auto result = AsModulars<Modular<P>>({7, 5, 12, 2, 9, 16, 8, 3});
-    TestMultiply(a, b, result);
-  }
-
-  {
-    constexpr auto P = 3;
-    auto text = AsModulars<Modular<P>>({1});
-    auto pattern = AsModulars<Modular<P>>({2});
-    auto result = AsModulars<Modular<P>>({2});
-    TestScalarProducts(text, pattern, result);
-  }
-
-  {
-    constexpr auto P = 3;
-    auto text = AsModulars<Modular<P>>({});
-    auto pattern = AsModulars<Modular<P>>({1});
-    auto result = AsModulars<Modular<P>>({});
-    TestScalarProducts(text, pattern, result);
-  }
-
-  {
-    constexpr auto P = 17;
-    auto text = AsModulars<Modular<P>>({1, 3, 2, 5, 4});
-    auto pattern = AsModulars<Modular<P>>({1, 2, 3});
-    auto result = AsModulars<Modular<P>>({13, 5, 7});
-    TestScalarProducts(text, pattern, result);
-  }
+TEST(Multiply1) {
+  constexpr auto P = 3;
+  auto a = AsModulars<Modular<P>>({1});
+  auto b = AsModulars<Modular<P>>({2});
+  auto result = AsModulars<Modular<P>>({2});
+  TestMultiply(a, b, result);
 }
+
+TEST(Multiply2) {
+  constexpr auto P = 17;
+  auto a = AsModulars<Modular<P>>({1, 2, 3});
+  auto b = AsModulars<Modular<P>>({4, 5, 6});
+  auto result = AsModulars<Modular<P>>({4, 13, 11, 10, 1});
+  TestMultiply(a, b, result);
+}
+
+TEST(Multiply3) {
+  constexpr auto P = 17;
+  auto a = AsModulars<Modular<P>>({1, 2, 3, 4, 5, 6});
+  auto b = AsModulars<Modular<P>>({7, 8, 9});
+  auto result = AsModulars<Modular<P>>({7, 5, 12, 2, 9, 16, 8, 3});
+  TestMultiply(a, b, result);
+}
+
+TEST(ScalarProducts1) {
+  constexpr auto P = 3;
+  auto text = AsModulars<Modular<P>>({1});
+  auto pattern = AsModulars<Modular<P>>({2});
+  auto result = AsModulars<Modular<P>>({2});
+  TestScalarProducts(text, pattern, result);
+}
+
+TEST(ScalarProducts2) {
+  constexpr auto P = 3;
+  auto text = AsModulars<Modular<P>>({});
+  auto pattern = AsModulars<Modular<P>>({1});
+  auto result = AsModulars<Modular<P>>({});
+  TestScalarProducts(text, pattern, result);
+}
+
+TEST(ScalarProducts3) {
+  constexpr auto P = 17;
+  auto text = AsModulars<Modular<P>>({1, 3, 2, 5, 4});
+  auto pattern = AsModulars<Modular<P>>({1, 2, 3});
+  auto result = AsModulars<Modular<P>>({13, 5, 7});
+  TestScalarProducts(text, pattern, result);
+}
+
+RUN_ALL_TESTS()

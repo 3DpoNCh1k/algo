@@ -8,6 +8,7 @@
 #include "helpers/tester.hpp"
 #include "helpers/stress.hpp"
 #include "helpers/duel.hpp"
+#include "tests/framework/test.hpp"
 
 using namespace algo::strings::aho_corasick;
 using String = std::string;
@@ -75,7 +76,12 @@ struct LeftmostAndRightmostTester : Tester {
   }
 };
 
-int main() {
+TEST(StressShort) {
   StressShort<LeftmostAndRightmostTester>();
+}
+
+TEST(StressLong) {
   StressLong<LeftmostAndRightmostTester>();
 }
+
+RUN_ALL_TESTS()

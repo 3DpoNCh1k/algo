@@ -4,6 +4,7 @@
 #include "algo/trees/segment_tree/trees.hpp"
 #include "algo/utils/debug.hpp"
 #include "tests/framework/asserts.hpp"
+#include "tests/framework/test.hpp"
 
 #include <algo/utils/random/random.hpp>
 #include <algo/utils/generators/tree.hpp>
@@ -111,7 +112,12 @@ void Test(int k_rep, int min_tree_size, int max_tree_size, int k_query) {
   }
 }
 
-int main() {
+TEST(StressSmall) {
   Test(1000, 1, 10, 100);
+}
+
+TEST(StressBig) {
   Test(50, 100, 500, 1000);
 }
+
+RUN_ALL_TESTS()

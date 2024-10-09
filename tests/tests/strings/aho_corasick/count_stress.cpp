@@ -7,6 +7,7 @@
 #include "helpers/tester.hpp"
 #include "helpers/stress.hpp"
 #include "helpers/duel.hpp"
+#include "tests/framework/test.hpp"
 
 using namespace algo::strings::aho_corasick;
 
@@ -51,7 +52,12 @@ struct CountTester : Tester {
   }
 };
 
-int main() {
+TEST(StressShort) {
   StressShort<CountTester>();
+}
+
+TEST(StressLong) {
   StressLong<CountTester>();
 }
+
+RUN_ALL_TESTS()

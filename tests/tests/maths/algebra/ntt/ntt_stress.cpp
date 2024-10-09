@@ -9,6 +9,7 @@
 #include <algo/utils/debug.hpp>
 
 #include "helpers.hpp"
+#include "tests/framework/test.hpp"
 
 using namespace algo::maths::algebra::ntt;
 using namespace algo::utils::random;
@@ -273,8 +274,16 @@ void TestScalarProducts() {
 };
 
 
-int main() {
+TEST(StressTransform) {
   TestTransform();
+}
+
+TEST(StressMultiply) {
   TestMultiply();
+}
+
+TEST(StressScalarProducts) {
   TestScalarProducts();
 }
+
+RUN_ALL_TESTS()
