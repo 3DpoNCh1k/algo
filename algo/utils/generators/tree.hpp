@@ -1,21 +1,19 @@
 #pragma once
 
-#include <algorithm>
 #include <utility>
 #include <vector>
 
 #include <algo/utils/random/random.hpp>
+#include <algo/trees/entity/tree.hpp>
 
 namespace algo::utils::generators {
 
 struct TreeGenerator {
-  using Edge = std::pair<int, int>;
-
   explicit TreeGenerator() {
   }
 
-  std::vector<Edge> GetEdges(int n) {
-    std::vector<Edge> edges;
+  trees::Tree Tree(int n) {
+    std::vector<std::pair<int, int>> edges;
     for (int i = 1; i < n; ++i) {
       edges.emplace_back(random::RandomInt(0, i - 1), i);
     }
@@ -26,18 +24,18 @@ struct TreeGenerator {
     std::iota(permutation.begin(), permutation.end(), 0);
     random::Shuffle(permutation);
 
-    for (Edge& edge : edges) {
+    for (auto& edge : edges) {
       // Rename
       edge.first = permutation[edge.first];
       edge.second = permutation[edge.second];
-
-      // Change the order of edge ends
-      if (random::Maybe()) {
-        std::swap(edge.first, edge.second);
-      }
     }
 
-    return edges;
+    trees::Tree tree(n);
+    for (auto& edge : edges) {
+      tree.AddEdge(edge.first, edge.second);
+    }
+
+    return tree;
   }
 };
 }  // namespace algo::utils::generators
