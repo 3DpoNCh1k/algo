@@ -1,20 +1,19 @@
 #include <algo/trees/fenwick/operations/add.hpp>
 #include <algo/trees/fenwick/statistics/sum.hpp>
 #include <algo/trees/fenwick/trees.hpp>
-#include <algo/utils/generators/random.hpp>
+#include <algo/utils/random/random.hpp>
 #include <tests/framework/asserts.hpp>
 #include "tests/framework/test.hpp"
 
 using namespace algo::trees::fenwick;
+using namespace algo::utils::random;
 using namespace operations;
 using namespace statistics;
 
 struct AddAndSumTester3D {
-  using RandomGenerator = algo::utils::generators::RandomGenerator;
   int n;
   int m;
   int k;
-  RandomGenerator random;
 
   using Fenwick = Fenwick3D<Operation<AddOp>, Statistics<Sum>>;
   Fenwick fenwick;
@@ -24,7 +23,6 @@ struct AddAndSumTester3D {
       : n(n),
         m(m),
         k(k),
-        random(RandomGenerator(0)),
         fenwick(Fenwick(n, m, k)),
         rival(n, std::vector<std::vector<i64>>(m, std::vector<i64>(k))) {
   }
@@ -77,11 +75,11 @@ struct AddAndSumTester3D {
     }
 
     for (int q = 0; q < queries; ++q) {
-      if (random.GetBool()) {
+      if (Maybe()) {
         QueryAddAtPoint(min_add_value, max_add_value);
         continue;
       }
-      if (random.GetBool()) {
+      if (Maybe()) {
         QueryGetAtPoint();
         continue;
       }
@@ -90,9 +88,9 @@ struct AddAndSumTester3D {
   }
 
   void QueryGetAtPoint() {
-    auto x = random.GetInt(0, n - 1);
-    auto y = random.GetInt(0, m - 1);
-    auto z = random.GetInt(0, k - 1);
+    auto x = RandomInt(0, n - 1);
+    auto y = RandomInt(0, m - 1);
+    auto z = RandomInt(0, k - 1);
 
     auto result = GetAtPointFenwick(x, y, z);
     auto rival_result = GetAtPointRival(x, y, z);
@@ -100,24 +98,24 @@ struct AddAndSumTester3D {
   }
 
   void QueryAddAtPoint(i64 min_add_value, i64 max_add_value) {
-    auto x = random.GetInt(0, n - 1);
-    auto y = random.GetInt(0, m - 1);
-    auto z = random.GetInt(0, k - 1);
+    auto x = RandomInt(0, n - 1);
+    auto y = RandomInt(0, m - 1);
+    auto z = RandomInt(0, k - 1);
 
-    auto value = random.GetInt(min_add_value, max_add_value);
+    auto value = RandomInt(min_add_value, max_add_value);
     AddAtPointFenwick(x, y, z, value);
     AddAtPointRival(x, y, z, value);
   }
 
   void QueryGetFrom3DRectangle() {
-    auto x0 = random.GetInt(0, n - 1);
-    auto x1 = random.GetInt(x0, n - 1);
+    auto x0 = RandomInt(0, n - 1);
+    auto x1 = RandomInt(x0, n - 1);
 
-    auto y0 = random.GetInt(0, m - 1);
-    auto y1 = random.GetInt(y0, m - 1);
+    auto y0 = RandomInt(0, m - 1);
+    auto y1 = RandomInt(y0, m - 1);
 
-    auto z0 = random.GetInt(0, k - 1);
-    auto z1 = random.GetInt(z0, k - 1);
+    auto z0 = RandomInt(0, k - 1);
+    auto z1 = RandomInt(z0, k - 1);
 
     auto result = GetFrom3DRectangleFenwick(x0, x1, y0, y1, z0, z1);
     i64 rival_result = GetFrom3DRectangleRival(x0, x1, y0, y1, z0, z1);

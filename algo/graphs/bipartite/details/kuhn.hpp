@@ -1,15 +1,12 @@
 #pragma once
 
-#include <algorithm>
-
 #include <algo/graphs/entities.hpp>
-#include "algo/utils/generators/random.hpp"
+#include "algo/utils/random/random.hpp"
 
 namespace algo::graphs::bipartite::details {
 struct Kuhn {
   BipartiteGraph g;
-  explicit Kuhn(const BipartiteGraph& g0)
-      : random(0) {
+  explicit Kuhn(const BipartiteGraph& g0) {
     if (g0.n_left_side > g0.n_right_side) {
       g = SwapSides(g0);
       swapped = true;
@@ -18,7 +15,6 @@ struct Kuhn {
     }
   }
 
-  utils::generators::RandomGenerator random;
   bool swapped = false;
   std::vector<bool> visited;
   std::vector<int> matching;
@@ -39,7 +35,7 @@ struct Kuhn {
     visited.assign(g.n_right_side, false);
     taken.resize(g.n_left_side, false);
     for (int v = 0; v < g.n_left_side; ++v) {
-      std::shuffle(g[v].begin(), g[v].end(), random.GetEngine());
+      utils::random::Shuffle(g[v]);
     }
 
     while (true) {

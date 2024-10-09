@@ -2,74 +2,45 @@
 
 #include <string>
 
-#include <algo/utils/generators/random.hpp>
+#include <algo/utils/random/random.hpp>
 
 namespace algo::utils::generators {
 
-namespace details {
 struct StringGenerator {
-  RandomGenerator& random;
-  explicit StringGenerator(RandomGenerator& random, char from, char to)
-      : random(random),
-        from_(from),
-        to_(to) {
+  StringGenerator() {
   }
 
-  std::string Get(int len) {
+  std::string FromRange(char from, char to, int len) {
     std::string s;
     for (int i = 0; i < len; ++i) {
-      s.push_back(random.GetChar(from_, to_));
+      char ch = random::RandomInt(from, to);
+      s.push_back(ch);
     }
     return s;
   }
 
- private:
-  char from_, to_;
-};
-
-}  // namespace details
-
-struct StringGenerator {
-  virtual std::string Get(int len) = 0;
-};
-
-struct AsciiStringGenerator : StringGenerator {
-  explicit AsciiStringGenerator(RandomGenerator& random)
-      : generator_(random, 0, char(255)) {
+  std::string Printable(int len) {
+    return FromRange(32, 127, len);
   }
 
-  std::string Get(int len) override {
-    return generator_.Get(len);
+  std::string Digits(int len) {
+    return FromRange(48, 57, len);
   }
 
- private:
-  details::StringGenerator generator_;
-};
-
-struct AsciiLowercaseStringGenerator : StringGenerator {
-  explicit AsciiLowercaseStringGenerator(RandomGenerator& random)
-      : generator_(random, 97, 122) {
+  std::string Letters(int len) {
+    auto k_lower = random::RandomInt(0, len);
+    auto s = Lowercase(k_lower) + Uppercase(len - k_lower);
+    random::Shuffle(s);
+    return s;
   }
 
-  std::string Get(int len) override {
-    return generator_.Get(len);
+  std::string Uppercase(int len) {
+    return FromRange(65, 90, len);
   }
 
- private:
-  details::StringGenerator generator_;
-};
-
-struct AsciiUppercaseStringGenerator : StringGenerator {
-  explicit AsciiUppercaseStringGenerator(RandomGenerator& random)
-      : generator_(random, 65, 90) {
+  std::string Lowercase(int len) {
+    return FromRange(97, 122, len);
   }
-
-  std::string Get(int len) override {
-    return generator_.Get(len);
-  }
-
- private:
-  details::StringGenerator generator_;
 };
 
 }  // namespace algo::utils::generators

@@ -2,7 +2,7 @@
 #include <set>
 #include <vector>
 
-#include <algo/utils/generators/random.hpp>
+#include <algo/utils/random/random.hpp>
 #include <algo/utils/generators/tree.hpp>
 
 #include <tests/framework/asserts.hpp>
@@ -114,14 +114,13 @@ TEST(Graph) {
 }
 
 TEST(GetEdges) {
-  auto random = RandomGenerator(0);
-  auto tree_generator = TreeGenerator(random);
+  auto tree_generator = TreeGenerator();
   {
     const int from = 1;
     const int to = 10;
     const int rep_count = 50;
     for (int rep = 0; rep < rep_count; ++rep) {
-      int n = random.GetInt(from, to);
+      int n = algo::utils::random::RandomInt(from, to);
       auto edges = tree_generator.GetEdges(n);
       ASSERT_EQ(int(edges.size()), n - 1);
       for (auto edge : edges) {

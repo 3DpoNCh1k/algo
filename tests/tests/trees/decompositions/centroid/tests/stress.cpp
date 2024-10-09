@@ -6,12 +6,13 @@
 #include "tests/framework/asserts.hpp"
 #include "tests/framework/test.hpp"
 
-#include <algo/utils/generators/random.hpp>
+#include <algo/utils/random/random.hpp>
 #include <algo/utils/generators/tree.hpp>
 
 using namespace algo::trees::decompositions;
 using namespace algo::trees::segment_tree;
 using namespace algo::utils::generators;
+using namespace algo::utils::random;
 
 using Tree = std::vector<std::vector<int>>;
 
@@ -43,15 +44,13 @@ struct BruteForce {
 };
 
 struct Tester {
-  RandomGenerator& random;
   const Tree& tree;
   Centroids<Operation<operations::AddOp>, Statistics<statistics::Sum>>
       centroids;
   BruteForce brute_force;
   int n;
-  explicit Tester(RandomGenerator& random, const Tree& tree)
-      : random(random),
-        tree(tree),
+  explicit Tester(const Tree& tree)
+      : tree(tree),
         centroids(tree),
         brute_force(tree),
         n(tree.size()) {
@@ -65,8 +64,8 @@ struct Tester {
   };
 
   void Ask() {
-    int u = random.GetInt(0, n - 1);
-    int dist = random.GetInt(0, n);
+    int u = RandomInt(0, n - 1);
+    int dist = RandomInt(0, n);
     auto result = centroids.GetMin(u, dist);
     auto correct_result = brute_force.GetMin(u, dist);
     dbg(u, dist);
@@ -86,13 +85,12 @@ Tree ConvertToTree(const std::vector<TreeGenerator::Edge>& edges, int n) {
 };
 
 void Stress(int k_rep, int min_tree_size, int max_tree_size, int k_query) {
-  RandomGenerator random(0);
-  TreeGenerator tree_generator(random);
+  auto tree_generator = TreeGenerator();
   for (int rep = 0; rep < k_rep; ++rep) {
-    int n = random.GetInt(min_tree_size, max_tree_size);
+    int n = RandomInt(min_tree_size, max_tree_size);
     auto edges = tree_generator.GetEdges(n);
     auto tree = ConvertToTree(edges, n);
-    auto tester = Tester(random, tree);
+    auto tester = Tester(tree);
     tester.Test(k_query);
   }
 }

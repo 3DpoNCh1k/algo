@@ -1,19 +1,18 @@
 #include <algo/trees/fenwick/operations/add.hpp>
 #include <algo/trees/fenwick/statistics/sum.hpp>
 #include <algo/trees/fenwick/trees.hpp>
-#include <algo/utils/generators/random.hpp>
+#include <algo/utils/random/random.hpp>
 #include <tests/framework/asserts.hpp>
 #include "tests/framework/test.hpp"
 
 using namespace algo::trees::fenwick;
+using namespace algo::utils::random;
 using namespace operations;
 using namespace statistics;
 
 struct AddAndSumTester2D {
-  using RandomGenerator = algo::utils::generators::RandomGenerator;
   int n;
   int m;
-  RandomGenerator random;
 
   using Fenwick = Fenwick2D<Operation<AddOp>, Statistics<Sum>>;
   Fenwick fenwick;
@@ -22,7 +21,6 @@ struct AddAndSumTester2D {
   explicit AddAndSumTester2D(int n, int m)
       : n(n),
         m(m),
-        random(RandomGenerator(0)),
         fenwick(Fenwick(n, m)),
         rival(n, std::vector<i64>(m)) {
   }
@@ -70,11 +68,11 @@ struct AddAndSumTester2D {
     }
 
     for (int q = 0; q < queries; ++q) {
-      if (random.GetBool()) {
+      if (Maybe()) {
         QueryAddAtPoint(min_add_value, max_add_value);
         continue;
       }
-      if (random.GetBool()) {
+      if (Maybe()) {
         QueryGetAtPoint();
         continue;
       }
@@ -83,8 +81,8 @@ struct AddAndSumTester2D {
   }
 
   void QueryGetAtPoint() {
-    auto row = random.GetInt(0, n - 1);
-    auto col = random.GetInt(0, m - 1);
+    auto row = RandomInt(0, n - 1);
+    auto col = RandomInt(0, m - 1);
 
     auto result = GetAtPointFenwick(row, col);
     auto rival_result = GetAtPointRival(row, col);
@@ -92,19 +90,19 @@ struct AddAndSumTester2D {
   }
 
   void QueryAddAtPoint(i64 min_add_value, i64 max_add_value) {
-    auto row = random.GetInt(0, n - 1);
-    auto col = random.GetInt(0, m - 1);
-    auto value = random.GetInt(min_add_value, max_add_value);
+    auto row = RandomInt(0, n - 1);
+    auto col = RandomInt(0, m - 1);
+    auto value = RandomInt(min_add_value, max_add_value);
     AddAtPointFenwick(row, col, value);
     AddAtPointRival(row, col, value);
   }
 
   void QueryGetFromRectangle() {
-    auto row0 = random.GetInt(0, n - 1);
-    auto row1 = random.GetInt(row0, n - 1);
+    auto row0 = RandomInt(0, n - 1);
+    auto row1 = RandomInt(row0, n - 1);
 
-    auto col0 = random.GetInt(0, m - 1);
-    auto col1 = random.GetInt(col0, m - 1);
+    auto col0 = RandomInt(0, m - 1);
+    auto col1 = RandomInt(col0, m - 1);
 
     auto result = GetFromRectangleFenwick(row0, row1, col0, col1);
     i64 rival_result = GetFromRectangleRival(row0, row1, col0, col1);

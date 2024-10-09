@@ -1,25 +1,23 @@
 #include <string>
 
 #include <algo/strings/suffix_array.hpp>
-#include <algo/utils/generators/random.hpp>
+#include <algo/utils/random/random.hpp>
 #include <algo/utils/generators/string.hpp>
 
 #include <tests/framework/asserts.hpp>
 #include "tests/framework/test.hpp"
 
 struct Tester {
-  algo::utils::generators::RandomGenerator random;
   int max_len;
   explicit Tester(int n)
-      : max_len(n),
-        random(0) {
+      : max_len(n) {
   }
 
   void Test(int k_rep) {
-    algo::utils::generators::AsciiStringGenerator string_generator(random);
+    auto string_generator = algo::utils::generators::StringGenerator();
     for (int rep = 0; rep < k_rep; ++rep) {
-      int len = random.GetInt(0, max_len);
-      Check(string_generator.Get(len));
+      int len = algo::utils::random::RandomInt(0, max_len);
+      Check(string_generator.Printable(len));
     }
   };
 

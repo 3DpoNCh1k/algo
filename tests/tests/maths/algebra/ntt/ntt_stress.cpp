@@ -1,4 +1,4 @@
-#include <algo/utils/generators/random.hpp>
+#include <algo/utils/random/random.hpp>
 #include "algo/maths/algebra/power.hpp"
 #include "algo/utils/types/modular.hpp"
 #include "tests/framework/asserts.hpp"
@@ -11,24 +11,23 @@
 #include "helpers.hpp"
 
 using namespace algo::maths::algebra::ntt;
+using namespace algo::utils::random;
 
 template <typename Modular>
 struct MultiplyTester {
-  algo::utils::generators::RandomGenerator random;
   std::vector<Modular> roots;
   NTT<Modular> ntt;
 
   explicit MultiplyTester(const std::vector<Modular>& roots)
-      : random(0),
-        roots(roots),
+      : roots(roots),
         ntt(roots) {
   }
   void Test(int k_rep) {
     int max_n = roots.size();
     for (int rep = 0; rep < k_rep; ++rep) {
-      int len_a = random.GetInt(1, max_n);
+      int len_a = RandomInt(1, max_n);
       auto a = GenerateCoefs(len_a);
-      auto b = GenerateCoefs(random.GetInt(1, max_n - len_a + 1));
+      auto b = GenerateCoefs(RandomInt(1, max_n - len_a + 1));
       auto expected = Multiply(a, b);
       auto result = MultiplyViaNTT(a, b);
       int n = std::max(expected.size(), result.size());
@@ -41,7 +40,7 @@ struct MultiplyTester {
   std::vector<Modular> GenerateCoefs(int n) {
     std::vector<Modular> coefs(n);
     for (int i = 0; i < n; ++i) {
-      coefs[i] = random.GetInt(0, Modular::MOD - 1);
+      coefs[i] = RandomInt(0, Modular::MOD - 1);
     }
     return coefs;
   }
@@ -74,22 +73,20 @@ struct MultiplyTester {
 
 template <typename Modular>
 struct ScalarProductsTester {
-  algo::utils::generators::RandomGenerator random;
   std::vector<Modular> roots;
   NTT<Modular> ntt;
 
   explicit ScalarProductsTester(const std::vector<Modular>& roots)
-      : random(0),
-        roots(roots),
+      : roots(roots),
         ntt(roots) {
   }
   void Test(int k_rep) {
     int max_n = roots.size();
     for (int rep = 0; rep < k_rep; ++rep) {
-      int text_length = random.GetInt(1, max_n);
+      int text_length = RandomInt(1, max_n);
       auto text = GenerateCoefs(text_length);
       auto pattern = GenerateCoefs(
-          random.GetInt(1, std::min(text_length, max_n - text_length + 1)));
+          RandomInt(1, std::min(text_length, max_n - text_length + 1)));
       auto expected = ScalarProducts(text, pattern);
       auto result = ntt.ScalarProducts(text, pattern);
       ASSERT_EQ(result, expected);
@@ -99,7 +96,7 @@ struct ScalarProductsTester {
   std::vector<Modular> GenerateCoefs(int n) {
     std::vector<Modular> coefs(n);
     for (int i = 0; i < n; ++i) {
-      coefs[i] = random.GetInt(0, Modular::MOD - 1);
+      coefs[i] = RandomInt(0, Modular::MOD - 1);
     }
     return coefs;
   }
@@ -121,19 +118,17 @@ struct ScalarProductsTester {
 
 template <typename Modular>
 struct TransformTester {
-  algo::utils::generators::RandomGenerator random;
   std::vector<Modular> roots;
   NTT<Modular> ntt;
 
   explicit TransformTester(const std::vector<Modular>& roots)
-      : random(0),
-        roots(roots),
+      : roots(roots),
         ntt(roots) {
   }
 
   void Test(int k_rep) {
     for (int rep = 0; rep < k_rep; ++rep) {
-      auto a = GenerateCoefs(random.GetInt(1, roots.size()));
+      auto a = GenerateCoefs(RandomInt(1, roots.size()));
       auto expected = Calculate(a);
       auto result = CalculateViaNTT(a);
       ASSERT_EQ(result, expected);
@@ -143,7 +138,7 @@ struct TransformTester {
   std::vector<Modular> GenerateCoefs(int n) {
     std::vector<Modular> coefs(n);
     for (int i = 0; i < n; ++i) {
-      coefs[i] = random.GetInt(0, Modular::MOD - 1);
+      coefs[i] = RandomInt(0, Modular::MOD - 1);
     }
     return coefs;
   }

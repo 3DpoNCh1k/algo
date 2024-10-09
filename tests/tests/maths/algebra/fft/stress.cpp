@@ -1,4 +1,4 @@
-#include <algo/utils/generators/random.hpp>
+#include <algo/utils/random/random.hpp>
 #include <algo/maths/algebra/fft/fft.hpp>
 
 #include "algo/utils/debug.hpp"
@@ -6,21 +6,21 @@
 #include "tests/framework/asserts.hpp"
 #include "tests/framework/test.hpp"
 
+using namespace algo::utils::random;
+
 struct MultiplyTester {
   int from, to;
   i64 A;
-  algo::utils::generators::RandomGenerator random;
   MultiplyTester(int from, int to)
       : from(from),
-        to(to),
-        random(0) {
+        to(to) {
     A = std::max(abs(from), abs(to));
   }
   void Test(int k_rep, int max_n) {
     assert(A * A * max_n <= 1e9);
     for (int rep = 0; rep < k_rep; ++rep) {
-      auto a = GenerateCoefs(random.GetInt(1, max_n));
-      auto b = GenerateCoefs(random.GetInt(1, max_n));
+      auto a = GenerateCoefs(RandomInt(1, max_n));
+      auto b = GenerateCoefs(RandomInt(1, max_n));
       auto expected = Multiply(a, b);
       auto result = MultiplyViaFFT(a, b);
       int n = std::max(expected.size(), result.size());
@@ -33,7 +33,7 @@ struct MultiplyTester {
   std::vector<int> GenerateCoefs(int n) {
     std::vector<int> coefs(n);
     for (int i = 0; i < n; ++i) {
-      coefs[i] = random.GetInt(from, to);
+      coefs[i] = RandomInt(from, to);
     }
     return coefs;
   }
@@ -68,20 +68,19 @@ struct MultiplyTester {
 struct ScalarProductTester {
   int from, to;
   i64 A;
-  algo::utils::generators::RandomGenerator random;
+
   ScalarProductTester(int from, int to)
       : from(from),
-        to(to),
-        random(0) {
+        to(to) {
     A = std::max(abs(from), abs(to));
   }
   void Test(int k_rep, int max_n) {
     assert(A * A * max_n <= 1e9);
     for (int rep = 0; rep < k_rep; ++rep) {
-      int text_length = random.GetInt(1, max_n);
+      int text_length = RandomInt(1, max_n);
       auto text = GenerateCoefs(text_length);
       auto pattern = GenerateCoefs(
-          random.GetInt(1, std::min(text_length, max_n - text_length + 1)));
+          RandomInt(1, std::min(text_length, max_n - text_length + 1)));
       auto expected = ScalarProducts(text, pattern);
       auto result = ScalarProductsViaFFT(text, pattern);
       ASSERT_EQ(result, expected);
@@ -91,7 +90,7 @@ struct ScalarProductTester {
   std::vector<int> GenerateCoefs(int n) {
     std::vector<int> coefs(n);
     for (int i = 0; i < n; ++i) {
-      coefs[i] = random.GetInt(from, to);
+      coefs[i] = RandomInt(from, to);
     }
     return coefs;
   }

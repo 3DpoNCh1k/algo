@@ -1,8 +1,10 @@
 #include <algo/maths/algebra/power.hpp>
-#include "algo/utils/generators/random.hpp"
+#include "algo/utils/random/random.hpp"
 #include "algo/utils/types/modular.hpp"
 #include "tests/framework/asserts.hpp"
 #include "tests/framework/test.hpp"
+
+using namespace algo::utils::random;
 
 template <typename T>
 T LinearPower(T value, int power) {
@@ -26,10 +28,9 @@ void TestSmall() {
 
 template <typename Modular>
 void TestBig(int k_rep) {
-  auto random = algo::utils::generators::RandomGenerator(0);
   for (int rep = 0; rep < k_rep; ++rep) {
-    Modular value = random.GetInt(0, Modular::MOD - 1);
-    auto power = random.GetInt(0, 1e5);
+    Modular value = RandomInt(0, Modular::MOD - 1);
+    auto power = RandomInt(0, 1e5);
     auto result = algo::maths::algebra::Power(value, power);
     auto expected = LinearPower(value, power);
     ASSERT_EQ(result, expected);

@@ -1,6 +1,6 @@
 #include <algo/graphs/entities.hpp>
 #include <algo/graphs/bipartite/assignment.hpp>
-#include "algo/utils/generators/random.hpp"
+#include "algo/utils/random/random.hpp"
 #include "algo/utils/types/fundamentals.hpp"
 #include "tests/framework/test.hpp"
 
@@ -8,23 +8,23 @@
 
 using namespace algo::graphs;
 using namespace algo::graphs::bipartite;
+using namespace algo::utils::random;
 
-BipartiteGraphWithCost GenerateGraph(
-    int n, int m, i64 min_c, i64 max_c, bool full,
-    algo::utils::generators::RandomGenerator& random) {
+BipartiteGraphWithCost GenerateGraph(int n, int m, i64 min_c, i64 max_c,
+                                     bool full) {
   auto g = BipartiteGraphWithCost(n, m);
   if (full) {
     for (int v = 0; v < n; ++v) {
       for (int u = 0; u < m; ++u) {
-        g.AddEdge(v, u, random.GetInt(min_c, max_c));
+        g.AddEdge(v, u, RandomInt(min_c, max_c));
       }
     }
   } else {
-    int e = random.GetInt(0, n * m);
+    int e = RandomInt(0, n * m);
     for (int i = 0; i < e; ++i) {
-      int v = random.GetInt(0, n - 1);
-      int u = random.GetInt(0, m - 1);
-      i64 c = random.GetInt(min_c, max_c);
+      int v = RandomInt(0, n - 1);
+      int u = RandomInt(0, m - 1);
+      i64 c = RandomInt(min_c, max_c);
       g.AddEdge(v, u, c);
     }
   }
@@ -32,12 +32,10 @@ BipartiteGraphWithCost GenerateGraph(
 };
 
 void Stress(int k_rep, int min_n, int max_n, i64 min_c, i64 max_c, bool full) {
-  auto random =
-      algo::utils::generators::RandomGenerator(min_n ^ max_n ^ min_c ^ max_c);
   for (int rep = 0; rep < k_rep; ++rep) {
-    int n = random.GetInt(min_n, max_n);
-    int m = random.GetInt(min_n, max_n);
-    auto g = GenerateGraph(n, m, min_c, max_c, full, random);
+    int n = RandomInt(min_n, max_n);
+    int m = RandomInt(min_n, max_n);
+    auto g = GenerateGraph(n, m, min_c, max_c, full);
     auto assignment = Assignment(g);
     Validate(assignment, g);
   }

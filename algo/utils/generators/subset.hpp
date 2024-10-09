@@ -3,21 +3,20 @@
 #include <cassert>
 #include <set>
 
-#include <algo/utils/generators/random.hpp>
+#include <algo/utils/random/random.hpp>
 
 namespace algo::utils::generators {
 struct SubsetGenerator {
-  explicit SubsetGenerator(RandomGenerator& random)
-      : random_(random) {
+  SubsetGenerator() {
   }
 
-  std::set<i64> GetFromRange(i64 from, i64 to, int count) {
+  std::set<i64> FromRange(i64 from, i64 to, int count) {
     assert(count <= (to - from + 1));
     std::set<i64> taken;
     for (int i = 0; i < count; ++i) {
       bool found = false;
       for (int rep = 0; rep < REP; ++rep) {
-        auto value = random_.GetInt(from, to);
+        auto value = random::RandomInt(from, to);
         if (taken.find(value) == taken.end()) {
           taken.insert(value);
           found = true;
@@ -36,7 +35,6 @@ struct SubsetGenerator {
   }
 
  private:
-  RandomGenerator& random_;
   static constexpr int REP = 100;
 };
 

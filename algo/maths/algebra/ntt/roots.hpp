@@ -6,7 +6,7 @@
 #include <algo/utils/types/fundamentals.hpp>
 #include <algo/maths/algebra/power.hpp>
 #include <algo/utils/bits.hpp>
-#include "algo/utils/generators/random.hpp"
+#include "algo/utils/random/random.hpp"
 
 namespace algo::maths::algebra::ntt {
 std::pair<int, int> FindCK(int p) {
@@ -42,9 +42,9 @@ Modular FindRoot(int degree) {
   if (degree == 1) {
     return 1;
   }
-  auto random = utils::generators::RandomGenerator(0);
+
   while (true) {
-    auto g = Modular(random.GetInt(1, Modular::MOD - 1));
+    auto g = Modular(utils::random::RandomInt(1, Modular::MOD - 1));
     if (Power(g, degree / 2) == -1) {
       return g;
     }

@@ -1,42 +1,41 @@
 #include "algo/flows/entities.hpp"
 #include "algo/flows/max_flow.hpp"
-#include "algo/utils/generators/random.hpp"
 #include "tests/framework/test.hpp"
+#include <algo/utils/random/random.hpp>
 
 #include "validate.hpp"
 
 using namespace algo::flows;
+using namespace algo::utils::random;
 
-ResidualNetwork GenerateNetwork(
-    int n, int e, int c, algo::utils::generators::RandomGenerator& random) {
-  int source = random.GetInt(0, n - 1);
+ResidualNetwork GenerateNetwork(int n, int e, int c) {
+  int source = RandomInt(0, n - 1);
   int sink;
   do {
-    sink = random.GetInt(0, n - 1);
+    sink = RandomInt(0, n - 1);
   } while (sink == source);
   ResidualNetwork network(n, source, sink);
   for (int i = 0; i < e; ++i) {
     int from;
     do {
-      from = random.GetInt(0, n - 1);
+      from = RandomInt(0, n - 1);
     } while (from == sink);
     int to;
     do {
-      to = random.GetInt(0, n - 1);
+      to = RandomInt(0, n - 1);
     } while (to == source);
-    int capacity = random.GetInt(0, c);
+    int capacity = RandomInt(0, c);
     network.Add(from, to, capacity);
   }
   return network;
 };
 
 void Stress(int k_rep, int max_n, int max_e, int max_c) {
-  auto random = algo::utils::generators::RandomGenerator(max_n ^ max_e ^ max_c);
   for (int rep = 0; rep < k_rep; ++rep) {
-    int n = random.GetInt(2, max_n);
-    int e = random.GetInt(0, max_e);
-    int c = random.GetInt(0, max_c);
-    auto network = GenerateNetwork(n, e, c, random);
+    int n = RandomInt(2, max_n);
+    int e = RandomInt(0, max_e);
+    int c = RandomInt(0, max_c);
+    auto network = GenerateNetwork(n, e, c);
     dbg(network.n, network.edges.size(), network.source, network.sink);
     auto [F, flow_cut] = MaxFlow(network);
     auto [flow, cut] = flow_cut;

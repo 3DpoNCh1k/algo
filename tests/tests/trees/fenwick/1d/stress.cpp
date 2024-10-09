@@ -1,24 +1,22 @@
 #include <algo/trees/fenwick/operations/add.hpp>
 #include <algo/trees/fenwick/statistics/sum.hpp>
 #include <algo/trees/fenwick/trees.hpp>
-#include <algo/utils/generators/random.hpp>
+#include <algo/utils/random/random.hpp>
 #include <tests/framework/asserts.hpp>
 #include "tests/framework/test.hpp"
 
 using namespace algo::trees::fenwick;
+using namespace algo::utils::random;
 using namespace operations;
 using namespace statistics;
 
 struct AddAndSumTester {
-  using RandomGenerator = algo::utils::generators::RandomGenerator;
   int n;
-  RandomGenerator random;
   Fenwick<Operation<AddOp>, Statistics<Sum>> fenwick;
   std::vector<i64> rival;
 
   explicit AddAndSumTester(int n)
       : n(n),
-        random(RandomGenerator(0)),
         fenwick(Fenwick<Operation<AddOp>, Statistics<Sum>>(n)),
         rival(n) {
   }
@@ -31,9 +29,9 @@ struct AddAndSumTester {
     }
 
     for (int q = 0; q < queries; ++q) {
-      if (random.GetBool()) {
-        auto index = random.GetInt(0, n - 1);
-        auto value = random.GetInt(min_add_value, max_add_value);
+      if (Maybe()) {
+        auto index = RandomInt(0, n - 1);
+        auto value = RandomInt(min_add_value, max_add_value);
         {
           auto add_operation = AddOp{value};
           fenwick.ApplyAtIndex(add_operation, index);
@@ -41,14 +39,14 @@ struct AddAndSumTester {
         { rival[index] += value; }
         continue;
       }
-      if (random.GetBool()) {
-        auto index = random.GetInt(0, n - 1);
+      if (Maybe()) {
+        auto index = RandomInt(0, n - 1);
         auto result = fenwick.GetAtIndex<Sum>(index);
         ASSERT_EQ(result.result, rival[index])
         continue;
       }
-      auto l = random.GetInt(0, n - 1);
-      auto r = random.GetInt(l, n - 1);
+      auto l = RandomInt(0, n - 1);
+      auto r = RandomInt(l, n - 1);
       auto result = fenwick.GetFromRange<Sum>(l, r);
       i64 rival_result = 0;
       for (int i = l; i <= r; ++i) {

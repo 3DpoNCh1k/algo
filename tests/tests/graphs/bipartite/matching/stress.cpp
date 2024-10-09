@@ -1,6 +1,6 @@
 #include <algo/graphs/entities.hpp>
 #include <algo/graphs/bipartite/matching.hpp>
-#include "algo/utils/generators/random.hpp"
+#include "algo/utils/random/random.hpp"
 #include "tests/framework/asserts.hpp"
 #include "tests/framework/test.hpp"
 
@@ -8,25 +8,24 @@
 
 using namespace algo::graphs;
 using namespace algo::graphs::bipartite;
+using namespace algo::utils::random;
 
-BipartiteGraph GenerateGraph(int n, int m, int e,
-                             algo::utils::generators::RandomGenerator& random) {
+BipartiteGraph GenerateGraph(int n, int m, int e) {
   BipartiteGraph g(n, m);
   for (int i = 0; n > 0 && m > 0 && i < e; ++i) {
-    int v = random.GetInt(0, n - 1);
-    int u = random.GetInt(0, m - 1);
+    int v = RandomInt(0, n - 1);
+    int u = RandomInt(0, m - 1);
     g[v].push_back(u);
   }
   return g;
 };
 
 void Stress(int k_rep, bool use_kuhn, int max_n, int max_m, int max_e) {
-  auto random = algo::utils::generators::RandomGenerator(max_n ^ max_m ^ max_e);
   for (int rep = 0; rep < k_rep; ++rep) {
-    int n = random.GetInt(0, max_n);
-    int m = random.GetInt(0, max_m);
-    int e = random.GetInt(0, max_e);
-    auto g = GenerateGraph(n, m, e, random);
+    int n = RandomInt(0, max_n);
+    int m = RandomInt(0, max_m);
+    int e = RandomInt(0, max_e);
+    auto g = GenerateGraph(n, m, e);
     auto matching = Matching(g, use_kuhn);
     auto max_size = GetMatchingSize(g);
     ASSERT_EQ(matching.size(), max_size);

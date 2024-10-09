@@ -2,14 +2,14 @@
 #include <string>
 
 #include <algo/ranges/prefix_sums.hpp>
-#include <algo/utils/generators/random.hpp>
+#include <algo/utils/random/random.hpp>
 #include <tests/framework/asserts.hpp>
 #include "tests/framework/test.hpp"
 
 using namespace algo::ranges;
+using namespace algo::utils::random;
 
 struct Tester {
-  algo::utils::generators::RandomGenerator random;
   std::vector<int> a;
   int n;
   PrefixSums prefix_sums;
@@ -21,7 +21,7 @@ struct Tester {
 
   void Test(int k_queries) {
     for (int q = 0; q < k_queries; ++q) {
-      int query_type = random.GetInt(1, 3);
+      int query_type = RandomInt(1, 3);
       if (query_type == 1) {
         AskPrefix();
       } else if (query_type == 2) {
@@ -33,7 +33,7 @@ struct Tester {
   };
 
   void AskPrefix() {
-    int p = random.GetInt(0, n - 1);
+    int p = RandomInt(0, n - 1);
     auto result = prefix_sums.GetFromPrefix(p);
     i64 correct_result = 0;
     for (int i = 0; i <= p; ++i) {
@@ -43,7 +43,7 @@ struct Tester {
   }
 
   void AskSuffix() {
-    int s = random.GetInt(0, n - 1);
+    int s = RandomInt(0, n - 1);
     auto result = prefix_sums.GetFromSuffix(s);
     i64 correct_result = 0;
     for (int i = s; i < n; ++i) {
@@ -53,8 +53,8 @@ struct Tester {
   }
 
   void AskRange() {
-    int l = random.GetInt(0, n - 1);
-    int r = random.GetInt(l, n - 1);
+    int l = RandomInt(0, n - 1);
+    int r = RandomInt(l, n - 1);
     auto result = prefix_sums.GetFromRange(l, r);
     i64 correct_result = 0;
     for (int i = l; i <= r; ++i) {
@@ -65,12 +65,11 @@ struct Tester {
 };
 
 void Stress(int rep, int max_n, int from, int to, int k_queries) {
-  algo::utils::generators::RandomGenerator random;
   for (int r = 0; r < rep; ++r) {
-    int n = random.GetInt(1, max_n);
+    int n = RandomInt(1, max_n);
     std::vector<int> a(n);
     for (int i = 0; i < n; ++i) {
-      a[i] = random.GetInt(from, to);
+      a[i] = RandomInt(from, to);
     }
     Tester(a).Test(k_queries);
   }

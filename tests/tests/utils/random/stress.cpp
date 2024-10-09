@@ -1,19 +1,18 @@
 #include <set>
 
-#include <algo/utils/generators/random.hpp>
+#include <algo/utils/random/random.hpp>
 #include <tests/framework/asserts.hpp>
 #include "tests/framework/test.hpp"
 
-using namespace algo::utils::generators;
+using namespace algo::utils::random;
 
 TEST(StressInt) {
-  auto g = RandomGenerator();
   const int from = -5;
   const int to = 5;
   const int rep_count = 1000;
   std::set<int> s;
   for (int rep = 0; rep < rep_count; ++rep) {
-    auto value = g.GetInt(from, to);
+    auto value = RandomInt(from, to);
     ASSERT_TRUE(value >= from);
     ASSERT_TRUE(value <= to);
     s.insert(value);
