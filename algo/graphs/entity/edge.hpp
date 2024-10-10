@@ -14,7 +14,7 @@ struct Edge : Properties... {
       : Properties(props)... {
   }
 
-  bool operator==(const Edge& that) {
+  bool operator==(const Edge& that) const {
     return (Properties::operator==(that) && ...);
   }
 

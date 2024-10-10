@@ -2,6 +2,7 @@
 
 #include <algo/utils/random/random.hpp>
 #include <algo/graphs/entity/graph.hpp>
+#include <algo/graphs/entity/bipartite.hpp>
 #include "algo/graphs/entity/edge.hpp"
 
 namespace algo::utils::generators {
@@ -25,5 +26,42 @@ struct GraphGenerator {
     }
     return g;
   }
+
+  graphs::BipartiteGraph BipartiteGraph(int n, int m, int e) {
+    auto g = graphs::BipartiteGraph(n, m);
+    if (n == 0 || m == 0) {
+      return g;
+    }
+    for (int i = 0; i < e; ++i) {
+      int v = RandomInt(0, n - 1);
+      int u = RandomInt(0, m - 1);
+      g.AddEdge(DirectedEdge(v, u));
+    }
+    return g;
+  };
+
+  template <typename C>
+  graphs::BipartiteGraphWith<Cost<C>> BipartiteGraphWithCost(int n, int m,
+                                                             bool full, C min_c,
+                                                             C max_c) {
+    auto g = graphs::BipartiteGraphWith<Cost<C>>(n, m);
+    if (full) {
+      for (int v = 0; v < n; ++v) {
+        for (int u = 0; u < m; ++u) {
+          C c = RandomInt(min_c, max_c);
+          g.AddEdge(DirectedEdgeWith<Cost<C>>(v, u, Cost(c)));
+        }
+      }
+    } else {
+      int e = RandomInt(0, n * m);
+      for (int i = 0; i < e; ++i) {
+        int v = RandomInt(0, n - 1);
+        int u = RandomInt(0, m - 1);
+        C c = RandomInt(min_c, max_c);
+        g.AddEdge(DirectedEdgeWith<Cost<C>>(v, u, Cost(c)));
+      }
+    }
+    return g;
+  };
 };
 }  // namespace algo::utils::generators

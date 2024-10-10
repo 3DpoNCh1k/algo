@@ -2,15 +2,17 @@
 
 #include <algorithm>
 
-#include <algo/graphs/entities.hpp>
+#include <algo/graphs/entity/bipartite.hpp>
 #include <cassert>
 #include <vector>
 #include "algo/utils/debug.hpp"
 
 namespace algo::graphs::bipartite::details {
+template <typename C, typename... EdgeProperties>
 struct Hungarian {
-  const BipartiteGraphWithCost& g;
-  explicit Hungarian(const BipartiteGraphWithCost& g0)
+  using Graph = BipartiteGraphWith<Cost<C>, EdgeProperties...>;
+  const Graph& g;
+  explicit Hungarian(const Graph& g0)
       : g(g0) {
   }
 
@@ -21,20 +23,20 @@ struct Hungarian {
   std::vector<int> right_matching;
   std::vector<int> left_matching;
 
-  std::vector<i64> right_potential;
-  std::vector<i64> left_potential;
+  std::vector<C> right_potential;
+  std::vector<C> left_potential;
   std::vector<int> minimum_edge;
 
-  std::vector<DirectedEdgeWithCost> Assign() {
-    right_matching.assign(g.n_right_side, -1);
-    left_matching.assign(g.n_left_side, -1);
-    right_potential.assign(g.n_right_side, 0);
-    left_potential.assign(g.n_left_side, 0);
+  std::vector<typename Graph::EdgeType> Assign() {
+    right_matching.assign(g.n_right, -1);
+    left_matching.assign(g.n, -1);
+    right_potential.assign(g.n_right, 0);
+    left_potential.assign(g.n, 0);
     while (FindAugmentingPath()) {
     }
 
-    std::vector<DirectedEdgeWithCost> assignment;
-    for (int v = 0; v < g.n_left_side; ++v) {
+    std::vector<typename Graph::EdgeType> assignment;
+    for (int v = 0; v < g.n; ++v) {
       if (left_matching[v] != -1) {
         assignment.push_back(g.edges[left_matching[v]]);
       }
@@ -44,11 +46,11 @@ struct Hungarian {
 
   bool FindAugmentingPath() {
     dbg("FindAugmentingPath");
-    visited_right.assign(g.n_right_side, false);
-    visited_right_by_edge.assign(g.n_right_side, -1);
-    visited_left.assign(g.n_left_side, false);
-    minimum_edge.assign(g.n_right_side, -1);
-    for (int v = 0; v < g.n_left_side; ++v) {
+    visited_right.assign(g.n_right, false);
+    visited_right_by_edge.assign(g.n_right, -1);
+    visited_left.assign(g.n, false);
+    minimum_edge.assign(g.n_right, -1);
+    for (int v = 0; v < g.n; ++v) {
       if (left_matching[v] == -1) {
         VisitLeft(v);
       }
@@ -59,12 +61,12 @@ struct Hungarian {
         return false;
       }
       auto delta = GetEdgeCost(e);
-      for (int v = 0; v < g.n_left_side; ++v) {
+      for (int v = 0; v < g.n; ++v) {
         if (visited_left[v]) {
           left_potential[v] -= delta;
         }
       }
-      for (int u = 0; u < g.n_right_side; ++u) {
+      for (int u = 0; u < g.n_right; ++u) {
         if (visited_right[u]) {
           right_potential[u] += delta;
         }
@@ -98,7 +100,7 @@ struct Hungarian {
 
   void VisitLeft(int v) {
     visited_left[v] = true;
-    for (int e : g[v]) {
+    for (int e : g.edge_list[v]) {
       auto edge = g.edges[e];
       if (left_matching[v] == e) {
         continue;
@@ -110,7 +112,7 @@ struct Hungarian {
     }
   }
 
-  i64 GetEdgeCost(int e) {
+  auto GetEdgeCost(int e) {
     auto edge = g.edges[e];
     return left_potential[edge.from] + right_potential[edge.to] + edge.cost;
   };
@@ -118,7 +120,7 @@ struct Hungarian {
   int FindMinimumEdge() {
     dbg("FindMinimumEdge");
     int e = -1;
-    for (int u = 0; u < g.n_right_side; ++u) {
+    for (int u = 0; u < g.n_right; ++u) {
       if (visited_right[u]) {
         continue;
       }

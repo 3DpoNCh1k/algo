@@ -3,17 +3,22 @@
 #include <algo/trees/segment_tree/statistics/sum.hpp>
 #include <algo/trees/decompositions/heavy_light.hpp>
 #include "algo/trees/segment_tree/trees.hpp"
+#include "algo/trees/entity/tree.hpp"
+
 #include "algo/utils/debug.hpp"
 #include "tests/framework/asserts.hpp"
 #include "tests/framework/test.hpp"
 
 using namespace algo::trees::decompositions;
 using namespace algo::trees::segment_tree;
+using namespace algo::trees;
 
 TEST(Simple1) {
-  using Tree = std::vector<std::vector<int>>;
   // 0 - 1 - 2
-  Tree tree = {{1}, {0, 2}, {1}};
+  Tree tree(3);
+  tree.AddEdge(0, 1);
+  tree.AddEdge(1, 2);
+
   HLD<Operation<operations::AddOp>, Statistics<statistics::Sum>> hld(tree);
   {
     auto stat = hld.GetFromPath<statistics::Sum>(0, 2);
@@ -53,13 +58,15 @@ TEST(Simple1) {
 }
 
 TEST(Simple2) {
-  using Tree = std::vector<std::vector<int>>;
   /*
        0
       / \
      1   2
   */
-  Tree tree = {{1, 2}, {0}, {0}};
+  Tree tree(3);
+  tree.AddEdge(0, 1);
+  tree.AddEdge(0, 2);
+
   HLD<Operation<operations::AddOp>, Statistics<statistics::Sum>> hld(tree);
   {
     auto stat = hld.GetFromPath<statistics::Sum>(0, 2);
@@ -101,7 +108,6 @@ TEST(Simple2) {
 }
 
 TEST(Simple3) {
-  using Tree = std::vector<std::vector<int>>;
   /*
        0
       / \
@@ -109,14 +115,12 @@ TEST(Simple3) {
      |   |
      4   2
   */
-  // clang-format off
-  Tree tree = {
-    {1, 3},
-    {0, 4},
-    {3},
-    {0, 2},
-    {1}};
-  // clang-format on
+  Tree tree(5);
+  tree.AddEdge(0, 1);
+  tree.AddEdge(1, 4);
+  tree.AddEdge(0, 3);
+  tree.AddEdge(3, 2);
+
   HLD<Operation<operations::AddOp>, Statistics<statistics::Sum>> hld(tree);
   {
     auto stat = hld.GetFromPath<statistics::Sum>(2, 4);

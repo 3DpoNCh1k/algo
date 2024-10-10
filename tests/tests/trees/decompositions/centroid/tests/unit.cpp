@@ -5,17 +5,21 @@
 #include "algo/trees/segment_tree/operations/set.hpp"
 #include "algo/trees/segment_tree/statistics/minimum.hpp"
 #include "algo/trees/segment_tree/trees.hpp"
+#include "algo/trees/entity/tree.hpp"
+
 #include "algo/utils/debug.hpp"
 #include "tests/framework/asserts.hpp"
 #include "tests/framework/test.hpp"
 
 using namespace algo::trees::decompositions;
 using namespace algo::trees::segment_tree;
+using namespace algo::trees;
 
 TEST(Simple1) {
-  using Tree = std::vector<std::vector<int>>;
   // 0 - 1
-  Tree tree = {{1}, {0}};
+  Tree tree(2);
+  tree.AddEdge(0, 1);
+
   Centroids<Operation<operations::SetOp>, Statistics<statistics::Minimum>>
       centroids(tree);
 
@@ -32,15 +36,11 @@ TEST(Simple1) {
 }
 
 TEST(Simple2) {
-  using Tree = std::vector<std::vector<int>>;
   // 0 - 1 - 2
-  // clang-format off
-  Tree tree = {
-    {1},
-    {0, 2},
-    {1}
-   };
-  // clang-format on
+  Tree tree(3);
+  tree.AddEdge(0, 1);
+  tree.AddEdge(1, 2);
+
   Centroids<Operation<operations::SetOp>, Statistics<statistics::Minimum>>
       centroids(tree);
 

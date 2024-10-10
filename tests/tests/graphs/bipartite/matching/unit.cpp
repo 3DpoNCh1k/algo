@@ -1,6 +1,6 @@
 #include <algo/graphs/bipartite/matching.hpp>
-#include "algo/graphs/entities.hpp"
-#include "algo/utils/debug.hpp"
+#include "algo/graphs/entity/bipartite.hpp"
+#include "algo/graphs/entity/edge.hpp"
 #include "tests/framework/asserts.hpp"
 #include "tests/framework/test.hpp"
 
@@ -11,14 +11,12 @@ void Test(bool use_kuhn) {
   0 -> {0, 1}
   1 -> {0}
   */
-  // clang-format off
-  BipartiteGraph g {
-    2, 2, {
-      {0, 1},
-      {0}
-    }
-  };
-  // clang-format on
+
+  BipartiteGraph g(2, 2);
+  g.AddEdge(DirectedEdge(0, 0));
+  g.AddEdge(DirectedEdge(0, 1));
+  g.AddEdge(DirectedEdge(1, 0));
+
   auto matching = bipartite::Matching(g, use_kuhn);
 
   ASSERT_EQ(matching.size(), 2);

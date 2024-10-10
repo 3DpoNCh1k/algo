@@ -2,6 +2,8 @@
 #include <algo/trees/segment_tree/statistics/sum.hpp>
 #include <algo/trees/decompositions/heavy_light.hpp>
 #include "algo/trees/segment_tree/trees.hpp"
+#include "algo/trees/entity/tree.hpp"
+
 #include "tests/framework/asserts.hpp"
 #include "tests/framework/test.hpp"
 
@@ -10,20 +12,17 @@
 
 using namespace algo::trees::decompositions;
 using namespace algo::trees::segment_tree;
+using namespace algo::trees;
 using namespace algo::utils::generators;
 using namespace algo::utils::random;
 
-using Tree = std::vector<std::vector<int>>;
-
 struct BruteForce {
   const Tree& tree;
-  int n;
   std::vector<i64> values;
 
   explicit BruteForce(const Tree& tree)
-      : tree(tree),
-        n(tree.size()) {
-    values.resize(n);
+      : tree(tree) {
+    values.resize(tree.n);
   }
 
   void Apply(int u, int v, const operations::AddOp& op) {
@@ -53,7 +52,7 @@ struct BruteForce {
     if (v == target) {
       return true;
     }
-    for (int u : tree[v]) {
+    for (int u : tree.adjacency_list[v]) {
       if (u != parent) {
         if (DFS(u, v, target, path)) {
           return true;
@@ -69,12 +68,11 @@ struct Tester {
   const Tree& tree;
   HLD<Operation<operations::AddOp>, Statistics<statistics::Sum>> hld;
   BruteForce brute_force;
-  int n;
+
   explicit Tester(const Tree& tree)
       : tree(tree),
         hld(tree),
-        brute_force(tree),
-        n(tree.size()) {
+        brute_force(tree) {
   }
 
   void Test(int k_query) {
@@ -88,8 +86,8 @@ struct Tester {
   };
 
   void Update() {
-    int u = RandomInt(0, n - 1);
-    int v = RandomInt(0, n - 1);
+    int u = RandomInt(0, tree.n - 1);
+    int v = RandomInt(0, tree.n - 1);
     int value = RandomInt(-1e9, 1e9);
     auto op = operations::AddOp{value};
     if (u == v && Maybe()) {
@@ -101,8 +99,8 @@ struct Tester {
   }
 
   void Ask() {
-    int u = RandomInt(0, n - 1);
-    int v = RandomInt(0, n - 1);
+    int u = RandomInt(0, tree.n - 1);
+    int v = RandomInt(0, tree.n - 1);
     auto stat = (u == v && Maybe()) ? hld.GetFromVertex<statistics::Sum>(v)
                                     : hld.GetFromPath<statistics::Sum>(u, v);
     auto correct_stat = brute_force.Get(u, v);
@@ -110,21 +108,11 @@ struct Tester {
   }
 };
 
-Tree ConvertToTree(const std::vector<TreeGenerator::Edge>& edges, int n) {
-  Tree tree(n);
-  for (auto [u, v] : edges) {
-    tree[u].push_back(v);
-    tree[v].push_back(u);
-  }
-  return tree;
-};
-
 void Stress(int k_rep, int min_tree_size, int max_tree_size, int k_query) {
   auto tree_generator = TreeGenerator();
   for (int rep = 0; rep < k_rep; ++rep) {
     int n = RandomInt(min_tree_size, max_tree_size);
-    auto edges = tree_generator.GetEdges(n);
-    auto tree = ConvertToTree(edges, n);
+    auto tree = tree_generator.Tree(n);
     auto tester = Tester(tree);
     tester.Test(k_query);
   }

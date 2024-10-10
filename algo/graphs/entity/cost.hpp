@@ -6,11 +6,12 @@
 namespace algo::graphs {
 template <typename T>
 struct Cost {
-  explicit Cost(T cost)
+  using CostType = T;
+  explicit Cost(CostType cost)
       : cost(cost){};
-  T cost;
+  CostType cost;
 
-  bool operator==(const Cost& that) {
+  bool operator==(const Cost& that) const {
     return cost == that.cost;
   }
 

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algo/trees/entity/tree.hpp>
 #include <algo/trees/segment_tree/trees.hpp>
 
 namespace algo::trees::decompositions {
@@ -10,13 +11,10 @@ struct HeavyLightDecomposition {
       segment_tree::LazyPropagationStaticSegmentTree<Operation,
                                                      StatisticsTuple>;
 
-  using InputTree = std::vector<std::vector<int>>;
-
-  explicit HeavyLightDecomposition(const InputTree& tree)
+  explicit HeavyLightDecomposition(const Tree& tree)
       : root_(0),
-        n_(tree.size()),
         input_tree_(tree),
-        segment_tree_(n_) {
+        segment_tree_(input_tree_.n) {
     AllocateMemory();
     BuildPaths();
   }
@@ -41,12 +39,12 @@ struct HeavyLightDecomposition {
 
  private:
   void AllocateMemory() {
-    parent_.resize(n_);
-    height_.resize(n_);
-    size_.resize(n_);
+    parent_.resize(input_tree_.n);
+    height_.resize(input_tree_.n);
+    size_.resize(input_tree_.n);
 
-    index_.resize(n_);
-    top_.resize(n_);
+    index_.resize(input_tree_.n);
+    top_.resize(input_tree_.n);
   }
 
   void BuildPaths() {
@@ -62,7 +60,7 @@ struct HeavyLightDecomposition {
 
   void CalculateVertexInfo(int v) {
     size_[v] = 1;
-    for (int u : input_tree_[v]) {
+    for (int u : input_tree_.adjacency_list[v]) {
       if (u != parent_[v]) {
         parent_[u] = v;
         height_[u] = height_[v] + 1;
@@ -74,7 +72,7 @@ struct HeavyLightDecomposition {
 
   void CalculatePaths(int v) {
     int heavy_child = -1;
-    for (int u : input_tree_[v]) {
+    for (int u : input_tree_.adjacency_list[v]) {
       if (u != parent_[v]) {
         if (heavy_child == -1 || size_[heavy_child] < size_[u]) {
           heavy_child = u;
@@ -86,7 +84,7 @@ struct HeavyLightDecomposition {
       index_[heavy_child] = next_index_++;
       CalculatePaths(heavy_child);
     }
-    for (int u : input_tree_[v]) {
+    for (int u : input_tree_.adjacency_list[v]) {
       if (u != parent_[v] && u != heavy_child) {
         top_[u] = u;
         index_[u] = next_index_++;
@@ -137,8 +135,7 @@ struct HeavyLightDecomposition {
   };
 
   int root_;
-  int n_;
-  const InputTree& input_tree_;
+  const Tree& input_tree_;
   SegmentTree segment_tree_;
 
   std::vector<int> height_;

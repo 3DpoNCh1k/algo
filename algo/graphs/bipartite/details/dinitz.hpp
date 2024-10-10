@@ -2,12 +2,14 @@
 
 #include <deque>
 
-#include <algo/graphs/entities.hpp>
+#include <algo/graphs/entity/bipartite.hpp>
 
 namespace algo::graphs::bipartite::details {
+template <typename... EdgeProperties>
 struct Dinitz {
-  const BipartiteGraph& g;
-  explicit Dinitz(const BipartiteGraph& g)
+  using Graph = BipartiteGraphWith<EdgeProperties...>;
+  const Graph& g;
+  explicit Dinitz(const Graph& g)
       : g(g) {
   }
 
@@ -16,15 +18,15 @@ struct Dinitz {
   std::vector<int> distance;
   std::vector<int> next;
 
-  DirectedEdges Match() {
-    matching.resize(g.n_right_side, -1);
-    taken.resize(g.n_left_side);
+  std::vector<typename Graph::EdgeType> Match() {
+    matching.resize(g.n_right, -1);
+    taken.resize(g.n);
 
     while (FindAugmentingPaths()) {
     }
 
-    DirectedEdges match;
-    for (int u = 0; u < g.n_right_side; ++u) {
+    std::vector<typename Graph::EdgeType> match;
+    for (int u = 0; u < g.n_right; ++u) {
       if (matching[u] != -1) {
         match.emplace_back(matching[u], u);
       }
@@ -37,8 +39,8 @@ struct Dinitz {
     if (!has_paths) {
       return false;
     }
-    next.assign(g.n_left_side, 0);
-    for (int v = 0; v < g.n_left_side; ++v) {
+    next.assign(g.n, 0);
+    for (int v = 0; v < g.n; ++v) {
       if (taken[v]) {
         continue;
       }
@@ -48,8 +50,9 @@ struct Dinitz {
   }
 
   bool FindAugmentingPath(int v) {
-    while (next[v] < g[v].size()) {
-      int u = g[v][next[v]++];
+    while (next[v] < g.edge_list[v].size()) {
+      int e = g.edge_list[v][next[v]++];
+      int u = g.edges[e].to;
       int w = matching[u];
 
       if (w == -1) {
@@ -68,9 +71,9 @@ struct Dinitz {
 
   bool BuildLayers() {
     const int infinity = 1e9;
-    distance.assign(g.n_left_side, infinity);
+    distance.assign(g.n, infinity);
     std::deque<int> q;
-    for (int v = 0; v < g.n_left_side; ++v) {
+    for (int v = 0; v < g.n; ++v) {
       if (!taken[v]) {
         q.push_back(v);
         distance[v] = 0;
@@ -81,7 +84,8 @@ struct Dinitz {
     while (!q.empty()) {
       auto v = q.front();
       q.pop_front();
-      for (int u : g[v]) {
+      for (int e : g.edge_list[v]) {
+        int u = g.edges[e].to;
         int w = matching[u];
         if (w == -1) {
           found = true;

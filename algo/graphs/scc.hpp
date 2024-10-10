@@ -4,19 +4,23 @@
 #include <utility>
 #include <vector>
 
-#include <algo/graphs/entities.hpp>
+#include <algo/graphs/entity/graph.hpp>
+#include <algo/graphs/entity/condensation.hpp>
 
 namespace algo::graphs {
 
 namespace scc::details {
+template <typename... EdgeProperties>
 struct SCCImpl {
+  using Graph = DirectedGraphWith<EdgeProperties...>;
+  using CondensationType = Condensation<EdgeProperties...>;
   explicit SCCImpl(const Graph& g0)
       : g_(g0),
-        n_(g_.size()) {
+        g_inversed_(g0.n) {
   }
 
   // Kosaraju's algorithm
-  Condensation Condense() {
+  CondensationType Condense() {
     CreateInversedGraph();
     OrderVertices();
     ExtractComponents();
@@ -25,18 +29,19 @@ struct SCCImpl {
 
  private:
   void CreateInversedGraph() {
-    g_inversed_.resize(n_);
-    for (int v = 0; v < n_; ++v) {
-      for (int u : g_[v]) {
-        g_inversed_[u].push_back(v);
+    for (int v = 0; v < g_.n; ++v) {
+      for (int e : g_.edge_list[v]) {
+        auto edge = g_.edges[e];
+        std::swap(edge.to, edge.from);
+        g_inversed_.AddEdge(edge);
       }
     }
   }
 
   void OrderVertices() {
     order_.clear();
-    visited_.assign(n_, false);
-    for (int v = 0; v < n_; ++v) {
+    visited_.assign(g_.n, false);
+    for (int v = 0; v < g_.n; ++v) {
       if (!visited_[v]) {
         OrderDfs(v);
       }
@@ -44,10 +49,10 @@ struct SCCImpl {
   }
 
   void ExtractComponents() {
-    visited_.assign(n_, false);
-    component_.assign(n_, -1);
+    visited_.assign(g_.n, false);
+    component_.assign(g_.n, -1);
     k_component_ = 0;
-    for (int i = n_ - 1; i >= 0; --i) {
+    for (int i = g_.n - 1; i >= 0; --i) {
       int v = order_[i];
       if (!visited_[v]) {
         ComponentDfs(v, k_component_);
@@ -56,30 +61,37 @@ struct SCCImpl {
     }
   }
 
-  Condensation Harvest() {
-    Components components;
-    components.resize(k_component_);
-    std::set<std::pair<int, int>> edges;
-    for (int v = 0; v < n_; ++v) {
+  auto Harvest() {
+    std::vector<typename CondensationType::Component> components(k_component_);
+    Graph graph(k_component_);
+
+    std::set<std::pair<int, int>> added_edges;
+    for (int v = 0; v < g_.n; ++v) {
       components[component_[v]].push_back(v);
-      for (int u : g_[v]) {
-        if (component_[v] != component_[u]) {
-          edges.emplace(component_[v], component_[u]);
+      for (int e : g_.edge_list[v]) {
+        auto edge = g_.edges[e];
+        int u = edge.to;
+        if (component_[v] != component_[u] &&
+            added_edges.find({component_[v], component_[u]}) ==
+                added_edges.end()) {
+          added_edges.emplace(component_[v], component_[u]);
+
+          auto new_edge = edge;
+          new_edge.from = component_[v];
+          new_edge.to = component_[u];
+
+          graph.AddEdge(new_edge);
         }
       }
     }
 
-    Graph graph;
-    graph.resize(k_component_);
-    for (auto [v, u] : edges) {
-      graph[v].push_back(u);
-    }
-    return Condensation(std::move(graph), std::move(components));
+    return CondensationType{std::move(graph), std::move(components)};
   };
 
   void OrderDfs(int v) {
     visited_[v] = true;
-    for (int u : g_[v]) {
+    for (int e : g_.edge_list[v]) {
+      int u = g_.edges[e].to;
       if (!visited_[u]) {
         OrderDfs(u);
       }
@@ -90,7 +102,8 @@ struct SCCImpl {
   void ComponentDfs(int v, int component_number) {
     component_[v] = component_number;
     visited_[v] = true;
-    for (int u : g_inversed_[v]) {
+    for (int e : g_inversed_.edge_list[v]) {
+      int u = g_inversed_.edges[e].to;
       if (!visited_[u]) {
         ComponentDfs(u, component_number);
       }
@@ -98,7 +111,6 @@ struct SCCImpl {
   }
 
   const Graph& g_;
-  const int n_;
   Graph g_inversed_;
 
   std::vector<int> order_;
@@ -109,7 +121,9 @@ struct SCCImpl {
 };
 }  // namespace scc::details
 
-Condensation StronglyConnectedComponents(const Graph& g) {
+template <typename... EdgeProperties>
+auto StronglyConnectedComponents(
+    const DirectedGraphWith<EdgeProperties...>& g) {
   return scc::details::SCCImpl(g).Condense();
 }
 

@@ -3,28 +3,29 @@
 #include <algorithm>
 #include <set>
 
-#include <algo/graphs/entities.hpp>
-#include "algo/utils/types/fundamentals.hpp"
+#include <algo/graphs/entity/bipartite.hpp>
 #include "tests/framework/asserts.hpp"
 
 using namespace algo::graphs;
 
-i64 GetAssignmentCost(const BipartiteGraphWithCost& g) {
-  int n = std::max(g.n_left_side, g.n_right_side);
-  std::pair<int, i64> min_cost = {n, 0};
+template <typename Cost>
+auto GetAssignmentCost(const BipartiteGraphWith<Cost>& g) {
+  using C = typename Cost::CostType;
+  int n = std::max(g.n, g.n_right);
+  std::pair<int, C> min_cost = {n, 0};
   std::vector<int> permutation(n);
   for (int i = 0; i < n; ++i) {
     permutation[i] = i;
   }
   do {
-    std::pair<int, i64> cur_cost = {0, 0};
-    for (int v = 0; v < g.n_left_side; ++v) {
+    std::pair<int, C> cur_cost = {0, 0};
+    for (int v = 0; v < g.n; ++v) {
       int u = permutation[v];
-      if (u >= g.n_right_side) {
+      if (u >= g.n_right) {
         cur_cost.first++;
       } else {
-        std::pair<int, i64> edge_cost = {1, 0};
-        for (int e : g[v]) {
+        std::pair<int, C> edge_cost = {1, 0};
+        for (int e : g.edge_list[v]) {
           if (g.edges[e].to == u) {
             edge_cost = min(edge_cost, {0, g.edges[e].cost});
           }
@@ -38,10 +39,11 @@ i64 GetAssignmentCost(const BipartiteGraphWithCost& g) {
   return min_cost.second;
 };
 
-void Validate(const std::vector<DirectedEdgeWithCost>& assignment,
-              const BipartiteGraphWithCost& g) {
+template <typename Cost>
+void Validate(const std::vector<DirectedEdgeWith<Cost>>& assignment,
+              const BipartiteGraphWith<Cost>& g) {
   auto min_cost = GetAssignmentCost(g);
-  i64 cost = 0;
+  typename Cost::CostType cost = 0;
   std::set<int> left;
   std::set<int> right;
   for (auto e : assignment) {

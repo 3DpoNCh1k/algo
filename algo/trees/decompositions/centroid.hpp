@@ -6,15 +6,13 @@
 #include <vector>
 #include "algo/binary_search/binary_search.hpp"
 #include "algo/utils/bits.hpp"
+#include "algo/trees/entity/tree.hpp"
 #include "algo/utils/debug.hpp"
 namespace algo::trees::decompositions {
 
 template <typename Operation, typename StatisticsTuple>
 struct CentroidDecomposition {
-  using InputTree = std::vector<std::vector<int>>;
-
-  int n;
-  const InputTree& input_tree;
+  const Tree& input_tree;
   int root_centroid = -1;
   struct Node {
     // min
@@ -43,9 +41,8 @@ struct CentroidDecomposition {
   std::vector<Node> nodes;
   std::vector<int> size;
 
-  explicit CentroidDecomposition(const InputTree& tree)
-      : n(tree.size()),
-        input_tree(tree) {
+  explicit CentroidDecomposition(const Tree& tree)
+      : input_tree(tree) {
     AllocateMemory();
     BuildCentroids();
     PrintNodes();
@@ -168,16 +165,17 @@ struct CentroidDecomposition {
 
  private:
   void AllocateMemory() {
-    nodes.resize(n);
-    int max_k = utils::bits::ExponentOfPowerOfTwoThatAtLeast(u64(n)) + 1;
+    nodes.resize(input_tree.n);
+    int max_k =
+        utils::bits::ExponentOfPowerOfTwoThatAtLeast(u64(input_tree.n)) + 1;
     for (auto& node : nodes) {
       node.centroid.reserve(max_k);
       node.distance.reserve(max_k);
       node.sum.resize(2);
       node.count.resize(2);
     }
-    size.resize(n);
-    forbidden.resize(n, false);
+    size.resize(input_tree.n);
+    forbidden.resize(input_tree.n, false);
   }
 
   void BuildCentroids() {
@@ -187,7 +185,7 @@ struct CentroidDecomposition {
   void PrintNodes() {
     dbg("PrintNodes");
     dbg(root_centroid);
-    for (int v = 0; v < n; ++v) {
+    for (int v = 0; v < input_tree.n; ++v) {
       const auto& node = nodes[v];
       dbg(v);
       dbg(node.centroid);
@@ -202,7 +200,7 @@ struct CentroidDecomposition {
     nodes[c].next_centroid = prev_centroid;
     nodes[c].centroid_child_id = id;
     AddCentroid(c);
-    for (int u : input_tree[c]) {
+    for (int u : input_tree.adjacency_list[c]) {
       if (!forbidden[u]) {
         int child = BuildRecursive(u, c, nodes[c].centroid_children.size());
         nodes[c].centroid_children.push_back(child);
@@ -214,7 +212,7 @@ struct CentroidDecomposition {
 
   void CalculateSubtreeSize(int v, int parent) {
     size[v] = 1;
-    for (int u : input_tree[v]) {
+    for (int u : input_tree.adjacency_list[v]) {
       if (u != parent && !forbidden[u]) {
         CalculateSubtreeSize(u, v);
         size[v] += size[u];
@@ -224,7 +222,7 @@ struct CentroidDecomposition {
 
   int FindCentroid(int v, int parent) {
     int index = -1;
-    for (int u : input_tree[v]) {
+    for (int u : input_tree.adjacency_list[v]) {
       if (u != parent && !forbidden[u]) {
         if (size[u] > size[v] / 2) {
           index = u;
@@ -261,7 +259,7 @@ struct CentroidDecomposition {
       for (auto [v, parent] : q) {
         nodes[v].centroid.push_back(c);
         nodes[v].distance.push_back(dist);
-        for (int u : input_tree[v]) {
+        for (int u : input_tree.adjacency_list[v]) {
           if (u != parent && !forbidden[u]) {
             next_q.emplace_back(u, v);
           }
@@ -273,7 +271,7 @@ struct CentroidDecomposition {
 
   void PrintDps() {
     dbg("PrintDps");
-    for (int v = 0; v < n; ++v) {
+    for (int v = 0; v < input_tree.n; ++v) {
       const auto& node = nodes[v];
       dbg(v);
       dbg(node.color);
@@ -291,7 +289,7 @@ struct CentroidDecomposition {
   }
 
   void CalculateDp() {
-    forbidden.assign(n, false);
+    forbidden.assign(input_tree.n, false);
     CalculateCentroid(root_centroid);
   }
 
@@ -335,7 +333,7 @@ struct CentroidDecomposition {
       return 0;
     }
     i64 result = nodes[v].color == col ? dist : 0;
-    for (int u : input_tree[v]) {
+    for (int u : input_tree.adjacency_list[v]) {
       if (u != p) {
         result += DfsSum(u, v, dist + 1, col);
       }
@@ -348,7 +346,7 @@ struct CentroidDecomposition {
       return 0;
     }
     int result = nodes[v].color == col ? 1 : 0;
-    for (int u : input_tree[v]) {
+    for (int u : input_tree.adjacency_list[v]) {
       if (u != p) {
         result += DfsCount(u, v, col);
       }

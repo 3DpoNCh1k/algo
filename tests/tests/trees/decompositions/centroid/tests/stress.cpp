@@ -1,8 +1,11 @@
 #include <algo/trees/segment_tree/operations/add.hpp>
 #include <algo/trees/segment_tree/statistics/sum.hpp>
 #include <algo/trees/decompositions/centroid.hpp>
+#include <algo/trees/entity/tree.hpp>
+
 #include "algo/trees/segment_tree/trees.hpp"
 #include "algo/utils/debug.hpp"
+
 #include "tests/framework/asserts.hpp"
 #include "tests/framework/test.hpp"
 
@@ -11,18 +14,15 @@
 
 using namespace algo::trees::decompositions;
 using namespace algo::trees::segment_tree;
+using namespace algo::trees;
 using namespace algo::utils::generators;
 using namespace algo::utils::random;
 
-using Tree = std::vector<std::vector<int>>;
-
 struct BruteForce {
   const Tree& tree;
-  int n;
 
   explicit BruteForce(const Tree& tree)
-      : tree(tree),
-        n(tree.size()) {
+      : tree(tree) {
   }
 
   int GetMin(int u, int dist) {
@@ -34,7 +34,7 @@ struct BruteForce {
       return 1e9;
     }
     int result = v;
-    for (int u : tree[v]) {
+    for (int u : tree.adjacency_list[v]) {
       if (u != parent) {
         result = std::min(result, DFS(u, v, d - 1));
       }
@@ -48,12 +48,10 @@ struct Tester {
   Centroids<Operation<operations::AddOp>, Statistics<statistics::Sum>>
       centroids;
   BruteForce brute_force;
-  int n;
   explicit Tester(const Tree& tree)
       : tree(tree),
         centroids(tree),
-        brute_force(tree),
-        n(tree.size()) {
+        brute_force(tree) {
   }
 
   void Test(int k_query) {
@@ -64,8 +62,8 @@ struct Tester {
   };
 
   void Ask() {
-    int u = RandomInt(0, n - 1);
-    int dist = RandomInt(0, n);
+    int u = RandomInt(0, tree.n - 1);
+    int dist = RandomInt(0, tree.n);
     auto result = centroids.GetMin(u, dist);
     auto correct_result = brute_force.GetMin(u, dist);
     dbg(u, dist);
@@ -75,21 +73,11 @@ struct Tester {
   }
 };
 
-Tree ConvertToTree(const std::vector<TreeGenerator::Edge>& edges, int n) {
-  Tree tree(n);
-  for (auto [u, v] : edges) {
-    tree[u].push_back(v);
-    tree[v].push_back(u);
-  }
-  return tree;
-};
-
 void Stress(int k_rep, int min_tree_size, int max_tree_size, int k_query) {
   auto tree_generator = TreeGenerator();
   for (int rep = 0; rep < k_rep; ++rep) {
     int n = RandomInt(min_tree_size, max_tree_size);
-    auto edges = tree_generator.GetEdges(n);
-    auto tree = ConvertToTree(edges, n);
+    auto tree = tree_generator.Tree(n);
     auto tester = Tester(tree);
     tester.Test(k_query);
   }
