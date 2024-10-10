@@ -7,6 +7,14 @@
     {
       "target": "stress.cpp",
       "profile": "DebugLocalDebug"
+    },
+    {
+      "target": "sum_unit.cpp",
+      "profile": "DebugLocalDebug"
+    },
+    {
+      "target": "sum_stress.cpp",
+      "profile": "DebugLocalDebug"
     }
   ]
 }

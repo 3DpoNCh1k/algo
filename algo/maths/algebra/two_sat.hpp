@@ -4,29 +4,31 @@
 #include <cstdlib>
 #include <set>
 #include <vector>
+
+#include <algo/graphs/entity/graph.hpp>
 #include <algo/graphs/scc.hpp>
+#include "algo/graphs/entity/edge.hpp"
 
 namespace algo::maths::algebra {
 struct TwoSat {
   using Clause = std::pair<int, int>;
-  using Graph = std::vector<std::vector<int>>;
   using Solution = std::set<int>;
   using Result = std::pair<bool, Solution>;
   explicit TwoSat(int n, const std::vector<Clause>& clauses)
-      : k_variable_(n) {
-    dependency_graph_.resize(2 * k_variable_);
+      : k_variable_(n),
+        dependency_graph_(2 * k_variable_) {
     for (auto [a, b] : clauses) {
       int u = VariableToVertex(a);
       int v = VariableToVertex(b);
-      dependency_graph_[VertexNegation(u)].push_back(v);
-      dependency_graph_[VertexNegation(v)].push_back(u);
+      dependency_graph_.AddEdge(graphs::DirectedEdge(VertexNegation(u), v));
+      dependency_graph_.AddEdge(graphs::DirectedEdge(VertexNegation(v), u));
     }
   }
 
   Result Solve() {
     auto [condenstaion_graph, components] =
         graphs::StronglyConnectedComponents(dependency_graph_);
-    value_.assign(dependency_graph_.size(), -1);
+    value_.assign(dependency_graph_.n, -1);
     for (const auto& component : components) {
       if (value_[component[0]] == -1) {
         for (int v : component) {
@@ -65,7 +67,7 @@ struct TwoSat {
   }
 
   int k_variable_;
-  Graph dependency_graph_;
+  graphs::DirectedGraph dependency_graph_;
   std::vector<int> value_;
 };
 
