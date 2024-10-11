@@ -1,7 +1,11 @@
 {
   "tests": [
     {
-      "target": "unit.cpp",
+      "target": "sum_unit.cpp",
+      "profile": "DebugLocalDebug"
+    },
+    {
+      "target": "min_unit.cpp",
       "profile": "DebugLocalDebug"
     }
   ]

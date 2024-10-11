@@ -24,6 +24,13 @@ void WithApplyOnRange(SegmentTree segment_tree) {
     auto expected = 2;
     ASSERT_EQ(stat.result, expected);
   }
+
+  {
+    auto stat = segment_tree.template GetFromRange<statistics::Sum>(0, 2);
+    auto expected = 5;
+    ASSERT_EQ(stat.result, expected);
+  }
+
   segment_tree.ApplyOnRange(0, 1, operations::AddOp{3});
 
   {
@@ -39,6 +46,18 @@ void WithApplyOnRange(SegmentTree segment_tree) {
   {
     auto stat = segment_tree.template GetAtIndex<statistics::Sum>(2);
     auto expected = 2;
+    ASSERT_EQ(stat.result, expected);
+  }
+
+  {
+    auto stat = segment_tree.template GetFromRange<statistics::Sum>(0, 1);
+    auto expected = 9;
+    ASSERT_EQ(stat.result, expected);
+  }
+
+  {
+    auto stat = segment_tree.template GetFromRange<statistics::Sum>(1, 2);
+    auto expected = 7;
     ASSERT_EQ(stat.result, expected);
   }
 }
@@ -65,6 +84,24 @@ void OnlyApplyAtIndex(SegmentTree segment_tree) {
   {
     auto stat = segment_tree.template GetAtIndex<statistics::Sum>(2);
     auto expected = 2;
+    ASSERT_EQ(stat.result, expected);
+  }
+
+  {
+    auto stat = segment_tree.template GetFromRange<statistics::Sum>(0, 1);
+    auto expected = -2;
+    ASSERT_EQ(stat.result, expected);
+  }
+
+  {
+    auto stat = segment_tree.template GetFromRange<statistics::Sum>(1, 2);
+    auto expected = 2;
+    ASSERT_EQ(stat.result, expected);
+  }
+
+  {
+    auto stat = segment_tree.template GetFromRange<statistics::Sum>(0, 2);
+    auto expected = 0;
     ASSERT_EQ(stat.result, expected);
   }
 }
