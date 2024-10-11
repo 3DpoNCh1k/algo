@@ -13,6 +13,14 @@ struct Sum : Base {
     result.result += that.result;
     return result;
   };
+
+  bool operator==(const Sum& that) const {
+    return result == that.result;
+  }
+
+  bool operator!=(const Sum& that) const {
+    return result != that.result;
+  }
 };
 
 Sum UpdateStatistics(const Sum& stat, const operations::AddOp& op) {
