@@ -3,6 +3,7 @@
 #include <array>
 #include <utility>
 #include <vector>
+#include "algo/utils/meta.hpp"
 
 namespace algo::graphs {
 struct Grid {
@@ -21,17 +22,20 @@ struct Grid {
   }
 
  private:
-  template <typename T>
-  std::vector<Neighbor> Neighbors(int row, int col, const T& delta_row,
-                                  const T& delta_column) {
+  template <std::size_t N>
+  std::vector<Neighbor> Neighbors(int row, int col,
+                                  const std::array<int, N>& delta_row,
+                                  const std::array<int, N>& delta_column) {
     std::vector<Neighbor> neighbors;
-    for (int i = 0; i < delta_row.size(); ++i) {
-      int next_row = row + delta_row[i];
-      int next_col = col + delta_column[i];
+
+    utils::meta::ForLoop<0, N - 1>([&](auto i) {
+      int next_row = row + delta_row[i.Value];
+      int next_col = col + delta_column[i.Value];
       if (IsValidRow(next_row) && IsValidColumn(next_col)) {
         neighbors.emplace_back(next_row, next_col);
       }
-    }
+    });
+
     return neighbors;
   }
 
