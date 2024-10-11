@@ -27,11 +27,11 @@ struct Node {
         });
   };
 
-  void UpdateAsLongest(int index) {
+  void UpdateAsLongest(int end_index) {
     utils::meta::ForLoop<0, std::tuple_size_v<StatisticsTuple> - 1>(
         [&](auto index_number) {
           auto& stat = std::get<index_number.Value>(statistics_);
-          stat.FoundAsLongestPatternEndingAt(index);
+          stat.FoundAsLongestPatternEndingAt(end_index);
         });
   };
 

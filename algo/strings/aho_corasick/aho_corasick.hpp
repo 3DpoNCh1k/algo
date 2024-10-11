@@ -78,6 +78,7 @@ struct AhoCorasick {
     }
     trie_.CreateLinks();
   }
+
   bool IsNewPattern(int trie_node_index) {
     return trie_to_pattern_.find(trie_node_index) == trie_to_pattern_.end();
   }

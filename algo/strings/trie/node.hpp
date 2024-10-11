@@ -14,7 +14,6 @@ struct TrieNode {
   std::map<Letter, int> children;
   bool is_terminal = false;
 
-  std::map<Letter, int> cache;
   int longest_suffix = -1;
   int longest_terminal_suffix = -1;
 

@@ -87,14 +87,11 @@ struct Trie {
       return root_;
     }
     auto& parent = nodes_[parent_index];
-    if (parent.cache.find(letter) == parent.cache.end()) {
-      if (nodes_[parent.longest_suffix].HasChild(letter)) {
-        parent.cache[letter] = nodes_[parent.longest_suffix].GetChild(letter);
-      } else {
-        parent.cache[letter] = FindSuffixIndex(parent.longest_suffix, letter);
-      }
+
+    if (nodes_[parent.longest_suffix].HasChild(letter)) {
+      return nodes_[parent.longest_suffix].GetChild(letter);
     }
-    return parent.cache[letter];
+    return FindSuffixIndex(parent.longest_suffix, letter);
   }
 
   int root_;
