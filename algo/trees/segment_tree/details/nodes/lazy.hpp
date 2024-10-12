@@ -10,21 +10,21 @@
 
 namespace algo::trees::segment_tree::details {
 
-template <typename Operation, typename StatisticsTuple>
-struct LazyNode : BaseNode<Operation, StatisticsTuple> {
-  using Base = BaseNode<Operation, StatisticsTuple>;
-  std::optional<Operation> operation;
+template <typename Update, typename... Statistics>
+struct LazyNode : BaseNode<Update, Statistics...> {
+  using Base = BaseNode<Update, Statistics...>;
+  std::optional<Update> operation;
 
   LazyNode(int l, int r)
       : Base(l, r) {
   }
 
-  void ApplyOperation(const Operation& op) {
-    this->Base::ApplyOperation(op);
+  void ApplyOperation(const Update& update) {
+    this->Base::ApplyOperation(update);
     if (operation.has_value()) {
-      operation = operation.value().Compose(op);
+      operation = operation.value().Compose(update);
     } else {
-      operation = op;
+      operation = update;
     }
   }
 
@@ -39,9 +39,9 @@ struct LazyNode : BaseNode<Operation, StatisticsTuple> {
   std::string ToString() const {
     std::stringstream ss;
     ss << this->Base::ToString();
-    ss << "Operation = "
+    ss << "Update = "
        << (operation.has_value() ? operation.value().ToString()
-                                 : std::string("No op"));
+                                 : std::string("No update"));
     return ss.str();
   };
 };

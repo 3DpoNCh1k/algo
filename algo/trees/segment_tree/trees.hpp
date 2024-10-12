@@ -12,19 +12,19 @@
 #include <algo/trees/segment_tree/details/segment_tree.hpp>
 
 namespace algo::trees::segment_tree {
-template <typename Operation, typename... Statistics>
+template <typename Update, typename... Statistics>
 using LazyPropagationStaticSegmentTree =
     details::SegmentTree<details::LazyPropagator, details::StaticTree,
-                         details::LazyNode, Operation, Statistics...>;
+                         details::LazyNode, Update, Statistics...>;
 
-template <typename Operation, typename... Statistics>
+template <typename Update, typename... Statistics>
 using LazyPropagationDynamicSegmentTree =
     details::SegmentTree<details::LazyPropagator, details::DynamicTree,
-                         details::LazyNode, Operation, Statistics...>;
+                         details::LazyNode, Update, Statistics...>;
 
-template <typename Operation, typename... Statistics>
+template <typename Update, typename... Statistics>
 using EagerPropagationStaticSegmentTree =
     details::SegmentTree<details::EagerPropagator, details::StaticTree,
-                         details::EagerNode, Operation, Statistics...>;
+                         details::EagerNode, Update, Statistics...>;
 
 }  // namespace algo::trees::segment_tree

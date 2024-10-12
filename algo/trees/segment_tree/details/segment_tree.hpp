@@ -8,9 +8,9 @@ namespace algo::trees::segment_tree::details {
 template <template <typename> typename PropagatorTemplate,
           template <typename> typename TreeTemplate,
           template <typename, typename...> typename NodeTemplate,
-          typename Operation, typename... TStatistics>
+          typename Update, typename... Statistics>
 struct SegmentTree {
-  using Node = NodeTemplate<Operation, TStatistics...>;
+  using Node = NodeTemplate<Update, Statistics...>;
   using Tree = TreeTemplate<Node>;
   using Propagator = PropagatorTemplate<Tree>;
 
@@ -25,27 +25,27 @@ struct SegmentTree {
         propagator(tree) {
   }
 
-  // void ApplyAtIndex(int idx, const Operation& op) {
-  //   propagator.ApplyAtIndex(idx, op);
+  // void ApplyAtIndex(int idx, const Update& update) {
+  //   propagator.ApplyAtIndex(idx, update);
   // }
 
-  void ApplyAtIndex(const Operation& op) {
-    dbg("SegmentTree.ApplyAtIndex", op.range, op.add);
-    propagator.ApplyAtIndex(op);
+  void ApplyAtIndex(const Update& update) {
+    dbg("SegmentTree.ApplyAtIndex", update.range, update.add);
+    propagator.ApplyAtIndex(update);
   }
 
-  void ApplyOnRange(const Operation& op) {
-    propagator.ApplyOnRange(op);
+  void ApplyOnRange(const Update& update) {
+    propagator.ApplyOnRange(update);
   }
 
-  template <typename Statistics>
-  Statistics GetAtIndex(int idx) {
-    return propagator.template GetAtIndex<Statistics>(idx);
+  template <typename Stats>
+  Stats GetAtIndex(int idx) {
+    return propagator.template GetAtIndex<Stats>(idx);
   }
 
-  template <typename Statistics>
-  Statistics GetFromRange(ranges::IntRange range) {
-    return propagator.template GetFromRange<Statistics>(range);
+  template <typename Stats>
+  Stats GetFromRange(ranges::IntRange range) {
+    return propagator.template GetFromRange<Stats>(range);
   }
 };
 }  // namespace algo::trees::segment_tree::details

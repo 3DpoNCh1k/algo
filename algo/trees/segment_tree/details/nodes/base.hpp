@@ -10,44 +10,43 @@
 
 namespace algo::trees::segment_tree::details {
 
-template <typename Op, typename... TStatistics>
+template <typename Op, typename... Statistics>
 struct BaseNode {
-  using Operation = Op;
-  using StatisticsTuple = std::tuple<TStatistics...>;
+  using Update = Op;
+  using StatisticsTuple = std::tuple<Statistics...>;
   ranges::IntRange range;
   StatisticsTuple statistics;
 
   BaseNode(int l, int r)
       : range(l, r),
-        statistics(TStatistics(range)...) {
+        statistics(Statistics(range)...) {
   }
 
-  void ApplyOperation(const Operation& op) {
-    dbg("BaseNode.ApplyOperation", range, op.range, op.add);
-    assert(range == op.range);
+  void ApplyOperation(const Update& update) {
+    dbg("BaseNode.ApplyOperation", range, update.range, update.add);
+    assert(range == update.range);
 
     utils::meta::ForLoop<0, std::tuple_size_v<StatisticsTuple> - 1>(
         [&](auto index) {
           auto& stat = std::get<index.Value>(statistics);
-          stat = op.Apply(stat);
+          stat = update.Apply(stat);
         });
   }
 
   void Pull(const BaseNode& left, const BaseNode& right) {
     utils::meta::ForLoop<0, std::tuple_size_v<StatisticsTuple> - 1>(
         [&](auto index) {
-          using Statistics = std::tuple_element_t<index.Value, StatisticsTuple>;
-          using Monoid = typename Statistics::Monoid;
+          using Stats = std::tuple_element_t<index.Value, StatisticsTuple>;
+          using Monoid = typename Stats::Monoid;
 
           auto& stat = std::get<index.Value>(statistics);
-          stat.value =
-              Monoid::Combine(left.Get<Statistics>(), right.Get<Statistics>());
+          stat.value = Monoid::Combine(left.Get<Stats>(), right.Get<Stats>());
         });
   };
 
-  template <typename Statistics>
+  template <typename Stats>
   auto Get() const {
-    return std::get<Statistics>(statistics).value;
+    return std::get<Stats>(statistics).value;
   }
 
   std::string ToString() const {
