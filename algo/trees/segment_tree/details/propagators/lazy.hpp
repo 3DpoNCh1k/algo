@@ -1,5 +1,7 @@
 #pragma once
 
+#include "algo/ranges/range.hpp"
+#include "algo/utils/debug.hpp"
 namespace algo::trees::segment_tree::details {
 
 template <typename Tree>
@@ -12,50 +14,55 @@ struct LazyPropagator {
       : tree(tree) {
   }
 
-  void ApplyAtIndex(int idx, const Operation& op) {
-    ApplyOnRange(idx, idx, op);
+  void ApplyAtIndex(const Operation& op) {
+    ApplyOnRange(op);
   }
 
-  void ApplyOnRange(int l, int r, const Operation& op) {
-    ApplyOnRangeImpl(tree.GetRoot(), l, r, op);
+  void ApplyOnRange(const Operation& op) {
+    ApplyOnRangeImpl(tree.GetRoot(), op);
   }
 
-  void ApplyOnRangeImpl(Node& node, int l, int r, const Operation& op) {
-    if (node.IsOutside(l, r)) {
+  void ApplyOnRangeImpl(Node& node, const Operation& op) {
+    dbg("LazyPropagator.ApplyOnRangeImpl", node.range, op.range, op.add);
+    if (node.range.IsOutside(op.range)) {
+      dbg("outside");
       return;
     }
-    if (node.IsInside(l, r)) {
-      node.ApplyOperation(op);
+    if (node.range.IsInside(op.range)) {
+      dbg("inside");
+      node.ApplyOperation(op.OnSubrange(node.range));
       return;
     }
     node.Push(tree.GetLeft(node), tree.GetRight(node));
-    ApplyOnRangeImpl(tree.GetLeft(node), l, r, op);
-    ApplyOnRangeImpl(tree.GetRight(node), l, r, op);
+    ApplyOnRangeImpl(tree.GetLeft(node), op);
+    ApplyOnRangeImpl(tree.GetRight(node), op);
     node.Pull(tree.GetLeft(node), tree.GetRight(node));
   }
 
   template <typename Statistics>
   Statistics GetAtIndex(int idx) {
-    return GetFromRange<Statistics>(idx, idx);
+    return GetFromRange<Statistics>(ranges::IntRange(idx, idx));
   }
 
   template <typename Statistics>
-  Statistics GetFromRange(int l, int r) {
-    return GetFromRangeImpl<Statistics>(tree.GetRoot(), l, r);
+  Statistics GetFromRange(ranges::IntRange range) {
+    return Statistics(range,
+                      GetFromRangeImpl<Statistics>(tree.GetRoot(), range));
   }
 
   template <typename Statistics>
-  Statistics GetFromRangeImpl(Node& node, int l, int r) {
-    if (node.IsOutside(l, r)) {
-      return Statistics{};
+  auto GetFromRangeImpl(Node& node, ranges::IntRange range) {
+    using Monoid = typename Statistics::Monoid;
+    if (node.range.IsOutside(range)) {
+      return Monoid::Identity();
     }
-    if (node.IsInside(l, r)) {
+    if (node.range.IsInside(range)) {
       return node.template Get<Statistics>();
     }
     node.Push(tree.GetLeft(node), tree.GetRight(node));
-    auto left = GetFromRangeImpl<Statistics>(tree.GetLeft(node), l, r);
-    auto right = GetFromRangeImpl<Statistics>(tree.GetRight(node), l, r);
-    return left.Merge(right);
+    auto left = GetFromRangeImpl<Statistics>(tree.GetLeft(node), range);
+    auto right = GetFromRangeImpl<Statistics>(tree.GetRight(node), range);
+    return Monoid::Combine(left, right);
   }
 };
 

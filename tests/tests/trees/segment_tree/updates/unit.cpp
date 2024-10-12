@@ -1,17 +1,18 @@
 
-#include <algo/trees/segment_tree/updates/range.hpp>
+#include <algo/ranges/range.hpp>
 #include <algo/trees/segment_tree/updates/add.hpp>
 #include <algo/trees/segment_tree/updates/set.hpp>
 
-#include <algo/trees/segment_tree/new_statistics/sum.hpp>
+#include <algo/trees/segment_tree/statistics/sum.hpp>
 
-#include "algo/trees/segment_tree/new_statistics/minimum.hpp"
+#include "algo/trees/segment_tree/statistics/minimum.hpp"
 #include "algo/utils/debug.hpp"
 #include "tests/framework/asserts.hpp"
 #include "tests/framework/test.hpp"
 
-using namespace algo::trees::segment_tree::range_updates;
-using namespace algo::trees::segment_tree::new_statistics;
+using namespace algo::ranges;
+using namespace algo::trees::segment_tree::updates;
+using namespace algo::trees::segment_tree::statistics;
 
 TEST(Range) {
   auto range0_1 = Range(0, 1);
@@ -32,45 +33,47 @@ TEST(Range) {
 }
 
 TEST(Add) {
-  auto set_1_2 = Add(Range(1, 2), 1);
-  auto set_0_3 = Add(Range(0, 3), 2);
+  auto range = Range(0, 1);
+  auto add_1 = Add(range, 1);
+  auto add_2 = Add(range, 2);
 
   {
-    auto result = set_1_2.Compose(set_0_3);
+    auto result = add_1.Compose(add_2);
     ASSERT_EQ(result.add, 3);
   }
 
   {
-    auto sum_stat = IntSum(Range(0, 1), 1);
-    auto result = set_0_3.Apply(sum_stat);
+    auto sum_stat = IntSum(range, 1);
+    auto result = add_2.Apply(sum_stat);
     ASSERT_EQ(result.value, 5);
   }
 
   {
-    auto min_stat = IntMinimum(Range(0, 1), 1);
-    auto result = set_0_3.Apply(min_stat);
+    auto min_stat = IntMinimum(range, 1);
+    auto result = add_2.Apply(min_stat);
     ASSERT_EQ(result.value, 3);
   }
 }
 
 TEST(Set) {
-  auto set_1_2 = Set(Range(1, 2), 1);
-  auto set_0_3 = Set(Range(0, 3), 2);
+  auto range = Range(0, 1);
+  auto set_1 = Set(range, 1);
+  auto set_2 = Set(range, 2);
 
   {
-    auto result = set_1_2.Compose(set_0_3);
+    auto result = set_1.Compose(set_2);
     ASSERT_EQ(result.value, 2);
   }
 
   {
-    auto sum_stat = IntSum(Range(0, 1), 1);
-    auto result = set_0_3.Apply(sum_stat);
+    auto sum_stat = IntSum(range, 1);
+    auto result = set_2.Apply(sum_stat);
     ASSERT_EQ(result.value, 4);
   }
 
   {
-    auto min_stat = IntMinimum(Range(0, 1), 1);
-    auto result = set_0_3.Apply(min_stat);
+    auto min_stat = IntMinimum(range, 1);
+    auto result = set_2.Apply(min_stat);
     ASSERT_EQ(result.value, 2);
   }
 }

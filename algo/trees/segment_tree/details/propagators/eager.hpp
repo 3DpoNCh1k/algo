@@ -1,5 +1,6 @@
 #pragma once
 
+#include "algo/ranges/range.hpp"
 namespace algo::trees::segment_tree::details {
 
 template <typename Tree>
@@ -12,8 +13,8 @@ struct EagerPropagator {
       : tree(tree) {
   }
 
-  void ApplyAtIndex(int idx, const Operation& op) {
-    Node* current_node = &tree.GetNodeAt(idx);
+  void ApplyAtIndex(const Operation& op) {
+    Node* current_node = &tree.GetNodeAt(op.range.l);
     current_node->ApplyOperation(op);
     while (tree.HasParent(*current_node)) {
       current_node = &tree.GetParent(*current_node);
@@ -24,30 +25,33 @@ struct EagerPropagator {
 
   template <typename Statistics>
   Statistics GetAtIndex(int idx) {
-    return tree.GetNodeAt(idx).template Get<Statistics>();
+    return Statistics(ranges::IntRange(idx, idx),
+                      tree.GetNodeAt(idx).template Get<Statistics>());
   }
 
   template <typename Statistics>
-  Statistics GetFromRange(int l, int r) {
-    return GetFromRangeTopDown<Statistics>(l, r);
+  Statistics GetFromRange(ranges::IntRange range) {
+    return Statistics(range, GetFromRangeTopDown<Statistics>(range));
   }
 
   template <typename Statistics>
-  Statistics GetFromRangeTopDown(int l, int r) {
-    return GetFromRangeTopDownImpl<Statistics>(tree.GetRoot(), l, r);
+  auto GetFromRangeTopDown(ranges::IntRange range) {
+    return GetFromRangeTopDownImpl<Statistics>(tree.GetRoot(), range);
   }
 
   template <typename Statistics>
-  Statistics GetFromRangeTopDownImpl(Node& node, int l, int r) {
-    if (node.IsOutside(l, r)) {
-      return Statistics{};
+  auto GetFromRangeTopDownImpl(Node& node, ranges::IntRange range) {
+    using Monoid = typename Statistics::Monoid;
+    if (node.range.IsOutside(range)) {
+      return Monoid::Identity();
     }
-    if (node.IsInside(l, r)) {
+    if (node.range.IsInside(range)) {
       return node.template Get<Statistics>();
     }
-    auto left = GetFromRangeTopDownImpl<Statistics>(tree.GetLeft(node), l, r);
-    auto right = GetFromRangeTopDownImpl<Statistics>(tree.GetRight(node), l, r);
-    return left.Merge(right);
+
+    return Monoid::Combine(
+        GetFromRangeTopDownImpl<Statistics>(tree.GetLeft(node), range),
+        GetFromRangeTopDownImpl<Statistics>(tree.GetRight(node), range));
   }
 };
 

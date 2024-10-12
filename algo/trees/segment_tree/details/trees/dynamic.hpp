@@ -11,12 +11,14 @@ template <typename Node>
 struct DynamicTree {
   using DataNode = Node;
   struct TreeNode : DataNode {
+    TreeNode(int idx, int l, int r)
+        : DataNode(l, r),
+          index(idx) {
+    }
+
     int index = -1;
     int left_index = -1;
     int right_index = -1;
-    void SetIndex(int idx) {
-      index = idx;
-    }
   };
 
   std::vector<TreeNode> nodes;
@@ -32,20 +34,17 @@ struct DynamicTree {
   int CreateNode(int l, int r) {
     assert(nodes.size() < nodes.capacity());
     int index = nodes.size();
-    nodes.emplace_back();
-    TreeNode& node = nodes[index];
-    node.SetInterval(l, r);
-    node.SetIndex(index);
+    nodes.emplace_back(index, l, r);
     return index;
   }
 
   void EnsureThatChildsExist(TreeNode& node) {
-    int m = node.L + (node.R - node.L) / 2;
+    int m = node.range.l + (node.range.r - node.range.l) / 2;
     if (node.left_index == -1) {
-      node.left_index = CreateNode(node.L, m);
+      node.left_index = CreateNode(node.range.l, m);
     }
     if (node.right_index == -1) {
-      node.right_index = CreateNode(m + 1, node.R);
+      node.right_index = CreateNode(m + 1, node.range.r);
     }
   }
 

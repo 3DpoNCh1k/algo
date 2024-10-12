@@ -1,11 +1,11 @@
 #pragma once
 
-#include <algo/trees/segment_tree/new_statistics/sum.hpp>
-#include "algo/trees/segment_tree/new_statistics/minimum.hpp"
+#include <algo/trees/segment_tree/statistics/sum.hpp>
+#include "algo/trees/segment_tree/statistics/minimum.hpp"
 
-namespace algo::trees::segment_tree::range_updates {
+namespace algo::trees::segment_tree::updates {
 
-template <typename Range, typename Element>
+template <typename Element, typename Range = ranges::IntRange>
 struct Set {
   Set(Range range, Element value)
       : range(range),
@@ -13,19 +13,28 @@ struct Set {
   }
 
   Set Compose(Set update) {
-    assert(range.IsInside(update.range));
+    assert(range == update.range);
 
     auto result = Set(*this);
     result.value = update.value;
     return result;
   };
 
-  auto Apply(new_statistics::IntSum stat) {
+  Set OnSubrange(Range subrange) const {
+    assert(subrange.IsInside(range));
+    return Set(subrange, value);
+  }
+
+  auto Apply(statistics::IntSum stat) const {
+    assert(range == stat.range);
+
     stat.value = stat.range.Length() * value;
     return stat;
   }
 
-  auto Apply(new_statistics::IntMinimum stat) {
+  auto Apply(statistics::IntMinimum stat) const {
+    assert(range == stat.range);
+
     stat.value = value;
     return stat;
   }
@@ -34,4 +43,6 @@ struct Set {
   Element value;
 };
 
-}  // namespace algo::trees::segment_tree::range_updates
+using IntSet = Set<i64>;
+
+}  // namespace algo::trees::segment_tree::updates

@@ -1,32 +1,34 @@
 #pragma once
 
-#include <algo/trees/segment_tree/statistics/base.hpp>
-#include <algo/trees/segment_tree/operations/add.hpp>
-#include <algo/utils/types/fundamentals.hpp>
+#include <cassert>
+
+#include "algo/utils/types/fundamentals.hpp"
+
+#include <algo/ranges/range.hpp>
+
+#include <algo/maths/algebra/group_theory/operations/plus.hpp>
+#include "algo/maths/algebra/group_theory/monoids/monoid.hpp"
+
+// include all plus monoids here
+#include "algo/maths/algebra/group_theory/monoids/int_plus.hpp"
+
 namespace algo::trees::segment_tree::statistics {
 
-struct Sum : Base {
-  i64 result = 0;
+using namespace algo::maths::algebra::group_theory;
 
-  Sum Merge(const Sum& that) const {
-    auto result = *this;
-    result.result += that.result;
-    return result;
-  };
+template <typename Element, typename RangeType = ranges::IntRange>
+struct Sum {
+  using Monoid = monoid::Monoid<Element, operation::Plus>;
+  using Range = RangeType;
+  Element value;
+  Range range;
 
-  bool operator==(const Sum& that) const {
-    return result == that.result;
-  }
-
-  bool operator!=(const Sum& that) const {
-    return result != that.result;
+  explicit Sum(Range range, Element value = Monoid::Identity())
+      : range(range),
+        value(value) {
   }
 };
 
-Sum UpdateStatistics(const Sum& stat, const operations::AddOp& op) {
-  auto new_stat = stat;
-  new_stat.result += (new_stat.R - new_stat.L + 1) * op.add;
-  return new_stat;
-};
+using IntSum = Sum<i64>;
 
 }  // namespace algo::trees::segment_tree::statistics

@@ -2,35 +2,48 @@
 
 #include <cassert>
 
-#include <algo/trees/segment_tree/new_statistics/sum.hpp>
-#include "algo/trees/segment_tree/new_statistics/minimum.hpp"
-#include "algo/trees/segment_tree/updates/range.hpp"
+#include <algo/trees/segment_tree/statistics/sum.hpp>
+#include "algo/trees/segment_tree/statistics/minimum.hpp"
+#include "algo/ranges/range.hpp"
+#include "algo/utils/debug.hpp"
 
-namespace algo::trees::segment_tree::range_updates {
+namespace algo::trees::segment_tree::updates {
 
-template <typename Element, typename Range = IntRange>
+template <typename Element, typename Range = ranges::IntRange>
 struct Add {
+  using ElementType = Element;
   Add(Range range, Element add)
       : range(range),
         add(add) {
   }
 
-  Add Compose(Add update) {
-    assert(range.IsInside(update.range));
+  Add Compose(Add update) const {
+    dbg("Add.Compose", range, add, update.range, update.add);
+
+    assert(range == update.range);
 
     auto result = Add(*this);
     result.add += update.add;
     return result;
   };
 
-  auto Apply(new_statistics::IntSum stat) {
-    assert(stat.range.IsInside(range));
+  Add OnSubrange(Range subrange) const {
+    assert(subrange.IsInside(range));
+
+    return Add(subrange, add);
+  }
+
+  auto Apply(statistics::IntSum stat) const {
+    dbg("Add.Apply", range, add, stat.range, stat.value);
+    assert(range == stat.range);
+
     stat.value += stat.range.Length() * add;
     return stat;
   }
 
-  auto Apply(new_statistics::IntMinimum stat) {
-    assert(stat.range.IsInside(range));
+  auto Apply(statistics::IntMinimum stat) const {
+    assert(range == stat.range);
+
     stat.value += add;
     return stat;
   }
@@ -41,4 +54,4 @@ struct Add {
 
 using IntAdd = Add<i64>;
 
-}  // namespace algo::trees::segment_tree::range_updates
+}  // namespace algo::trees::segment_tree::updates

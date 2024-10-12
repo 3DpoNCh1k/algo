@@ -9,10 +9,12 @@ template <typename Node>
 struct StaticTree {
   using DataNode = Node;
   struct TreeNode : DataNode {
-    int index = -1;
-    void SetIndex(int idx) {
-      index = idx;
+    TreeNode(int index, int l, int r)
+        : DataNode(l, r),
+          index(index) {
     }
+
+    int index = -1;
   };
 
   std::vector<TreeNode> nodes;
@@ -22,18 +24,16 @@ struct StaticTree {
     B = utils::bits::PowerOfTwoThatAtLeast(u64(n));
     ROOT = 1;
 
-    nodes.resize(2 * B);
+    nodes.resize(2 * B, TreeNode(-1, -1, -1));
 
     for (int i = B; i < 2 * B; ++i) {
       int idx = i - B;
-      nodes[i].SetInterval(idx, idx);
-      nodes[i].SetIndex(i);
+      nodes[i] = TreeNode(i, idx, idx);
     }
     for (int i = B - 1; i >= ROOT; --i) {
       auto left = 2 * i;
       auto right = left + 1;
-      nodes[i].SetInterval(nodes[left].L, nodes[right].R);
-      nodes[i].SetIndex(i);
+      nodes[i] = TreeNode(i, nodes[left].range.l, nodes[right].range.r);
       nodes[i].Pull(nodes[left], nodes[right]);
     }
   }

@@ -1,30 +1,32 @@
 #pragma once
 
-#include <algorithm>
-#include <limits>
-#include <algo/trees/segment_tree/operations/set_add.hpp>
-#include <algo/trees/segment_tree/statistics/base.hpp>
-#include <algo/utils/types/fundamentals.hpp>
+#include "algo/utils/types/fundamentals.hpp"
+
+#include <algo/ranges/range.hpp>
+
+#include <algo/maths/algebra/group_theory/operations/min.hpp>
+#include "algo/maths/algebra/group_theory/monoids/monoid.hpp"
+
+// include all min monoids here
+#include "algo/maths/algebra/group_theory/monoids/int_min.hpp"
 
 namespace algo::trees::segment_tree::statistics {
 
-struct Minimum : Base {
-  i64 result = std::numeric_limits<i64>::max();
+using namespace algo::maths::algebra::group_theory;
 
-  Minimum Merge(const Minimum& that) const {
-    auto result = *this;
-    result.result = std::min(result.result, that.result);
-    return result;
-  };
-};
+template <typename Element, typename RangeType = ranges::IntRange>
+struct Minimum {
+  using Monoid = monoid::Monoid<Element, operation::Min>;
+  using Range = RangeType;
+  Element value;
+  Range range;
 
-Minimum UpdateStatistics(const Minimum& stat, const operations::SetAddOp& op) {
-  auto new_stat = stat;
-  if (op.should_set) {
-    new_stat.result = op.set;
+  explicit Minimum(Range range, Element value = Monoid::Identity())
+      : range(range),
+        value(value) {
   }
-  new_stat.result += op.add;
-  return new_stat;
 };
+
+using IntMinimum = Minimum<i64>;
 
 }  // namespace algo::trees::segment_tree::statistics
