@@ -8,6 +8,17 @@
 
 namespace algo::utils::traits {
 // NOLINTBEGIN
+
+template <typename T, typename = void>
+struct is_subscriptable : std::false_type {};
+
+template <typename T>
+struct is_subscriptable<T, std::void_t<decltype(std::declval<T>()[0])>>
+    : std::true_type {};
+
+template <typename T>
+constexpr bool is_subscriptable_v = is_subscriptable<T>::value;
+
 template <typename T, typename = void>
 struct is_iterable : std::false_type {};
 
