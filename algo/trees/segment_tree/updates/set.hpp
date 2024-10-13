@@ -1,14 +1,29 @@
 #pragma once
 
+#include <algo/trees/segment_tree/statistics/value_of.hpp>
 #include <algo/trees/segment_tree/statistics/sum.hpp>
 #include "algo/trees/segment_tree/statistics/minimum.hpp"
 
 namespace algo::trees::segment_tree::updates {
 
+using namespace statistics;
+
 template <typename Element, typename Range = ranges::IntRange>
 struct Set {
+  using Index = typename Range::Index;
+
   Set(Range range, Element value)
       : range(range),
+        value(value) {
+  }
+
+  Set(Index index, Element value)
+      : range(index, index),
+        value(value) {
+  }
+
+  Set(Index l, Index r, Element value)
+      : range(l, r),
         value(value) {
   }
 
@@ -22,21 +37,16 @@ struct Set {
 
   Set OnSubrange(Range subrange) const {
     assert(subrange.IsInside(range));
+
     return Set(subrange, value);
   }
 
-  auto Apply(statistics::IntSum stat) const {
-    assert(range == stat.range);
-
-    stat.value = stat.range.Length() * value;
-    return stat;
+  auto Apply(ValueOf<IntSum>) const {
+    return range.Length() * value;
   }
 
-  auto Apply(statistics::IntMinimum stat) const {
-    assert(range == stat.range);
-
-    stat.value = value;
-    return stat;
+  auto Apply(ValueOf<IntMinimum>) const {
+    return value;
   }
 
   Range range;

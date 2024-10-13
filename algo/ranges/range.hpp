@@ -2,34 +2,31 @@
 
 #include <sstream>
 #include <string>
+#include "algo/utils/types/fundamentals.hpp"
 
 namespace algo::ranges {
 
-template <typename Index = int>
+template <typename IndexType>
 struct Range {
+  using Index = IndexType;
+
   Range(Index l, Index r)
       : l(l),
         r(r) {
   }
 
-  bool IsInside(const Range& other) const {
+  template <typename Jndex>
+  bool IsInside(const Range<Jndex>& other) const {
     return other.l <= l && r <= other.r;
   };
 
-  bool IsOutside(const Range& other) const {
+  template <typename Jndex>
+  bool IsOutside(const Range<Jndex>& other) const {
     return other.l > r || other.r < l;
   };
 
   Index Length() const {
     return r - l + 1;
-  }
-
-  bool IsEmpty() const {
-    return l > r;
-  }
-
-  static Range MakeEmpty() {
-    return Range(0, -1);
   }
 
   std::string ToString() const {
@@ -38,17 +35,24 @@ struct Range {
     return ss.str();
   };
 
-  bool operator==(const Range& other) const {
+  template <typename Jndex>
+  bool operator==(const Range<Jndex>& other) const {
     return l == other.l && r == other.r;
   }
 
-  bool operator!=(const Range& other) const {
+  template <typename Jndex>
+  bool operator!=(const Range<Jndex>& other) const {
     return !(*this == other);
   }
+
+  // segment tree uses implicit conversion
+  operator Range<i64>() {  // NOLINT
+    return Range<i64>(l, r);
+  };
 
   Index l, r;
 };
 
-using IntRange = Range<int>;
+using IntRange = Range<i64>;
 
 }  // namespace algo::ranges

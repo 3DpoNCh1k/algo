@@ -6,20 +6,33 @@
 #include <algo/utils/meta.hpp>
 
 #include <algo/ranges/range.hpp>
+
+#include "algo/trees/segment_tree/updates/add.hpp"
 #include "algo/utils/debug.hpp"
 
 namespace algo::trees::segment_tree::details {
 
-template <typename Op, typename... Statistics>
+template <typename IndexType, typename UpdateType, typename... Statistics>
 struct BaseNode {
-  using Update = Op;
+  static constexpr size_t N = sizeof...(Statistics);
+  static_assert(N > 0);
+
+  using Index = IndexType;
+  using Range = ranges::Range<Index>;
+  using Update = UpdateType;
+
   using StatisticsTuple = std::tuple<Statistics...>;
-  ranges::IntRange range;
+  using Value = typename std::tuple_element_t<0, StatisticsTuple>::Value;
+
+  Range range;
   StatisticsTuple statistics;
 
-  BaseNode(int l, int r)
+  std::array<Value, N> values;
+
+  BaseNode(Index l, Index r, Value value)
       : range(l, r),
-        statistics(Statistics(range)...) {
+        values(utils::meta::MakeArray<N>(value)) {
+    dbg(l, r, range);
   }
 
   void ApplyOperation(const Update& update) {
@@ -28,8 +41,10 @@ struct BaseNode {
 
     utils::meta::ForLoop<0, std::tuple_size_v<StatisticsTuple> - 1>(
         [&](auto index) {
-          auto& stat = std::get<index.Value>(statistics);
-          stat = update.Apply(stat);
+          using Stats = std::tuple_element_t<index.Value, StatisticsTuple>;
+
+          auto& value = values[index.Value];
+          value = update.Apply(statistics::ValueOf<Stats>(value));
         });
   }
 
@@ -39,14 +54,17 @@ struct BaseNode {
           using Stats = std::tuple_element_t<index.Value, StatisticsTuple>;
           using Monoid = typename Stats::Monoid;
 
-          auto& stat = std::get<index.Value>(statistics);
-          stat.value = Monoid::Combine(left.Get<Stats>(), right.Get<Stats>());
+          auto& value = values[index.Value];
+          value = Monoid::Combine(left.Get<Stats>(), right.Get<Stats>());
         });
   };
 
   template <typename Stats>
   auto Get() const {
-    return std::get<Stats>(statistics).value;
+    constexpr auto Index = utils::meta::IndexOf<Stats, Statistics...>();
+    static_assert(Index != -1);
+
+    return values[Index];
   }
 
   std::string ToString() const {

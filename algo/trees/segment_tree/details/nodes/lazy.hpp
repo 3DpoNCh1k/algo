@@ -5,18 +5,17 @@
 
 #include <algo/utils/meta.hpp>
 #include <algo/trees/segment_tree/details/nodes/base.hpp>
-#include "algo/ranges/range.hpp"
-#include "algo/utils/debug.hpp"
 
 namespace algo::trees::segment_tree::details {
 
-template <typename Update, typename... Statistics>
-struct LazyNode : BaseNode<Update, Statistics...> {
-  using Base = BaseNode<Update, Statistics...>;
+template <typename Index, typename Update, typename... Statistics>
+struct LazyNode : BaseNode<Index, Update, Statistics...> {
+  using Base = BaseNode<Index, Update, Statistics...>;
   std::optional<Update> operation;
 
-  LazyNode(int l, int r)
-      : Base(l, r) {
+  template <typename... Args>
+  explicit LazyNode(Args&&... args)
+      : Base(std::forward<Args>(args)...) {
   }
 
   void ApplyOperation(const Update& update) {

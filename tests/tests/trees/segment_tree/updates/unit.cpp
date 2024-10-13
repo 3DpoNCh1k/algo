@@ -3,6 +3,7 @@
 #include <algo/trees/segment_tree/updates/add.hpp>
 #include <algo/trees/segment_tree/updates/set.hpp>
 
+#include <algo/trees/segment_tree/statistics/value_of.hpp>
 #include <algo/trees/segment_tree/statistics/sum.hpp>
 
 #include "algo/trees/segment_tree/statistics/minimum.hpp"
@@ -43,15 +44,13 @@ TEST(Add) {
   }
 
   {
-    auto sum_stat = IntSum(range, 1);
-    auto result = add_2.Apply(sum_stat);
-    ASSERT_EQ(result.value, 5);
+    auto result = add_2.Apply(ValueOf<IntSum>(1));
+    ASSERT_EQ(result, 5);
   }
 
   {
-    auto min_stat = IntMinimum(range, 1);
-    auto result = add_2.Apply(min_stat);
-    ASSERT_EQ(result.value, 3);
+    auto result = add_2.Apply(ValueOf<IntMinimum>(1));
+    ASSERT_EQ(result, 3);
   }
 }
 
@@ -66,15 +65,13 @@ TEST(Set) {
   }
 
   {
-    auto sum_stat = IntSum(range, 1);
-    auto result = set_2.Apply(sum_stat);
-    ASSERT_EQ(result.value, 4);
+    auto result = set_2.Apply(ValueOf<IntSum>(1));
+    ASSERT_EQ(result, 4);
   }
 
   {
-    auto min_stat = IntMinimum(range, 1);
-    auto result = set_2.Apply(min_stat);
-    ASSERT_EQ(result.value, 2);
+    auto result = set_2.Apply(ValueOf<IntMinimum>(1));
+    ASSERT_EQ(result, 2);
   }
 }
 

@@ -14,17 +14,10 @@ namespace algo::trees::segment_tree::statistics {
 
 using namespace algo::maths::algebra::group_theory;
 
-template <typename Element, typename RangeType = ranges::IntRange>
+template <typename ValueType>
 struct Minimum {
-  using Monoid = monoid::Monoid<Element, operation::Min>;
-  using Range = RangeType;
-  Element value;
-  Range range;
-
-  explicit Minimum(Range range, Element value = Monoid::Identity())
-      : range(range),
-        value(value) {
-  }
+  using Value = ValueType;
+  using Monoid = monoid::Monoid<Value, operation::Min>;
 };
 
 using IntMinimum = Minimum<i64>;

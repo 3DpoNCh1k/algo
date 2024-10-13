@@ -38,6 +38,16 @@ template <int... ints, typename T>
 auto MakeArrayImpl(algo::utils::meta::IntSeq<ints...>, T value) {
   return std::array{((void)ints, value)...};
 }
+
+template <int Index, typename U>
+constexpr int IndexOfImpl() {
+  return -1;
+};
+
+template <int Index, typename U, typename T, typename... Types>
+constexpr int IndexOfImpl() {
+  return std::is_same_v<U, T> ? Index : IndexOfImpl<Index + 1, U, Types...>();
+}
 }  // namespace details
 
 template <int from, int to, class Body>
@@ -49,6 +59,11 @@ template <std::size_t N, typename T>
 auto MakeArray(T value) {
   return details::MakeArrayImpl(algo::utils::meta::IntRange<0, N - 1>(),
                                 std::move(value));
+}
+
+template <typename T, typename... Types>
+constexpr int IndexOf() {
+  return details::IndexOfImpl<0, T, Types...>();
 }
 
 }  // namespace algo::utils::meta

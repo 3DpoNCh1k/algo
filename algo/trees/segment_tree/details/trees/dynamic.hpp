@@ -1,45 +1,67 @@
 #pragma once
 
+#include <functional>
+#include <type_traits>
 #include <vector>
 #include <cassert>
 
 #include <algo/utils/types/fundamentals.hpp>
+#include "algo/utils/traits/traits.hpp"
 
 namespace algo::trees::segment_tree::details {
 
 template <typename Node>
 struct DynamicTree {
   using DataNode = Node;
+  using Index = typename DataNode::Index;
+  using Value = typename DataNode::Value;
+
   struct TreeNode : DataNode {
-    TreeNode(int idx, int l, int r)
-        : DataNode(l, r),
+    TreeNode(Index idx, Index l, Index r, Value value)
+        : DataNode(l, r, value),
           index(idx) {
     }
 
-    int index = -1;
-    int left_index = -1;
-    int right_index = -1;
+    Index index = -1;
+    Index left_index = -1;
+    Index right_index = -1;
   };
 
   std::vector<TreeNode> nodes;
-  int ROOT = -1;
-  static constexpr int DefaultMaxSize = 1e6;
+  Index ROOT = -1;
+  std::function<Value(Index, Index)> initializer;
+
+  static constexpr std::size_t DefaultMaxSize = 1e6;
   // TODO: use allocator instead of reserve
 
-  explicit DynamicTree(i64 l, i64 r, int max_size = DefaultMaxSize) {
+  template <typename Initializer,
+            typename = std::enable_if_t<
+                std::is_invocable_r_v<Value, Initializer, Index, Index>>>
+  explicit DynamicTree(Index l, Index r, Initializer f,
+                       std::size_t max_size = DefaultMaxSize)
+      : initializer(f) {
     nodes.reserve(max_size);
     ROOT = CreateNode(l, r);
   }
 
-  int CreateNode(int l, int r) {
+  explicit DynamicTree(Index l, Index r, Value value,
+                       std::size_t max_size = DefaultMaxSize)
+      : initializer([value](Index, Index) {
+          return value;
+        }) {
+    nodes.reserve(max_size);
+    ROOT = CreateNode(l, r);
+  }
+
+  Index CreateNode(Index l, Index r) {
     assert(nodes.size() < nodes.capacity());
-    int index = nodes.size();
-    nodes.emplace_back(index, l, r);
+    Index index = nodes.size();
+    nodes.emplace_back(index, l, r, initializer(l, r));
     return index;
   }
 
   void EnsureThatChildsExist(TreeNode& node) {
-    int m = node.range.l + (node.range.r - node.range.l) / 2;
+    Index m = node.range.l + (node.range.r - node.range.l) / 2;
     if (node.left_index == -1) {
       node.left_index = CreateNode(node.range.l, m);
     }

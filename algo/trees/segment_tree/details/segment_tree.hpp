@@ -1,18 +1,19 @@
 #pragma once
 
 #include <utility>
-#include "algo/ranges/range.hpp"
 
 namespace algo::trees::segment_tree::details {
 
-template <template <typename> typename PropagatorTemplate,
+template <typename Index, template <typename> typename PropagatorTemplate,
           template <typename> typename TreeTemplate,
-          template <typename, typename...> typename NodeTemplate,
+          template <typename, typename, typename...> typename NodeTemplate,
           typename Update, typename... Statistics>
 struct SegmentTree {
-  using Node = NodeTemplate<Update, Statistics...>;
+  using Node = NodeTemplate<Index, Update, Statistics...>;
   using Tree = TreeTemplate<Node>;
   using Propagator = PropagatorTemplate<Tree>;
+
+  using Range = typename Node::Range;
 
   Tree tree;
   Propagator propagator;
@@ -25,10 +26,6 @@ struct SegmentTree {
         propagator(tree) {
   }
 
-  // void ApplyAtIndex(int idx, const Update& update) {
-  //   propagator.ApplyAtIndex(idx, update);
-  // }
-
   void ApplyAtIndex(const Update& update) {
     dbg("SegmentTree.ApplyAtIndex", update.range, update.add);
     propagator.ApplyAtIndex(update);
@@ -39,13 +36,18 @@ struct SegmentTree {
   }
 
   template <typename Stats>
-  Stats GetAtIndex(int idx) {
+  typename Stats::Value GetAtIndex(Index idx) {
     return propagator.template GetAtIndex<Stats>(idx);
   }
 
   template <typename Stats>
-  Stats GetFromRange(ranges::IntRange range) {
+  typename Stats::Value GetFromRange(Range range) {
     return propagator.template GetFromRange<Stats>(range);
+  }
+
+  template <typename Stats>
+  typename Stats::Value GetFromRange(Index l, Index r) {
+    return propagator.template GetFromRange<Stats>(Range(l, r));
   }
 };
 }  // namespace algo::trees::segment_tree::details

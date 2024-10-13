@@ -15,19 +15,13 @@ using namespace algo::trees::segment_tree::updates;
 using namespace algo::trees::segment_tree::statistics;
 
 TEST(IntSum) {
-  auto stat01 = IntSum(Range(0, 1));
-  auto stat0 = IntSum(Range(0, 0), 1);
-  auto stat1 = IntSum(Range(1, 1), 2);
-  stat01.value = IntSum::Monoid::Combine(stat0.value, stat1.value);
-  ASSERT_EQ(stat01.value, 3);
+  auto value = IntSum::Monoid::Combine(1, 2);
+  ASSERT_EQ(value, 3);
 }
 
 TEST(IntMinimum) {
-  auto stat01 = IntMinimum(Range(0, 1));
-  auto stat0 = IntMinimum(Range(0, 0), 1);
-  auto stat1 = IntMinimum(Range(1, 1), 2);
-  stat01.value = IntMinimum::Monoid::Combine(stat0.value, stat1.value);
-  ASSERT_EQ(stat01.value, 1);
+  auto value = IntMinimum::Monoid::Combine(1, 2);
+  ASSERT_EQ(value, 1);
 }
 
 RUN_ALL_TESTS()

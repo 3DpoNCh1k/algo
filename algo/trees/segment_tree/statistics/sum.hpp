@@ -16,17 +16,10 @@ namespace algo::trees::segment_tree::statistics {
 
 using namespace algo::maths::algebra::group_theory;
 
-template <typename Element, typename RangeType = ranges::IntRange>
+template <typename ValueType>
 struct Sum {
-  using Monoid = monoid::Monoid<Element, operation::Plus>;
-  using Range = RangeType;
-  Element value;
-  Range range;
-
-  explicit Sum(Range range, Element value = Monoid::Identity())
-      : range(range),
-        value(value) {
-  }
+  using Value = ValueType;
+  using Monoid = monoid::Monoid<Value, operation::Plus>;
 };
 
 using IntSum = Sum<i64>;

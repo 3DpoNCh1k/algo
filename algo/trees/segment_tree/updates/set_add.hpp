@@ -1,7 +1,9 @@
 #pragma once
 
-#include <algo/trees/segment_tree/statistics/sum.hpp>
 #include <cassert>
+
+#include <algo/trees/segment_tree/statistics/value_of.hpp>
+#include <algo/trees/segment_tree/statistics/sum.hpp>
 #include "algo/trees/segment_tree/statistics/minimum.hpp"
 
 #include "algo/trees/segment_tree/updates/add.hpp"
@@ -9,6 +11,8 @@
 #include "algo/trees/segment_tree/updates/set.hpp"
 
 namespace algo::trees::segment_tree::updates {
+
+using namespace statistics;
 
 template <typename Element, typename Range = ranges::IntRange>
 struct SetAdd {
@@ -50,26 +54,26 @@ struct SetAdd {
     return SetAdd(subrange, value, add, should_set);
   }
 
-  auto Apply(statistics::IntSum stat) const {
-    assert(range == stat.range);
+  auto Apply(ValueOf<IntSum> stat_value) const {
+    Element result = stat_value.value;
 
     if (should_set) {
-      stat.value = stat.range.Length() * value;
+      result = range.Length() * value;
     }
-    stat.value += stat.range.Length() * add;
+    result += range.Length() * add;
 
-    return stat;
+    return result;
   }
 
-  auto Apply(statistics::IntMinimum stat) const {
-    assert(range == stat.range);
+  auto Apply(ValueOf<IntMinimum> stat_value) const {
+    Element result = stat_value.value;
 
     if (should_set) {
-      stat.value = value;
+      result = value;
     }
-    stat.value += add;
+    result += add;
 
-    return stat;
+    return result;
   }
 
   Range range;

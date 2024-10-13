@@ -1,6 +1,5 @@
 #pragma once
 
-#include "algo/ranges/range.hpp"
 #include "algo/utils/debug.hpp"
 namespace algo::trees::segment_tree::details {
 
@@ -8,6 +7,8 @@ template <typename Tree>
 struct LazyPropagator {
   using Node = typename Tree::DataNode;
   using Update = typename Node::Update;
+  using Index = typename Node::Index;
+  using Range = typename Node::Range;
 
   Tree& tree;
   explicit LazyPropagator(Tree& tree)
@@ -41,17 +42,17 @@ struct LazyPropagator {
   }
 
   template <typename Stats>
-  Stats GetAtIndex(int idx) {
-    return GetFromRange<Stats>(ranges::IntRange(idx, idx));
+  auto GetAtIndex(Index idx) {
+    return GetFromRange<Stats>(Range(idx, idx));
   }
 
   template <typename Stats>
-  Stats GetFromRange(ranges::IntRange range) {
-    return Stats(range, GetFromRangeImpl<Stats>(tree.GetRoot(), range));
+  auto GetFromRange(Range range) {
+    return GetFromRangeImpl<Stats>(tree.GetRoot(), range);
   }
 
   template <typename Stats>
-  auto GetFromRangeImpl(Node& node, ranges::IntRange range) {
+  auto GetFromRangeImpl(Node& node, Range range) {
     using Monoid = typename Stats::Monoid;
     if (node.range.IsOutside(range)) {
       return Monoid::Identity();

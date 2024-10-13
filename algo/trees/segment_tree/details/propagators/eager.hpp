@@ -1,12 +1,13 @@
 #pragma once
 
-#include "algo/ranges/range.hpp"
 namespace algo::trees::segment_tree::details {
 
 template <typename Tree>
 struct EagerPropagator {
   using Node = typename Tree::DataNode;
   using Update = typename Node::Update;
+  using Index = typename Node::Index;
+  using Range = typename Node::Range;
 
   Tree& tree;
   explicit EagerPropagator(Tree& tree)
@@ -24,24 +25,24 @@ struct EagerPropagator {
   }
 
   template <typename Stats>
-  Stats GetAtIndex(int idx) {
-    return Stats(ranges::IntRange(idx, idx),
-                 tree.GetNodeAt(idx).template Get<Stats>());
+  typename Stats::Value GetAtIndex(Index idx) {
+    return tree.GetNodeAt(idx).template Get<Stats>();
   }
 
   template <typename Stats>
-  Stats GetFromRange(ranges::IntRange range) {
-    return Stats(range, GetFromRangeTopDown<Stats>(range));
+  typename Stats::Value GetFromRange(Range range) {
+    return GetFromRangeTopDown<Stats>(range);
   }
 
   template <typename Stats>
-  auto GetFromRangeTopDown(ranges::IntRange range) {
+  typename Stats::Value GetFromRangeTopDown(Range range) {
     return GetFromRangeTopDownImpl<Stats>(tree.GetRoot(), range);
   }
 
   template <typename Stats>
-  auto GetFromRangeTopDownImpl(Node& node, ranges::IntRange range) {
+  typename Stats::Value GetFromRangeTopDownImpl(Node& node, Range range) {
     using Monoid = typename Stats::Monoid;
+
     if (node.range.IsOutside(range)) {
       return Monoid::Identity();
     }

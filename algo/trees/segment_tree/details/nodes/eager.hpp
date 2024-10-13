@@ -4,10 +4,12 @@
 
 namespace algo::trees::segment_tree::details {
 
-template <typename Update, typename... Statistics>
-struct EagerNode : BaseNode<Update, Statistics...> {
-  EagerNode(int l, int r)
-      : BaseNode<Update, Statistics...>(l, r){};
+template <typename Index, typename Update, typename... Statistics>
+struct EagerNode : BaseNode<Index, Update, Statistics...> {
+  template <typename... Args>
+  explicit EagerNode(Args&&... args)
+      : BaseNode<Index, Update, Statistics...>(std::forward<Args>(args)...) {
+  }
 };
 
 }  // namespace algo::trees::segment_tree::details

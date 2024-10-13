@@ -2,6 +2,7 @@
 
 #include <cassert>
 
+#include <algo/trees/segment_tree/statistics/value_of.hpp>
 #include <algo/trees/segment_tree/statistics/sum.hpp>
 #include "algo/trees/segment_tree/statistics/minimum.hpp"
 #include "algo/ranges/range.hpp"
@@ -9,11 +10,23 @@
 
 namespace algo::trees::segment_tree::updates {
 
+using namespace statistics;
+
 template <typename Element, typename Range = ranges::IntRange>
 struct Add {
-  using ElementType = Element;
+  using Index = typename Range::Index;
   Add(Range range, Element add)
       : range(range),
+        add(add) {
+  }
+
+  Add(Index index, Element add)
+      : range(index, index),
+        add(add) {
+  }
+
+  Add(Index l, Index r, Element add)
+      : range(l, r),
         add(add) {
   }
 
@@ -33,19 +46,12 @@ struct Add {
     return Add(subrange, add);
   }
 
-  auto Apply(statistics::IntSum stat) const {
-    dbg("Add.Apply", range, add, stat.range, stat.value);
-    assert(range == stat.range);
-
-    stat.value += stat.range.Length() * add;
-    return stat;
+  auto Apply(ValueOf<IntSum> value) const {
+    return value.value + range.Length() * add;
   }
 
-  auto Apply(statistics::IntMinimum stat) const {
-    assert(range == stat.range);
-
-    stat.value += add;
-    return stat;
+  auto Apply(ValueOf<IntMinimum> value) const {
+    return value.value + add;
   }
 
   Range range;
