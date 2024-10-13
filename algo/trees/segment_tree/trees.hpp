@@ -22,9 +22,6 @@ using EagerPropagationStaticSegmentTree =
     details::SegmentTree<int, details::EagerPropagator, details::StaticTree,
                          details::EagerNode, Update, Statistics...>;
 
-// template<typename Node>
-// using DynamicTreeTemplate = details::DynamicTree<
-
 template <typename Update, typename Statistics>
 using LazyPropagationDynamicSegmentTree =
     details::SegmentTree<i64, details::LazyPropagator, details::DynamicTree,
