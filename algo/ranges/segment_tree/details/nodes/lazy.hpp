@@ -11,27 +11,27 @@ namespace algo::ranges::segment_tree::details {
 template <typename Index, typename Update, typename... Statistics>
 struct LazyNode : BaseNode<Index, Update, Statistics...> {
   using Base = BaseNode<Index, Update, Statistics...>;
-  std::optional<Update> operation;
+  std::optional<Update> node_update;
 
   template <typename... Args>
   explicit LazyNode(Args&&... args)
       : Base(std::forward<Args>(args)...) {
   }
 
-  void ApplyOperation(const Update& update) {
-    this->Base::ApplyOperation(update);
-    if (operation.has_value()) {
-      operation = operation.value().Compose(update);
+  void Apply(const Update& update) {
+    this->Base::Apply(update);
+    if (node_update.has_value()) {
+      node_update = node_update.value().Compose(update);
     } else {
-      operation = update;
+      node_update = update;
     }
   }
 
   void Push(LazyNode& left, LazyNode& right) {
-    if (operation.has_value()) {
-      left.ApplyOperation(operation.value().OnSubrange(left.range));
-      right.ApplyOperation(operation.value().OnSubrange(right.range));
-      operation.reset();
+    if (node_update.has_value()) {
+      left.Apply(node_update.value().OnSubrange(left.range));
+      right.Apply(node_update.value().OnSubrange(right.range));
+      node_update.reset();
     }
   };
 
@@ -39,8 +39,8 @@ struct LazyNode : BaseNode<Index, Update, Statistics...> {
     std::stringstream ss;
     ss << this->Base::ToString();
     ss << "Update = "
-       << (operation.has_value() ? operation.value().ToString()
-                                 : std::string("No update"));
+       << (node_update.has_value() ? node_update.value().ToString()
+                                   : std::string("No update"));
     return ss.str();
   };
 };

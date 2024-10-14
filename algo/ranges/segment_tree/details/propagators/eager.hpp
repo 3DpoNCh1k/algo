@@ -16,7 +16,7 @@ struct EagerPropagator {
 
   void ApplyAtIndex(const Update& update) {
     Node* current_node = &tree.GetNodeAt(update.range.l);
-    current_node->ApplyOperation(update);
+    current_node->Apply(update);
     while (tree.HasParent(*current_node)) {
       current_node = &tree.GetParent(*current_node);
       current_node->Pull(tree.GetLeft(*current_node),

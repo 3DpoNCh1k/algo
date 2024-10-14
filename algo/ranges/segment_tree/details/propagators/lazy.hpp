@@ -32,7 +32,7 @@ struct LazyPropagator {
     }
     if (node.range.IsInside(update.range)) {
       dbg("inside");
-      node.ApplyOperation(update.OnSubrange(node.range));
+      node.Apply(update.OnSubrange(node.range));
       return;
     }
     node.Push(tree.GetLeft(node), tree.GetRight(node));

@@ -34,8 +34,8 @@ struct BaseNode {
     dbg(l, r, range);
   }
 
-  void ApplyOperation(const Update& update) {
-    dbg("BaseNode.ApplyOperation", range, update.range, update.add);
+  void Apply(const Update& update) {
+    dbg("BaseNode.Apply", range, update.range, update.add);
     assert(range == update.range);
 
     utils::meta::ForLoop<0, std::tuple_size_v<StatisticsTuple> - 1>(
