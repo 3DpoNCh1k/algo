@@ -1,37 +1,37 @@
-#include <algo/trees/fenwick/operations/add.hpp>
-#include <algo/trees/fenwick/statistics/sum.hpp>
+#include <algo/trees/fenwick/2d.hpp>
+#include <algo/trees/segment_tree/statistics/sum.hpp>
 
-#include <algo/trees/fenwick/trees.hpp>
 #include <tests/framework/asserts.hpp>
+#include "algo/utils/debug.hpp"
 #include "tests/framework/test.hpp"
 
 using namespace algo::trees::fenwick;
-using namespace operations;
-using namespace statistics;
+using namespace algo::trees::segment_tree::statistics;
 
 TEST(Simple) {
-  auto fenwick = Fenwick2D<Operation<AddOp>, Statistics<Sum>>(5, 5);
+  auto fenwick = Fenwick2D<IntSum>(5, 5);
+  fenwick.Set(0, 0, 1);
   {
-    auto add = AddOp{1};
-    fenwick.ApplyAtIndex(add, 0, 0);
-  }
-  {
-    auto res = fenwick.GetAtIndex<Sum>(0, 0);
-    ASSERT_EQ(res.result, 1);
+    auto res = fenwick.Get(0, 0);
+    dbg(res);
+    ASSERT_EQ(res, 1);
   }
 
   {
-    auto add = AddOp{2};
-    fenwick.ApplyAtIndex(add, 1, 3);
+    auto res = fenwick.Get(1, 3);
+    dbg(res);
   }
+
+  fenwick.Set(1, 3, 2);
   {
-    auto res = fenwick.GetAtIndex<Sum>(1, 3);
-    ASSERT_EQ(res.result, 2);
+    auto res = fenwick.Get(1, 3);
+    dbg(res);
+    ASSERT_EQ(res, 2);
   }
 
   {
-    auto res = fenwick.GetFromRange<Sum>(0, 4, 0, 4);
-    ASSERT_EQ(res.result, 3);
+    auto res = fenwick.GetFromRectangle(0, 4, 0, 4);
+    ASSERT_EQ(res, 3);
   }
 };
 

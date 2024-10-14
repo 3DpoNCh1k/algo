@@ -1,43 +1,40 @@
-#include <algo/trees/fenwick/operations/add.hpp>
-#include <algo/trees/fenwick/statistics/sum.hpp>
-#include <algo/trees/fenwick/trees.hpp>
+#include <algo/trees/fenwick/3d.hpp>
+#include <algo/trees/segment_tree/statistics/sum.hpp>
+
 #include <algo/utils/random/random.hpp>
 #include <tests/framework/asserts.hpp>
 #include "tests/framework/test.hpp"
 
 using namespace algo::trees::fenwick;
+using namespace algo::trees::segment_tree::statistics;
 using namespace algo::utils::random;
-using namespace operations;
-using namespace statistics;
 
 struct AddAndSumTester3D {
   int n;
   int m;
   int k;
 
-  using Fenwick = Fenwick3D<Operation<AddOp>, Statistics<Sum>>;
-  Fenwick fenwick;
+  Fenwick3D<IntSum> fenwick;
   std::vector<std::vector<std::vector<i64>>> rival;
 
   explicit AddAndSumTester3D(int n, int m, int k)
       : n(n),
         m(m),
         k(k),
-        fenwick(Fenwick(n, m, k)),
+        fenwick(n, m, k),
         rival(n, std::vector<std::vector<i64>>(m, std::vector<i64>(k))) {
   }
 
   i64 GetAtPointFenwick(int x, int y, int z) {
-    auto res = fenwick.GetAtIndex<Sum>(x, y, z);
-    return res.result;
+    auto res = fenwick.Get(x, y, z);
+    return res;
   }
   i64 GetAtPointRival(int x, int y, int z) {
     return rival[x][y][z];
   }
 
   void AddAtPointFenwick(int x, int y, int z, i64 value) {
-    auto add_operation = AddOp{value};
-    fenwick.ApplyAtIndex(add_operation, x, y, z);
+    fenwick.Set(x, y, z, fenwick.Get(x, y, z) + value);
   }
 
   void AddAtPointRival(int x, int y, int z, i64 value) {
@@ -46,8 +43,8 @@ struct AddAndSumTester3D {
 
   i64 GetFrom3DRectangleFenwick(int x0, int x1, int y0, int y1, int z0,
                                 int z1) {
-    auto res = fenwick.GetFromRange<Sum>(x0, x1, y0, y1, z0, z1);
-    return res.result;
+    auto res = fenwick.GetFromCube(x0, x1, y0, y1, z0, z1);
+    return res;
   }
 
   i64 GetFrom3DRectangleRival(int x0, int x1, int y0, int y1, int z0, int z1) {

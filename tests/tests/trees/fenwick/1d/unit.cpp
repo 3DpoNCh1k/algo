@@ -1,52 +1,56 @@
-#include <iostream>
+#include <algo/trees/fenwick/1d.hpp>
+#include <algo/trees/segment_tree/statistics/sum.hpp>
 
-#include <algo/trees/fenwick/operations/operation.hpp>
-#include <algo/trees/fenwick/statistics/base.hpp>
-#include <algo/trees/fenwick/statistics/statistics.hpp>
 #include <tests/framework/asserts.hpp>
 #include "tests/framework/test.hpp"
 
 using namespace algo::trees::fenwick;
-
-using std::cout;
-using std::endl;
+using namespace algo::trees::segment_tree::statistics;
 
 TEST(Simple) {
-  double op = 0;
-  int i = 1;
-  int j = 2;
+  auto fenwick = Fenwick<IntSum>(3);
+  fenwick.Set(0, 1);
   {
-    auto c = operations::Apply(op).At(i, j);
-    cout << c.index << " " << c.operation.index << endl;
-    ASSERT_EQ(c.index, i);
-    ASSERT_EQ(c.operation.index, j);
-  }
-  {
-    auto c = statistics::Get<double>().From(i, j);
-    ASSERT_EQ(c.l, i);
-    ASSERT_EQ(c.r, j);
+    auto value = fenwick.Get(0);
+    ASSERT_EQ(value, 1)
   }
 
   {
-    auto c = statistics::Get<double>().From(i, i, j, j);
-    ASSERT_EQ(c.l, i);
-    ASSERT_EQ(c.r, i);
-    ASSERT_EQ(c.stat.l, j);
-    ASSERT_EQ(c.stat.r, j);
+    auto value = fenwick.Get(1);
+    ASSERT_EQ(value, 0)
   }
 
   {
-    auto c = statistics::Get<double>().At(i);
-    ASSERT_EQ(c.l, i);
-    ASSERT_EQ(c.r, i);
+    auto value = fenwick.Get(2);
+    ASSERT_EQ(value, 0)
   }
 
   {
-    auto c = statistics::Get<double>().At(i, j);
-    ASSERT_EQ(c.l, i);
-    ASSERT_EQ(c.r, i);
-    ASSERT_EQ(c.stat.l, j);
-    ASSERT_EQ(c.stat.r, j);
+    auto value = fenwick.GetFromRange(0, 2);
+    ASSERT_EQ(value, 1)
+  }
+
+  // add
+  fenwick.Set(1, fenwick.Get(1) + 2);
+
+  {
+    auto value = fenwick.Get(0);
+    ASSERT_EQ(value, 1)
+  }
+
+  {
+    auto value = fenwick.Get(1);
+    ASSERT_EQ(value, 2)
+  }
+
+  {
+    auto value = fenwick.Get(2);
+    ASSERT_EQ(value, 0)
+  }
+
+  {
+    auto value = fenwick.GetFromRange(0, 2);
+    ASSERT_EQ(value, 3)
   }
 };
 

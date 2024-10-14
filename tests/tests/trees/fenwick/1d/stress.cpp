@@ -1,30 +1,28 @@
-#include <algo/trees/fenwick/operations/add.hpp>
-#include <algo/trees/fenwick/statistics/sum.hpp>
-#include <algo/trees/fenwick/trees.hpp>
+#include <algo/trees/fenwick/1d.hpp>
+#include <algo/trees/segment_tree/statistics/sum.hpp>
 #include <algo/utils/random/random.hpp>
 #include <tests/framework/asserts.hpp>
 #include "tests/framework/test.hpp"
 
 using namespace algo::trees::fenwick;
+using namespace algo::trees::segment_tree::statistics;
 using namespace algo::utils::random;
-using namespace operations;
-using namespace statistics;
 
 struct AddAndSumTester {
   int n;
-  Fenwick<Operation<AddOp>, Statistics<Sum>> fenwick;
+  Fenwick<IntSum> fenwick;
   std::vector<i64> rival;
 
   explicit AddAndSumTester(int n)
       : n(n),
-        fenwick(Fenwick<Operation<AddOp>, Statistics<Sum>>(n)),
+        fenwick(n),
         rival(n) {
   }
 
   void Test(int queries, i64 min_add_value, i64 max_add_value) {
     for (int i = 0; i < n; ++i) {
-      auto res = fenwick.GetAtIndex<Sum>(i);
-      ASSERT_EQ(res.result, 0);
+      auto res = fenwick.Get(i);
+      ASSERT_EQ(res, 0);
       ASSERT_EQ(rival[i], 0);
     }
 
@@ -32,27 +30,24 @@ struct AddAndSumTester {
       if (Maybe()) {
         auto index = RandomInt(0, n - 1);
         auto value = RandomInt(min_add_value, max_add_value);
-        {
-          auto add_operation = AddOp{value};
-          fenwick.ApplyAtIndex(add_operation, index);
-        }
-        { rival[index] += value; }
+        fenwick.Set(index, fenwick.Get(index) + value);
+        rival[index] += value;
         continue;
       }
       if (Maybe()) {
         auto index = RandomInt(0, n - 1);
-        auto result = fenwick.GetAtIndex<Sum>(index);
-        ASSERT_EQ(result.result, rival[index])
+        auto result = fenwick.Get(index);
+        ASSERT_EQ(result, rival[index])
         continue;
       }
       auto l = RandomInt(0, n - 1);
       auto r = RandomInt(l, n - 1);
-      auto result = fenwick.GetFromRange<Sum>(l, r);
+      auto result = fenwick.GetFromRange(l, r);
       i64 rival_result = 0;
       for (int i = l; i <= r; ++i) {
         rival_result += rival[i];
       }
-      ASSERT_EQ(result.result, rival_result);
+      ASSERT_EQ(result, rival_result);
     }
   }
 };

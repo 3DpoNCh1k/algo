@@ -1,41 +1,38 @@
-#include <algo/trees/fenwick/operations/add.hpp>
-#include <algo/trees/fenwick/statistics/sum.hpp>
-#include <algo/trees/fenwick/trees.hpp>
+#include <algo/trees/fenwick/2d.hpp>
+#include <algo/trees/segment_tree/statistics/sum.hpp>
+
 #include <algo/utils/random/random.hpp>
 #include <tests/framework/asserts.hpp>
 #include "tests/framework/test.hpp"
 
 using namespace algo::trees::fenwick;
+using namespace algo::trees::segment_tree::statistics;
 using namespace algo::utils::random;
-using namespace operations;
-using namespace statistics;
 
 struct AddAndSumTester2D {
   int n;
   int m;
 
-  using Fenwick = Fenwick2D<Operation<AddOp>, Statistics<Sum>>;
-  Fenwick fenwick;
+  Fenwick2D<IntSum> fenwick;
   std::vector<std::vector<i64>> rival;
 
   explicit AddAndSumTester2D(int n, int m)
       : n(n),
         m(m),
-        fenwick(Fenwick(n, m)),
+        fenwick(n, m),
         rival(n, std::vector<i64>(m)) {
   }
 
   i64 GetAtPointFenwick(int i, int j) {
-    auto res = fenwick.GetAtIndex<Sum>(i, j);
-    return res.result;
+    auto res = fenwick.Get(i, j);
+    return res;
   }
   i64 GetAtPointRival(int i, int j) {
     return rival[i][j];
   }
 
   void AddAtPointFenwick(int i, int j, i64 value) {
-    auto add_operation = AddOp{value};
-    fenwick.ApplyAtIndex(add_operation, i, j);
+    fenwick.Set(i, j, fenwick.Get(i, j) + value);
   }
 
   void AddAtPointRival(int i, int j, i64 value) {
@@ -43,8 +40,8 @@ struct AddAndSumTester2D {
   }
 
   i64 GetFromRectangleFenwick(int row0, int row1, int col0, int col1) {
-    auto res = fenwick.GetFromRange<Sum>(row0, row1, col0, col1);
-    return res.result;
+    auto res = fenwick.GetFromRectangle(row0, row1, col0, col1);
+    return res;
   }
 
   i64 GetFromRectangleRival(int row0, int row1, int col0, int col1) {
