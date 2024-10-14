@@ -21,7 +21,7 @@ struct Edge : Properties... {
   std::string ToString() const {
     std::vector<std::string> property_strings;
     ((property_strings.push_back(Properties::ToString())), ...);
-    return algo::utils::JoinToString(property_strings, {.separator = " "});
+    return algo::utils::JoinToString(property_strings);
   };
 };
 

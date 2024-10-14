@@ -16,16 +16,6 @@ TEST(One) {
     auto s = JoinToString(dummies);
     ASSERT_EQ(s, dummy_string);
   }
-  {
-    std::string prefix = "with prefix";
-    auto s = JoinToString(dummies, {.prefix = prefix});
-    ASSERT_EQ(s, prefix + dummy_string);
-  }
-  {
-    std::string suffix = "with suffix";
-    auto s = JoinToString(dummies, {.suffix = suffix});
-    ASSERT_EQ(s, dummy_string + suffix);
-  }
 
   auto move_only_string = MoveOnlyWithToString().ToString();
   std::vector<MoveOnlyWithToString> move_onlies;
@@ -34,34 +24,18 @@ TEST(One) {
     auto s = JoinToString(move_onlies);
     ASSERT_EQ(s, move_only_string);
   }
-  {
-    std::string prefix = "with prefix";
-    auto s = JoinToString(move_onlies, {.prefix = prefix});
-    ASSERT_EQ(s, prefix + move_only_string);
-  }
-  {
-    std::string suffix = "with suffix";
-    auto s = JoinToString(move_onlies, {.suffix = suffix});
-    ASSERT_EQ(s, move_only_string + suffix);
-  }
 }
 
 TEST(Many) {
   {
     std::vector<int> v = {1, 2, 3};
-    auto result = JoinToString(v);
+    auto result = JoinToString(v, ", ");
     std::string expected = "1, 2, 3";
     ASSERT_EQ(result, expected)
   }
   {
-    std::set<int> s = {1, 2, 3};
-    auto result = JoinToString(s, {.prefix = "{", .suffix = "}"});
-    std::string expected = "{1, 2, 3}";
-    ASSERT_EQ(result, expected)
-  }
-  {
     std::map<int, bool> m = {{1, true}, {2, false}};
-    auto result = JoinToString(m, {.separator = "; "});
+    auto result = JoinToString(m, "; ");
     std::string expected = "(1, true); (2, false)";
     ASSERT_EQ(result, expected)
   }
@@ -70,10 +44,13 @@ TEST(Many) {
 TEST(ManyWithTransform) {
   {
     std::vector<int> v = {1, 2, 3};
-    auto result = JoinToString(v, [](int i) {
-      return ToString(-i);
-    });
-    std::string expected = "-1, -2, -3";
+    auto result = JoinToString(
+        v,
+        [](int i) {
+          return ToString(-i);
+        },
+        " ");
+    std::string expected = "-1 -2 -3";
     ASSERT_EQ(result, expected)
   }
 
@@ -88,7 +65,7 @@ TEST(ManyWithTransform) {
       return ToString(++counter);
     };
 
-    auto result = JoinToString(move_onlies, transformer);
+    auto result = JoinToString(move_onlies, transformer, ", ");
     std::string expected = "1, 2, 3";
     ASSERT_EQ(result, expected)
   }

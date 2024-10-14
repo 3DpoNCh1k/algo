@@ -20,7 +20,7 @@ struct Graph {
   std::string ToString() const {
     std::stringstream ss;
     ss << "Graph: n = " << n << "\n";
-    ss << algo::utils::JoinToString(edges, {.separator = "\n"});
+    ss << algo::utils::JoinToString(edges, "\n");
     return ss.str();
   };
 };
