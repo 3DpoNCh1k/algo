@@ -5,6 +5,7 @@
 
 #include <algo/utils/meta.hpp>
 #include <algo/ranges/range.hpp>
+#include <algo/ranges/statistics/value_of.hpp>
 
 #include "algo/utils/debug.hpp"
 

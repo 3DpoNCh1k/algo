@@ -5,36 +5,39 @@
 
 namespace algo::trees::decompositions {
 
-template <typename Operation, typename StatisticsTuple>
+template <typename Update, typename Statistics>
 struct HeavyLightDecomposition {
   using SegmentTree =
-      segment_tree::LazyPropagationStaticSegmentTree<Operation,
-                                                     StatisticsTuple>;
+      ranges::segment_tree::LazyPropagationStaticSegmentTree<Update,
+                                                             Statistics>;
+
+  using Monoid = typename Statistics::Monoid;
+  using Value = typename Statistics::Value;
 
   explicit HeavyLightDecomposition(const Tree& tree)
       : root_(0),
         input_tree_(tree),
-        segment_tree_(input_tree_.n) {
+        segment_tree_(input_tree_.n, Monoid::Identity()) {
     AllocateMemory();
     BuildPaths();
   }
 
-  void ApplyOnPath(int u, int v, const Operation& op) {
-    Apply(u, v, op);
+  template <typename... Args>
+  void ApplyOnPath(int u, int v, Args&&... args) {
+    Apply(u, v, std::forward<Args>(args)...);
   };
 
-  void ApplyAtVertex(int v, const Operation& op) {
-    Apply(v, v, op);
+  template <typename... Args>
+  void ApplyAtVertex(int v, Args&&... args) {
+    Apply(v, v, std::forward<Args>(args)...);
   };
 
-  template <typename Statistics>
-  Statistics GetFromPath(int u, int v) {
-    return Get<Statistics>(u, v);
+  Value GetFromPath(int u, int v) {
+    return Get(u, v);
   }
 
-  template <typename Statistics>
-  Statistics GetFromVertex(int v) {
-    return Get<Statistics>(v, v);
+  Value GetFromVertex(int v) {
+    return Get(v, v);
   }
 
  private:
@@ -93,14 +96,15 @@ struct HeavyLightDecomposition {
     }
   }
 
-  void Apply(int u, int v, const Operation& op) {
+  template <typename... Args>
+  void Apply(int u, int v, Args... args) {
     while (top_[u] != top_[v]) {
       if (height_[top_[u]] < height_[top_[v]]) {
         std::swap(u, v);
       }
       int l = index_[top_[u]];
       int r = index_[u];
-      segment_tree_.template ApplyOnRange(l, r, op);
+      segment_tree_.template ApplyOnRange(Update(l, r, args...));
       u = parent_[top_[u]];
     }
     if (height_[u] < height_[v]) {
@@ -108,20 +112,19 @@ struct HeavyLightDecomposition {
     }
     int l = index_[v];
     int r = index_[u];
-    segment_tree_.template ApplyOnRange(l, r, op);
+    segment_tree_.template ApplyOnRange(Update(l, r, args...));
   };
 
-  template <typename Statistics>
-  Statistics Get(int u, int v) {
-    auto result = Statistics{};
+  auto Get(int u, int v) {
+    auto result = Monoid::Identity();
     while (top_[u] != top_[v]) {
       if (height_[top_[u]] < height_[top_[v]]) {
         std::swap(u, v);
       }
       int l = index_[top_[u]];
       int r = index_[u];
-      result =
-          result.Merge(segment_tree_.template GetFromRange<Statistics>(l, r));
+      result = Monoid::Combine(
+          result, segment_tree_.template GetFromRange<Statistics>(l, r));
       u = parent_[top_[u]];
     }
     if (height_[u] < height_[v]) {
@@ -129,8 +132,9 @@ struct HeavyLightDecomposition {
     }
     int l = index_[v];
     int r = index_[u];
-    result =
-        result.Merge(segment_tree_.template GetFromRange<Statistics>(l, r));
+
+    result = Monoid::Combine(
+        result, segment_tree_.template GetFromRange<Statistics>(l, r));
     return result;
   };
 
@@ -147,7 +151,7 @@ struct HeavyLightDecomposition {
   std::vector<int> top_;
 };
 
-template <typename Operation, typename StatisticsTuple>
-using HLD = HeavyLightDecomposition<Operation, StatisticsTuple>;
+template <typename Update, typename Statistics>
+using HLD = HeavyLightDecomposition<Update, Statistics>;
 
 }  // namespace algo::trees::decompositions

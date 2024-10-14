@@ -1,7 +1,6 @@
-#include <algo/ranges/segment_tree/operations/add.hpp>
+#include <algo/ranges/updates/add.hpp>
 #include <algo/ranges/statistics/sum.hpp>
 #include <algo/trees/decompositions/heavy_light.hpp>
-#include "algo/ranges/segment_tree/trees.hpp"
 #include "algo/trees/entity/tree.hpp"
 
 #include "tests/framework/asserts.hpp"
@@ -12,6 +11,8 @@
 
 using namespace algo::trees::decompositions;
 using namespace algo::ranges::segment_tree;
+using namespace algo::ranges::updates;
+using namespace algo::ranges::statistics;
 using namespace algo::trees;
 using namespace algo::utils::generators;
 using namespace algo::utils::random;
@@ -25,18 +26,18 @@ struct BruteForce {
     values.resize(tree.n);
   }
 
-  void Apply(int u, int v, const operations::AddOp& op) {
+  void Apply(int u, int v, i64 add) {
     auto path = GetPath(u, v);
     for (int w : path) {
-      values[w] += op.add;
+      values[w] += add;
     }
   }
 
-  statistics::Sum Get(int u, int v) {
-    auto stat = statistics::Sum{};
+  auto Get(int u, int v) {
+    i64 stat = 0;
     auto path = GetPath(u, v);
     for (int w : path) {
-      stat.result += values[w];
+      stat += values[w];
     }
     return stat;
   }
@@ -66,7 +67,7 @@ struct BruteForce {
 
 struct Tester {
   const Tree& tree;
-  HLD<Operation<operations::AddOp>, Statistics<statistics::Sum>> hld;
+  HLD<IntAdd, IntSum> hld;
   BruteForce brute_force;
 
   explicit Tester(const Tree& tree)
@@ -88,23 +89,24 @@ struct Tester {
   void Update() {
     int u = RandomInt(0, tree.n - 1);
     int v = RandomInt(0, tree.n - 1);
-    int value = RandomInt(-1e9, 1e9);
-    auto op = operations::AddOp{value};
+    int add = RandomInt(-1e9, 1e9);
+
     if (u == v && Maybe()) {
-      hld.ApplyAtVertex(v, op);
+      hld.ApplyAtVertex(v, add);
     } else {
-      hld.ApplyOnPath(u, v, op);
+      hld.ApplyOnPath(u, v, add);
     }
-    brute_force.Apply(u, v, op);
+    brute_force.Apply(u, v, add);
   }
 
   void Ask() {
     int u = RandomInt(0, tree.n - 1);
     int v = RandomInt(0, tree.n - 1);
-    auto stat = (u == v && Maybe()) ? hld.GetFromVertex<statistics::Sum>(v)
-                                    : hld.GetFromPath<statistics::Sum>(u, v);
+    auto stat =
+        (u == v && Maybe()) ? hld.GetFromVertex(v) : hld.GetFromPath(u, v);
     auto correct_stat = brute_force.Get(u, v);
-    ASSERT_EQ(stat.result, correct_stat.result);
+
+    ASSERT_EQ(stat, correct_stat);
   }
 };
 
