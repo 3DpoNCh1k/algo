@@ -18,10 +18,15 @@ void Debug(Head h, Tail... t) {
 }  // namespace algo::utils::debug
 
 #ifdef LOCAL_DEBUG
-#define debug(...)                                                        \
-  std::cerr << "LINE(" << __LINE__ << ") -> [" << #__VA_ARGS__ << "]: ["; \
-  algo::utils::debug::Debug(__VA_ARGS__);                                 \
-  std::cerr << "]\n";
+#define debug(...)                                                          \
+  do {                                                                      \
+    std::cerr << "LINE(" << __LINE__ << ") -> [" << #__VA_ARGS__ << "]: ["; \
+    algo::utils::debug::Debug(__VA_ARGS__);                                 \
+    std::cerr << "]\n";                                                     \
+  } while (false)
+
 #else
-#define debug(...)
+#define debug(...) \
+  do {             \
+  } while (false)
 #endif
