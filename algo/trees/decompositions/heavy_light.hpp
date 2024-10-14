@@ -1,7 +1,7 @@
 #pragma once
 
 #include <algo/trees/entity/tree.hpp>
-#include <algo/trees/segment_tree/trees.hpp>
+#include <algo/ranges/segment_tree/trees.hpp>
 
 namespace algo::trees::decompositions {
 

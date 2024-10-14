@@ -1,8 +1,8 @@
 
-#include <algo/trees/segment_tree/operations/add.hpp>
-#include <algo/trees/segment_tree/statistics/sum.hpp>
+#include <algo/ranges/segment_tree/operations/add.hpp>
+#include <algo/ranges/statistics/sum.hpp>
 #include <algo/trees/decompositions/heavy_light.hpp>
-#include "algo/trees/segment_tree/trees.hpp"
+#include "algo/ranges/segment_tree/trees.hpp"
 #include "algo/trees/entity/tree.hpp"
 
 #include "algo/utils/debug.hpp"
@@ -10,7 +10,7 @@
 #include "tests/framework/test.hpp"
 
 using namespace algo::trees::decompositions;
-using namespace algo::trees::segment_tree;
+using namespace algo::ranges::segment_tree;
 using namespace algo::trees;
 
 TEST(Simple1) {
