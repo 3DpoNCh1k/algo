@@ -6,7 +6,7 @@
 #include <algo/ranges/statistics/sum.hpp>
 #include "algo/ranges/statistics/minimum.hpp"
 #include "algo/ranges/range.hpp"
-#include "algo/utils/debug.hpp"
+#include "algo/debug/debug.hpp"
 
 namespace algo::ranges::updates {
 
@@ -31,7 +31,7 @@ struct Add {
   }
 
   Add Compose(Add update) const {
-    dbg("Add.Compose", range, add, update.range, update.add);
+    debug("Add.Compose", range, add, update.range, update.add);
 
     assert(range == update.range);
 

@@ -3,7 +3,7 @@
 #include <algo/utils/types/fundamentals.hpp>
 #include <deque>
 #include "algo/flows/entity/residual_network.hpp"
-#include "algo/utils/debug.hpp"
+#include "algo/debug/debug.hpp"
 
 namespace algo::flows::details {
 template <typename Capacity>
@@ -58,11 +58,11 @@ struct Dinitz {
   }
 
   void FindAugmentingPaths(int limit) {
-    // dbg("FindAugmentingPaths", limit);
+    // debug("FindAugmentingPaths", limit);
     while (true) {
       bool found = BuildLayers(limit);
-      // dbg(found);
-      // dbg(distance);
+      // debug(found);
+      // debug(distance);
       if (!found) {
         break;
       }
@@ -74,32 +74,32 @@ struct Dinitz {
   }
 
   bool FindAugmentingPath(int v, int limit) {
-    // dbg("FindAugmentingPath", v, limit);
+    // debug("FindAugmentingPath", v, limit);
     while (next[v] < network.edge_list[v].size()) {
       int e = network.edge_list[v][next[v]];
-      // dbg(next[v], e);
-      // dbg(network.edges[e].from, network.edges[e].to);
+      // debug(next[v], e);
+      // debug(network.edges[e].from, network.edges[e].to);
       assert(network.edges[e].from == v);
       if (network.edges[e].capacity - flows[e] < limit) {
-        // dbg("less than limit");
+        // debug("less than limit");
         next[v]++;
         continue;
       }
       int u = network.edges[e].to;
-      // dbg(v, u, e);
+      // debug(v, u, e);
       if (distance[u] != distance[v] + 1) {
-        // dbg("not bfs");
+        // debug("not bfs");
         next[v]++;
         continue;
       }
       if (u == network.sink) {
-        // dbg("found sink");
+        // debug("found sink");
         flows[e] += limit;
         flows[network.PairedEdgeIndex(e)] -= limit;
         return true;
       }
       if (FindAugmentingPath(u, limit)) {
-        // dbg("found path");
+        // debug("found path");
         flows[e] += limit;
         flows[network.PairedEdgeIndex(e)] -= limit;
         return true;

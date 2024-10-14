@@ -6,7 +6,7 @@
 #include <algo/ranges/statistics/sum.hpp>
 #include "algo/ranges/statistics/minimum.hpp"
 
-#include "algo/utils/debug.hpp"
+#include "algo/debug/debug.hpp"
 #include "tests/framework/asserts.hpp"
 #include "tests/framework/test.hpp"
 

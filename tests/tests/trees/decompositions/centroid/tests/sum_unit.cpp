@@ -7,7 +7,7 @@
 #include "algo/ranges/segment_tree/trees.hpp"
 #include "algo/trees/entity/tree.hpp"
 
-#include "algo/utils/debug.hpp"
+#include "algo/debug/debug.hpp"
 #include "tests/framework/asserts.hpp"
 #include "tests/framework/test.hpp"
 
@@ -25,34 +25,34 @@ TEST(Bamboo) {
 
   {
     auto result = centroids.GetSum(0);
-    dbg(result);
+    debug(result);
     ASSERT_EQ(result, 1);
   }
   {
     auto result = centroids.GetSum(1);
-    dbg(result);
+    debug(result);
     ASSERT_EQ(result, 1);
   }
   centroids.ChangeColor(0);
   {
     auto result = centroids.GetSum(0);
-    dbg(result);
+    debug(result);
     ASSERT_EQ(result, 0);
   }
   {
     auto result = centroids.GetSum(1);
-    dbg(result);
+    debug(result);
     ASSERT_EQ(result, 0);
   }
   centroids.ChangeColor(1);
   {
     auto result = centroids.GetSum(0);
-    dbg(result);
+    debug(result);
     ASSERT_EQ(result, 1);
   }
   {
     auto result = centroids.GetSum(1);
-    dbg(result);
+    debug(result);
     ASSERT_EQ(result, 1);
   }
 }
@@ -76,23 +76,23 @@ TEST(Tree) {
 
   {
     auto result = centroids.GetSum(0);
-    dbg(result);
+    debug(result);
     ASSERT_EQ(result, 8);
   }
   {
     auto result = centroids.GetSum(3);
-    dbg(result);
+    debug(result);
     ASSERT_EQ(result, 5);
   }
   centroids.ChangeColor(1);
   {
     auto result = centroids.GetSum(3);
-    dbg(result);
+    debug(result);
     ASSERT_EQ(result, 3);
   }
   {
     auto result = centroids.GetSum(1);
-    dbg(result);
+    debug(result);
     ASSERT_EQ(result, 0);
   }
 }

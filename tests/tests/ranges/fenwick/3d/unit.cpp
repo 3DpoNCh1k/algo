@@ -2,7 +2,7 @@
 #include <algo/ranges/statistics/sum.hpp>
 
 #include <tests/framework/asserts.hpp>
-#include "algo/utils/debug.hpp"
+#include "algo/debug/debug.hpp"
 #include "tests/framework/test.hpp"
 
 using namespace algo::ranges::fenwick;

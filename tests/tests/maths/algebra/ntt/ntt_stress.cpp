@@ -6,7 +6,7 @@
 #include <algo/maths/algebra/ntt/roots.hpp>
 #include <algo/maths/algebra/ntt/ntt.hpp>
 
-#include <algo/utils/debug.hpp>
+#include <algo/debug/debug.hpp>
 
 #include "helpers.hpp"
 #include "tests/framework/test.hpp"

@@ -2,7 +2,7 @@
 #include <algo/flows/entity/residual_network.hpp>
 #include "algo/flows/entity/capacity.hpp"
 #include "algo/graphs/entity/edge.hpp"
-#include "algo/utils/debug.hpp"
+#include "algo/debug/debug.hpp"
 #include "tests/framework/asserts.hpp"
 #include "tests/framework/test.hpp"
 

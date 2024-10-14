@@ -7,7 +7,7 @@
 #include "algo/ranges/segment_tree/trees.hpp"
 #include "algo/trees/entity/tree.hpp"
 
-#include "algo/utils/debug.hpp"
+#include "algo/debug/debug.hpp"
 #include "tests/framework/asserts.hpp"
 #include "tests/framework/test.hpp"
 
@@ -25,12 +25,12 @@ TEST(Simple1) {
 
   {
     auto result = centroids.GetMin(0, 0);
-    dbg(result);
+    debug(result);
     ASSERT_EQ(result, 0);
   }
   {
     auto result = centroids.GetMin(1, 1);
-    dbg(result);
+    debug(result);
     ASSERT_EQ(result, 0);
   }
 }
@@ -46,17 +46,17 @@ TEST(Simple2) {
 
   {
     auto result = centroids.GetMin(0, 0);
-    dbg(result);
+    debug(result);
     ASSERT_EQ(result, 0);
   }
   {
     auto result = centroids.GetMin(1, 1);
-    dbg(result);
+    debug(result);
     ASSERT_EQ(result, 0);
   }
   {
     auto result = centroids.GetMin(1, 2);
-    dbg(result);
+    debug(result);
     ASSERT_EQ(result, 0);
   }
 }

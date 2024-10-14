@@ -1,4 +1,4 @@
-#include "algo/utils/debug.hpp"
+#include "algo/debug/debug.hpp"
 #include "tests/framework/asserts.hpp"
 
 #include <algo/maths/algebra/ntt/roots.hpp>
@@ -43,11 +43,11 @@ void TestScalarProducts(std::vector<Modular> text, std::vector<Modular> pattern,
   auto roots = UnityRoots(g, degree);
   auto ntt = NTT<Modular>(roots);
 
-  dbg(n);
-  dbg(text);
-  dbg(pattern);
+  debug(n);
+  debug(text);
+  debug(pattern);
   auto result = ntt.ScalarProducts(text, pattern);
-  dbg(result);
+  debug(result);
   ASSERT_EQ(result, expected);
 };
 

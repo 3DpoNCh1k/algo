@@ -4,7 +4,7 @@
 #include <algo/trees/decompositions/heavy_light.hpp>
 #include "algo/trees/entity/tree.hpp"
 
-#include "algo/utils/debug.hpp"
+#include "algo/debug/debug.hpp"
 #include "tests/framework/asserts.hpp"
 #include "tests/framework/test.hpp"
 
@@ -27,32 +27,32 @@ TEST(Simple1) {
   hld.ApplyOnPath(0, 1, 1);
   {
     auto stat = hld.GetFromVertex(0);
-    dbg(stat);
+    debug(stat);
     ASSERT_EQ(stat, 1);
   }
   {
     auto stat = hld.GetFromVertex(1);
-    dbg(stat);
+    debug(stat);
     ASSERT_EQ(stat, 1);
   }
   {
     auto stat = hld.GetFromVertex(2);
-    dbg(stat);
+    debug(stat);
     ASSERT_EQ(stat, 0);
   }
   {
     auto stat = hld.GetFromPath(0, 1);
-    dbg(stat);
+    debug(stat);
     ASSERT_EQ(stat, 2);
   }
   {
     auto stat = hld.GetFromPath(1, 2);
-    dbg(stat);
+    debug(stat);
     ASSERT_EQ(stat, 1);
   }
   {
     auto stat = hld.GetFromPath(0, 2);
-    dbg(stat);
+    debug(stat);
     ASSERT_EQ(stat, 2);
   }
 }
@@ -77,32 +77,32 @@ TEST(Simple2) {
   hld.ApplyAtVertex(2, 3);
   {
     auto stat = hld.GetFromVertex(0);
-    dbg(stat);
+    debug(stat);
     ASSERT_EQ(stat, 1);
   }
   {
     auto stat = hld.GetFromVertex(1);
-    dbg(stat);
+    debug(stat);
     ASSERT_EQ(stat, 2);
   }
   {
     auto stat = hld.GetFromVertex(2);
-    dbg(stat);
+    debug(stat);
     ASSERT_EQ(stat, 3);
   }
   {
     auto stat = hld.GetFromPath(0, 1);
-    dbg(stat);
+    debug(stat);
     ASSERT_EQ(stat, 3);
   }
   {
     auto stat = hld.GetFromPath(1, 2);
-    dbg(stat);
+    debug(stat);
     ASSERT_EQ(stat, 6);
   }
   {
     auto stat = hld.GetFromPath(0, 2);
-    dbg(stat);
+    debug(stat);
     ASSERT_EQ(stat, 4);
   }
 }
@@ -129,12 +129,12 @@ TEST(Simple3) {
   hld.ApplyOnPath(3, 2, -1);
   {
     auto stat = hld.GetFromPath(0, 1);
-    dbg(stat);
+    debug(stat);
     ASSERT_EQ(stat, 0);
   }
   {
     auto stat = hld.GetFromPath(2, 1);
-    dbg(stat);
+    debug(stat);
     ASSERT_EQ(stat, -2);
   }
 }

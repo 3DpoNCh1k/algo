@@ -7,7 +7,7 @@
 #include "algo/binary_search/binary_search.hpp"
 #include "algo/utils/bits.hpp"
 #include "algo/trees/entity/tree.hpp"
-#include "algo/utils/debug.hpp"
+#include "algo/debug/debug.hpp"
 namespace algo::trees::decompositions {
 
 template <typename Operation, typename StatisticsTuple>
@@ -65,12 +65,12 @@ struct CentroidDecomposition {
   }
 
   int GetMin(int u, int dist) {
-    dbg("GetMin", u, dist);
+    debug("GetMin", u, dist);
     int result = 1e9;
     for (int i = nodes[u].centroid.size() - 1; i >= 0; --i) {
       int c = nodes[u].centroid[i];
       int d = nodes[u].distance[i];
-      dbg("GetMin", i, c, d);
+      debug("GetMin", i, c, d);
       int min_from_centroid = GetMinFromCentroid(c, dist - d);
       result = std::min(result, min_from_centroid);
     }
@@ -78,21 +78,21 @@ struct CentroidDecomposition {
   }
 
   i64 GetSum(int v) {
-    dbg("GetSum", v);
+    debug("GetSum", v);
     i64 result = 0;
     int color = nodes[v].color;
     int prev_child_c = -1;
     for (int i = nodes[v].centroid.size() - 1; i >= 0; --i) {
       int c = nodes[v].centroid[i];
       i64 d = nodes[v].distance[i];
-      dbg(c, d, prev_child_c, color);
+      debug(c, d, prev_child_c, color);
 
       auto s = GetSumFromCentroidExceptCentroidChild(c, prev_child_c, color);
       auto cnt =
           GetCountFromCentroidExceptCentroidChild(c, prev_child_c, color);
 
       result += s + cnt * d;
-      dbg(s, cnt, result);
+      debug(s, cnt, result);
 
       prev_child_c = nodes[c].centroid_child_id;
     }
@@ -100,31 +100,31 @@ struct CentroidDecomposition {
   }
 
   i64 GetSumFromCentroidExceptCentroidChild(int c, int child, int color) {
-    dbg("GetSumFromCentroidExceptCentroidChild", c, child, color);
+    debug("GetSumFromCentroidExceptCentroidChild", c, child, color);
     auto& node = nodes[c];
-    dbg(node.sum);
-    dbg(node.child_sum);
+    debug(node.sum);
+    debug(node.child_sum);
     return node.sum[color] - (child == -1 ? 0 : node.child_sum[child][color]);
   };
 
   int GetCountFromCentroidExceptCentroidChild(int c, int child, int color) {
-    dbg("GetCountFromCentroidExceptCentroidChild", c, child, color);
+    debug("GetCountFromCentroidExceptCentroidChild", c, child, color);
     auto& node = nodes[c];
-    dbg(node.count);
-    dbg(node.child_count);
+    debug(node.count);
+    debug(node.child_count);
     return node.count[color] -
            (child == -1 ? 0 : node.child_count[child][color]);
   };
 
   void ChangeColor(int v) {
-    dbg("ChangeColor", v);
+    debug("ChangeColor", v);
     int color = nodes[v].color;
     int prev_child_c = -1;
     for (int i = nodes[v].centroid.size() - 1; i >= 0; --i) {
       int c = nodes[v].centroid[i];
       i64 d = nodes[v].distance[i];
 
-      dbg(c, d, prev_child_c);
+      debug(c, d, prev_child_c);
 
       auto& node = nodes[c];
       if (prev_child_c != -1) {
@@ -148,11 +148,11 @@ struct CentroidDecomposition {
         node.count[color] += node.child_count[prev_child_c][color];
         node.count[color ^ 1] += node.child_count[prev_child_c][color ^ 1];
 
-        dbg("after");
-        dbg(node.child_sum[prev_child_c]);
-        dbg(node.child_count[prev_child_c]);
-        dbg(node.sum);
-        dbg(node.count)
+        debug("after");
+        debug(node.child_sum[prev_child_c]);
+        debug(node.child_count[prev_child_c]);
+        debug(node.sum);
+        debug(node.count)
       }
 
       prev_child_c = nodes[c].centroid_child_id;
@@ -183,14 +183,14 @@ struct CentroidDecomposition {
   }
 
   void PrintNodes() {
-    dbg("PrintNodes");
-    dbg(root_centroid);
+    debug("PrintNodes");
+    debug(root_centroid);
     for (int v = 0; v < input_tree.n; ++v) {
       const auto& node = nodes[v];
-      dbg(v);
-      dbg(node.centroid);
-      dbg(node.distance);
-      dbg(node.centroid_children);
+      debug(v);
+      debug(node.centroid);
+      debug(node.distance);
+      debug(node.centroid_children);
     }
   }
 
@@ -239,7 +239,7 @@ struct CentroidDecomposition {
   }
 
   void AddCentroid(int c) {
-    dbg("AddCentroid", c);
+    debug("AddCentroid", c);
     forbidden[c] = true;
     // DFS(c, -1, prev_centroid, c, 0);
     std::deque<std::pair<int, int>> q;
@@ -270,22 +270,22 @@ struct CentroidDecomposition {
   }
 
   void PrintDps() {
-    dbg("PrintDps");
+    debug("PrintDps");
     for (int v = 0; v < input_tree.n; ++v) {
       const auto& node = nodes[v];
-      dbg(v);
-      dbg(node.color);
-      dbg(node.sum);
-      dbg(node.count);
-      dbg(node.next_centroid);
-      dbg(node.centroid_child_id);
+      debug(v);
+      debug(node.color);
+      debug(node.sum);
+      debug(node.count);
+      debug(node.next_centroid);
+      debug(node.centroid_child_id);
       for (int i = 0; i < node.centroid_children.size(); ++i) {
-        dbg(i, node.centroid_children[i]);
-        dbg(i, node.child_sum[i]);
-        dbg(i, node.child_count[i]);
+        debug(i, node.centroid_children[i]);
+        debug(i, node.child_sum[i]);
+        debug(i, node.child_count[i]);
       }
     }
-    dbg("PrintDps END");
+    debug("PrintDps END");
   }
 
   void CalculateDp() {
@@ -294,7 +294,7 @@ struct CentroidDecomposition {
   }
 
   void CalculateCentroid(int c) {
-    dbg("CalculateCentroid", c);
+    debug("CalculateCentroid", c);
     forbidden[c] = true;
     auto& node = nodes[c];
     int k = node.centroid_children.size();
@@ -307,7 +307,7 @@ struct CentroidDecomposition {
     for (int i = 0; i < k; ++i) {
       int c_child = node.centroid_children[i];
       int t_child = node.tree_children[i];
-      dbg(c, c_child, t_child);
+      debug(c, c_child, t_child);
 
       node.child_sum[i].resize(2);
       node.child_count[i].resize(2);
@@ -320,7 +320,7 @@ struct CentroidDecomposition {
 
       node.child_count[i][0] = DfsCount(t_child, -1, 0);
       node.child_count[i][1] = DfsCount(t_child, -1, 1);
-      dbg(node.count[0], node.child_count[i][0]);
+      debug(node.count[0], node.child_count[i][0]);
       node.count[0] += node.child_count[i][0];
       node.count[1] += node.child_count[i][1];
 

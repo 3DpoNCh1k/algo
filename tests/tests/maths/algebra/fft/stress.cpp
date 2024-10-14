@@ -1,7 +1,7 @@
 #include <algo/utils/random/random.hpp>
 #include <algo/maths/algebra/fft/fft.hpp>
 
-#include "algo/utils/debug.hpp"
+#include "algo/debug/debug.hpp"
 #include "helpers.hpp"
 #include "tests/framework/asserts.hpp"
 #include "tests/framework/test.hpp"

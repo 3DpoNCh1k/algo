@@ -2,7 +2,7 @@
 #include <algo/ranges/statistics/sum.hpp>
 
 #include <tests/framework/asserts.hpp>
-#include "algo/utils/debug.hpp"
+#include "algo/debug/debug.hpp"
 #include "tests/framework/test.hpp"
 
 using namespace algo::ranges::fenwick;
@@ -13,19 +13,19 @@ TEST(Simple) {
   fenwick.Set(0, 0, 1);
   {
     auto res = fenwick.Get(0, 0);
-    dbg(res);
+    debug(res);
     ASSERT_EQ(res, 1);
   }
 
   {
     auto res = fenwick.Get(1, 3);
-    dbg(res);
+    debug(res);
   }
 
   fenwick.Set(1, 3, 2);
   {
     auto res = fenwick.Get(1, 3);
-    dbg(res);
+    debug(res);
     ASSERT_EQ(res, 2);
   }
 

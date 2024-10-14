@@ -2,7 +2,7 @@
 
 #include <algo/strings/aho_corasick/aho_corasick.hpp>
 #include <algo/strings/aho_corasick/statistics/count.hpp>
-#include <algo/utils/debug.hpp>
+#include <algo/debug/debug.hpp>
 #include <tests/framework/asserts.hpp>
 #include "tests/framework/test.hpp"
 
@@ -17,7 +17,7 @@ TEST(Simple1) {
   std::string s = "aba";
   aho_corasick.Scan(s);
   auto stat = aho_corasick.Get<Count>(0);
-  dbg(stat.result);
+  debug(stat.result);
   ASSERT_EQ(stat.result, 2);
 }
 
@@ -28,12 +28,12 @@ TEST(Simple2) {
   aho_corasick.Scan(s);
   {
     auto stat = aho_corasick.Get<Count>(0);
-    dbg(stat.result);
+    debug(stat.result);
     ASSERT_EQ(stat.result, 2);
   }
   {
     auto stat = aho_corasick.Get<Count>(1);
-    dbg(stat.result);
+    debug(stat.result);
     ASSERT_EQ(stat.result, 1);
   }
 }

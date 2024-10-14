@@ -4,7 +4,7 @@
 #include <algo/trees/entity/tree.hpp>
 
 #include "algo/ranges/segment_tree/trees.hpp"
-#include "algo/utils/debug.hpp"
+#include "algo/debug/debug.hpp"
 
 #include "tests/framework/asserts.hpp"
 #include "tests/framework/test.hpp"
@@ -55,7 +55,7 @@ struct Tester {
   }
 
   void Test(int k_query) {
-    dbg(tree);
+    debug(tree);
     for (int q = 0; q < k_query; ++q) {
       Ask();
     }
@@ -66,9 +66,9 @@ struct Tester {
     int dist = RandomInt(0, tree.n);
     auto result = centroids.GetMin(u, dist);
     auto correct_result = brute_force.GetMin(u, dist);
-    dbg(u, dist);
-    dbg(result);
-    dbg(correct_result);
+    debug(u, dist);
+    debug(result);
+    debug(correct_result);
     ASSERT_EQ(result, correct_result);
   }
 };

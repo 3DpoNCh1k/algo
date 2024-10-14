@@ -4,7 +4,7 @@
 #include "algo/ranges/segment_tree/trees.hpp"
 #include "algo/trees/entity/tree.hpp"
 
-#include "algo/utils/debug.hpp"
+#include "algo/debug/debug.hpp"
 #include "tests/framework/asserts.hpp"
 #include "tests/framework/test.hpp"
 
@@ -60,7 +60,7 @@ struct Tester {
   }
 
   void Test(int k_query) {
-    dbg(tree);
+    debug(tree);
     for (int q = 0; q < k_query; ++q) {
       if (Maybe()) {
         Update();
@@ -72,19 +72,19 @@ struct Tester {
 
   void Update() {
     int u = RandomInt(0, tree.n - 1);
-    dbg("Update", u);
+    debug("Update", u);
     centroids.ChangeColor(u);
     brute_force.ChangeColor(u);
   }
 
   void Ask() {
     int u = RandomInt(0, tree.n - 1);
-    dbg("Ask", u);
+    debug("Ask", u);
     auto result = centroids.GetSum(u);
     auto correct_result = brute_force.GetSum(u);
-    dbg(u);
-    dbg(result);
-    dbg(correct_result);
+    debug(u);
+    debug(result);
+    debug(correct_result);
     ASSERT_EQ(result, correct_result);
   }
 };
@@ -94,7 +94,7 @@ void Test(int k_rep, int min_tree_size, int max_tree_size, int k_query) {
   for (int rep = 0; rep < k_rep; ++rep) {
     int n = RandomInt(min_tree_size, max_tree_size);
     auto tree = tree_generator.Tree(n);
-    dbg("Test", tree);
+    debug("Test", tree);
     auto tester = Tester(tree);
     tester.Test(k_query);
   }

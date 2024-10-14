@@ -107,7 +107,7 @@ struct FastFourierTransformImpl {
     text.resize(n);
     pattern.resize(n);
     auto product = Multiply(text, pattern);
-    // dbg(product);
+    // debug(product);
     std::vector<Coefficient> result(text_length - pattern_length + 1);
     for (int i = 0; i < result.size(); ++i) {
       result[i] = product[text_length - 1 - i];

@@ -2,7 +2,7 @@
 
 #include <algo/strings/aho_corasick/aho_corasick.hpp>
 #include <algo/strings/aho_corasick/statistics/leftmost.hpp>
-#include <algo/utils/debug.hpp>
+#include <algo/debug/debug.hpp>
 #include <tests/framework/asserts.hpp>
 #include "tests/framework/test.hpp"
 
@@ -18,12 +18,12 @@ TEST(Simple) {
   aho_corasick.Scan(s);
   {
     auto stat = aho_corasick.Get<Leftmost>(0);
-    dbg(stat.result);
+    debug(stat.result);
     ASSERT_EQ(stat.result, 1);
   }
   {
     auto stat = aho_corasick.Get<Leftmost>(1);
-    dbg(stat.result);
+    debug(stat.result);
     ASSERT_EQ(stat.result, -1);
   }
 }

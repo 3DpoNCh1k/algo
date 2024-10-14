@@ -5,7 +5,7 @@
 #include <algo/graphs/entity/bipartite.hpp>
 #include <cassert>
 #include <vector>
-#include "algo/utils/debug.hpp"
+#include "algo/debug/debug.hpp"
 
 namespace algo::graphs::bipartite::details {
 template <typename C, typename... EdgeProperties>
@@ -45,7 +45,7 @@ struct Hungarian {
   };
 
   bool FindAugmentingPath() {
-    dbg("FindAugmentingPath");
+    debug("FindAugmentingPath");
     visited_right.assign(g.n_right, false);
     visited_right_by_edge.assign(g.n_right, -1);
     visited_left.assign(g.n, false);
@@ -118,7 +118,7 @@ struct Hungarian {
   };
 
   int FindMinimumEdge() {
-    dbg("FindMinimumEdge");
+    debug("FindMinimumEdge");
     int e = -1;
     for (int u = 0; u < g.n_right; ++u) {
       if (visited_right[u]) {
