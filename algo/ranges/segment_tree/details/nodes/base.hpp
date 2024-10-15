@@ -24,7 +24,6 @@ struct BaseNode {
   using Value = typename std::tuple_element_t<0, StatisticsTuple>::Value;
 
   Range range;
-  StatisticsTuple statistics;
 
   std::array<Value, N> values;
 
