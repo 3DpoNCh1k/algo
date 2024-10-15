@@ -142,5 +142,6 @@ bool operator!=(const T& that, const Modular<ValueType, Mod>& modular) {
 using Modular_2 = Modular<i64, 2>;
 using Modular_1_000_000_007 = Modular<i64, 1'000'000'007>;
 using Modular_1_000_000_009 = Modular<i64, 1'000'000'009>;
+using Modular_998_244_353 = Modular<i64, 998'244'353>;
 // NOLINTEND
 }  // namespace algo::utils
