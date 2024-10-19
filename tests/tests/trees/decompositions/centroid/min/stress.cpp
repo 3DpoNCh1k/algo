@@ -1,9 +1,5 @@
-#include <algo/ranges/segment_tree/operations/add.hpp>
-#include <algo/ranges/statistics/sum.hpp>
-#include <algo/trees/decompositions/centroid.hpp>
 #include <algo/trees/entity/tree.hpp>
 
-#include "algo/ranges/segment_tree/trees.hpp"
 #include "algo/debug/debug.hpp"
 
 #include "tests/framework/asserts.hpp"
@@ -12,8 +8,8 @@
 #include <algo/utils/random/random.hpp>
 #include <algo/utils/generators/tree.hpp>
 
-using namespace algo::trees::decompositions;
-using namespace algo::ranges::segment_tree;
+#include "centroid.hpp"
+
 using namespace algo::trees;
 using namespace algo::utils::generators;
 using namespace algo::utils::random;
@@ -45,8 +41,8 @@ struct BruteForce {
 
 struct Tester {
   const Tree& tree;
-  Centroids<Operation<operations::AddOp>, Statistics<statistics::Sum>>
-      centroids;
+
+  MinCentroid centroids;
   BruteForce brute_force;
   explicit Tester(const Tree& tree)
       : tree(tree),
