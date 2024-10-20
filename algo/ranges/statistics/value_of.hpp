@@ -1,4 +1,3 @@
-
 #pragma once
 
 namespace algo::ranges::statistics {

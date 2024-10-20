@@ -1,3 +1,4 @@
+#pragma once
 
 #include <algo/ranges/range.hpp>
 #include <algo/ranges/updates/add.hpp>
