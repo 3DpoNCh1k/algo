@@ -32,11 +32,13 @@
   "buildPresets": [
     {
       "name": "debug",
-      "configurePreset": "debug"
+      "configurePreset": "debug",
+      "jobs": 4
     },
     {
       "name": "release",
-      "configurePreset": "release"
+      "configurePreset": "release",
+      "jobs": 4
     }
   ],
   "testPresets": [
@@ -47,7 +49,8 @@
         "outputOnFailure": true
       },
       "execution": {
-        "stopOnFailure": false
+        "stopOnFailure": false,
+        "jobs": 4
       }
     }
   ]
