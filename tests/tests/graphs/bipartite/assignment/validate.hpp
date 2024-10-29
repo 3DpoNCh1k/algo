@@ -4,7 +4,7 @@
 #include <set>
 
 #include <algo/graphs/entity/bipartite.hpp>
-#include "tests/framework/asserts.hpp"
+#include <tests/framework/asserts.hpp>
 
 using namespace algo::graphs;
 

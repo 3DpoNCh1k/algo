@@ -7,8 +7,6 @@
 #include <algo/ranges/range.hpp>
 #include <algo/ranges/statistics/value_of.hpp>
 
-#include "algo/debug/debug.hpp"
-
 namespace algo::ranges::segment_tree::details {
 
 template <typename IndexType, typename UpdateType, typename... Statistics>
@@ -30,11 +28,9 @@ struct BaseNode {
   BaseNode(Index l, Index r, Value value)
       : range(l, r),
         values(utils::meta::MakeArray<N>(value)) {
-    debug(l, r, range);
   }
 
   void Apply(const Update& update) {
-    debug("BaseNode.Apply", range, update.range, update.add);
     assert(range == update.range);
 
     utils::meta::ForLoop<0, std::tuple_size_v<StatisticsTuple> - 1>(

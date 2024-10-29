@@ -2,7 +2,7 @@
 
 #include <sstream>
 #include <string>
-#include "algo/utils/types/fundamentals.hpp"
+#include <algo/utils/types/fundamentals.hpp>
 
 namespace algo::ranges {
 

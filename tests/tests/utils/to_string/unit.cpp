@@ -9,7 +9,7 @@
 #include <algo/utils/to_string/to_string.hpp>
 #include <tests/framework/stubs/dummies.hpp>
 #include <tests/framework/asserts.hpp>
-#include "tests/framework/test.hpp"
+#include <tests/framework/test.hpp>
 
 using algo::utils::ToString;
 

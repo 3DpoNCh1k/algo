@@ -4,8 +4,8 @@
 #include <cassert>
 #include <deque>
 #include <vector>
-#include "algo/trees/entity/tree.hpp"
-#include "algo/trees/decompositions/centroid.hpp"
+#include <algo/trees/entity/tree.hpp>
+#include <algo/trees/decompositions/centroid.hpp>
 
 using namespace algo::trees;
 

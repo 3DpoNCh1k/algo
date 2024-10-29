@@ -4,7 +4,7 @@
 #include <algo/ranges/prefix_sums.hpp>
 #include <algo/utils/random/random.hpp>
 #include <tests/framework/asserts.hpp>
-#include "tests/framework/test.hpp"
+#include <tests/framework/test.hpp>
 
 using namespace algo::ranges;
 using namespace algo::utils::random;

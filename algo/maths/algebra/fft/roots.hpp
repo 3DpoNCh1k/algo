@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <algo/utils/types/fundamentals.hpp>
-#include "algo/maths/constants.hpp"
+#include <algo/maths/constants.hpp>
 
 namespace algo::maths::algebra::fft {
 std::vector<Complex> UnityRoots(int degree) {

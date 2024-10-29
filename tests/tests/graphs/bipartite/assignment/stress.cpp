@@ -1,9 +1,9 @@
 #include <algo/graphs/entity/bipartite.hpp>
 #include <algo/graphs/bipartite/assignment.hpp>
-#include "algo/utils/generators/graph.hpp"
-#include "algo/utils/random/random.hpp"
-#include "algo/utils/types/fundamentals.hpp"
-#include "tests/framework/test.hpp"
+#include <algo/utils/generators/graph.hpp>
+#include <algo/utils/random/random.hpp>
+#include <algo/utils/types/fundamentals.hpp>
+#include <tests/framework/test.hpp>
 
 #include "validate.hpp"
 

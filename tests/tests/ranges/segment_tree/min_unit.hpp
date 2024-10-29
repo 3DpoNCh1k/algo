@@ -8,7 +8,7 @@
 #include <algo/ranges/statistics/minimum.hpp>
 #include <algo/ranges/segment_tree/trees.hpp>
 
-#include "tests/framework/asserts.hpp"
+#include <tests/framework/asserts.hpp>
 
 using namespace algo::ranges;
 using namespace algo::ranges::updates;

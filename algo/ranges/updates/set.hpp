@@ -2,7 +2,7 @@
 
 #include <algo/ranges/statistics/value_of.hpp>
 #include <algo/ranges/statistics/sum.hpp>
-#include "algo/ranges/statistics/minimum.hpp"
+#include <algo/ranges/statistics/minimum.hpp>
 
 namespace algo::ranges::updates {
 

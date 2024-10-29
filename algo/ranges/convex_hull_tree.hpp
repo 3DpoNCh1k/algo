@@ -1,8 +1,8 @@
 #pragma once
 
 #include <limits>
-#include "algo/data_structures/convex_hull_trick.hpp"
-#include "algo/utils/bits.hpp"
+#include <algo/data_structures/convex_hull_trick.hpp>
+#include <algo/utils/bits.hpp>
 
 namespace algo::ranges {
 

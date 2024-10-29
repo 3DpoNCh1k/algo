@@ -1,6 +1,6 @@
 
 #include "min_unit.hpp"
-#include "tests/framework/test.hpp"
+#include <tests/framework/test.hpp>
 
 TEST(EagerPropagationStaticSegmentTree) {
   std::vector<int> values(3);

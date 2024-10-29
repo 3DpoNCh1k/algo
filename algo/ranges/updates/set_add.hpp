@@ -4,11 +4,11 @@
 
 #include <algo/ranges/statistics/value_of.hpp>
 #include <algo/ranges/statistics/sum.hpp>
-#include "algo/ranges/statistics/minimum.hpp"
+#include <algo/ranges/statistics/minimum.hpp>
 
-#include "algo/ranges/updates/add.hpp"
-#include "algo/ranges/range.hpp"
-#include "algo/ranges/updates/set.hpp"
+#include <algo/ranges/updates/add.hpp>
+#include <algo/ranges/range.hpp>
+#include <algo/ranges/updates/set.hpp>
 
 namespace algo::ranges::updates {
 

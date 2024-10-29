@@ -27,7 +27,6 @@ struct SegmentTree {
   }
 
   void ApplyAtIndex(const Update& update) {
-    debug("SegmentTree.ApplyAtIndex", update.range, update.add);
     propagator.ApplyAtIndex(update);
   }
 

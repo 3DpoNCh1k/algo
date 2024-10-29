@@ -1,8 +1,8 @@
 #include <algo/utils/types/modular.hpp>
 #include <algo/utils/types/fundamentals.hpp>
 #include <tests/framework/asserts.hpp>
-#include "algo/utils/meta.hpp"
-#include "tests/framework/test.hpp"
+#include <algo/utils/meta.hpp>
+#include <tests/framework/test.hpp>
 
 using namespace algo::utils;
 

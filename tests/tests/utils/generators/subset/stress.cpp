@@ -4,7 +4,7 @@
 #include <algo/utils/generators/subset.hpp>
 
 #include <tests/framework/asserts.hpp>
-#include "tests/framework/test.hpp"
+#include <tests/framework/test.hpp>
 
 using namespace algo::utils::random;
 using namespace algo::utils::generators;

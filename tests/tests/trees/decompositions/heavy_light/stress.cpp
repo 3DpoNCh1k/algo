@@ -1,10 +1,10 @@
 #include <algo/ranges/updates/add.hpp>
 #include <algo/ranges/statistics/sum.hpp>
 #include <algo/trees/decompositions/heavy_light.hpp>
-#include "algo/trees/entity/tree.hpp"
+#include <algo/trees/entity/tree.hpp>
 
-#include "tests/framework/asserts.hpp"
-#include "tests/framework/test.hpp"
+#include <tests/framework/asserts.hpp>
+#include <tests/framework/test.hpp>
 
 #include <algo/utils/random/random.hpp>
 #include <algo/utils/generators/tree.hpp>

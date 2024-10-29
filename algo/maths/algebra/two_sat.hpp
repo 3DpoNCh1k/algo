@@ -7,7 +7,7 @@
 
 #include <algo/graphs/entity/graph.hpp>
 #include <algo/graphs/scc.hpp>
-#include "algo/graphs/entity/edge.hpp"
+#include <algo/graphs/entity/edge.hpp>
 
 namespace algo::maths::algebra {
 struct TwoSat {

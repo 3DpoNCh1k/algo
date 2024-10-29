@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "algo/graphs/entity/edge.hpp"
+#include <algo/graphs/entity/edge.hpp>
 #include <algo/graphs/entity/cost.hpp>
 #include <algo/graphs/entity/orientation.hpp>
 

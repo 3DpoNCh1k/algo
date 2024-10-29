@@ -1,6 +1,6 @@
 #pragma once
 
-#include "algo/utils/types/fundamentals.hpp"
+#include <algo/utils/types/fundamentals.hpp>
 
 namespace algo::maths::algebra {
 template <typename T>

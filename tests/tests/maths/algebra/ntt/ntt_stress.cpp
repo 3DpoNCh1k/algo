@@ -1,7 +1,7 @@
 #include <algo/utils/random/random.hpp>
-#include "algo/maths/algebra/power.hpp"
-#include "algo/utils/types/modular.hpp"
-#include "tests/framework/asserts.hpp"
+#include <algo/maths/algebra/power.hpp>
+#include <algo/utils/types/modular.hpp>
+#include <tests/framework/asserts.hpp>
 
 #include <algo/maths/algebra/ntt/roots.hpp>
 #include <algo/maths/algebra/ntt/ntt.hpp>
@@ -9,7 +9,7 @@
 #include <algo/debug/debug.hpp>
 
 #include "helpers.hpp"
-#include "tests/framework/test.hpp"
+#include <tests/framework/test.hpp>
 
 using namespace algo::maths::algebra::ntt;
 using namespace algo::utils::random;

@@ -4,7 +4,7 @@
 #include <algo/strings/aho_corasick/statistics/leftmost.hpp>
 #include <algo/debug/debug.hpp>
 #include <tests/framework/asserts.hpp>
-#include "tests/framework/test.hpp"
+#include <tests/framework/test.hpp>
 
 using namespace algo::strings::aho_corasick;
 

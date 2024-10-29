@@ -2,9 +2,9 @@
 
 #include <deque>
 
-#include "algo/flows/entity/residual_network.hpp"
-#include "algo/utils/types/fundamentals.hpp"
-#include "tests/framework/asserts.hpp"
+#include <algo/flows/entity/residual_network.hpp>
+#include <algo/utils/types/fundamentals.hpp>
+#include <tests/framework/asserts.hpp>
 
 using namespace algo::flows;
 

@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "algo/utils/types/modular.hpp"
+#include <algo/utils/types/modular.hpp>
 
 template <i64 Mod>
 using Modular = algo::utils::Modular<i64, Mod>;

@@ -1,11 +1,11 @@
 #include <algorithm>
 
 #include <algo/graphs/articulation_points.hpp>
-#include "algo/utils/generators/graph.hpp"
-#include "algo/utils/random/random.hpp"
+#include <algo/utils/generators/graph.hpp>
+#include <algo/utils/random/random.hpp>
 
-#include "tests/framework/asserts.hpp"
-#include "tests/framework/test.hpp"
+#include <tests/framework/asserts.hpp>
+#include <tests/framework/test.hpp>
 
 #include "correct.hpp"
 

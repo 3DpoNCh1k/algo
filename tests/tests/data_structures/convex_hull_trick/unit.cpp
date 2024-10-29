@@ -1,6 +1,6 @@
-#include "algo/data_structures/convex_hull_trick.hpp"
-#include "tests/framework/asserts.hpp"
-#include "tests/framework/test.hpp"
+#include <algo/data_structures/convex_hull_trick.hpp>
+#include <tests/framework/asserts.hpp>
+#include <tests/framework/test.hpp>
 
 using namespace algo::data_structures::cht;
 

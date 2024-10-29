@@ -3,7 +3,7 @@
 #include <cassert>
 #include <deque>
 #include <vector>
-#include "algo/trees/entity/tree.hpp"
+#include <algo/trees/entity/tree.hpp>
 
 namespace algo::trees::decompositions::centroid {
 

@@ -1,5 +1,5 @@
-#include "algo/debug/debug.hpp"
-#include "tests/framework/test.hpp"
+#include <algo/debug/debug.hpp>
+#include <tests/framework/test.hpp>
 
 #include <algo/maths/algebra/group_theory/monoids/int_plus.hpp>
 #include <algo/maths/algebra/group_theory/monoids/int_min.hpp>

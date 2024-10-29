@@ -3,8 +3,8 @@
 #include <algo/utils/random/random.hpp>
 #include <algo/graphs/entity/graph.hpp>
 #include <algo/graphs/entity/bipartite.hpp>
-#include "algo/graphs/entity/edge.hpp"
-#include "algo/flows/entity/residual_network.hpp"
+#include <algo/graphs/entity/edge.hpp>
+#include <algo/flows/entity/residual_network.hpp>
 
 namespace algo::utils::generators {
 

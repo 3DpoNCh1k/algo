@@ -6,7 +6,7 @@
 #include <cassert>
 
 #include <algo/utils/types/fundamentals.hpp>
-#include "algo/utils/traits/traits.hpp"
+#include <algo/utils/traits/traits.hpp>
 
 namespace algo::ranges::segment_tree::details {
 

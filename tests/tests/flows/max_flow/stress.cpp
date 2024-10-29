@@ -1,7 +1,7 @@
-#include "algo/flows/entity/residual_network.hpp"
-#include "algo/flows/max_flow.hpp"
-#include "algo/utils/generators/graph.hpp"
-#include "tests/framework/test.hpp"
+#include <algo/flows/entity/residual_network.hpp>
+#include <algo/flows/max_flow.hpp>
+#include <algo/utils/generators/graph.hpp>
+#include <tests/framework/test.hpp>
 #include <algo/utils/random/random.hpp>
 
 #include "validate.hpp"

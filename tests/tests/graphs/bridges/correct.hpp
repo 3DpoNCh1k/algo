@@ -5,7 +5,7 @@
 #include <deque>
 
 #include <algo/graphs/entity/graph.hpp>
-#include "algo/graphs/entity/edge.hpp"
+#include <algo/graphs/entity/edge.hpp>
 
 using namespace algo::graphs;
 

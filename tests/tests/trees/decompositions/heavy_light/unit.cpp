@@ -2,11 +2,11 @@
 #include <algo/ranges/updates/add.hpp>
 #include <algo/ranges/statistics/sum.hpp>
 #include <algo/trees/decompositions/heavy_light.hpp>
-#include "algo/trees/entity/tree.hpp"
+#include <algo/trees/entity/tree.hpp>
 
-#include "algo/debug/debug.hpp"
-#include "tests/framework/asserts.hpp"
-#include "tests/framework/test.hpp"
+#include <algo/debug/debug.hpp>
+#include <tests/framework/asserts.hpp>
+#include <tests/framework/test.hpp>
 
 using namespace algo::trees::decompositions;
 using namespace algo::ranges::updates;

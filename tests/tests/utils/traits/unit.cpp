@@ -7,7 +7,7 @@
 #include <algo/utils/preprocessor.hpp>
 #include <tests/framework/stubs/dummies.hpp>
 #include <tests/framework/asserts.hpp>
-#include "tests/framework/test.hpp"
+#include <tests/framework/test.hpp>
 
 // NOLINTNEXTLINE
 using namespace algo::utils::traits;

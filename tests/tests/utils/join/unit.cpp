@@ -4,7 +4,7 @@
 #include <algo/utils/join.hpp>
 #include <tests/framework/stubs/move_only.hpp>
 #include <tests/framework/stubs/dummies.hpp>
-#include "tests/framework/asserts.hpp"
+#include <tests/framework/asserts.hpp>
 #include <tests/framework/test.hpp>
 
 using namespace algo::utils;

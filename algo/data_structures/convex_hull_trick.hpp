@@ -5,8 +5,8 @@
 #include <sstream>
 #include <vector>
 #include <cassert>
-#include "algo/binary_search/binary_search.hpp"
-#include "algo/utils/types/fundamentals.hpp"
+#include <algo/binary_search/binary_search.hpp>
+#include <algo/utils/types/fundamentals.hpp>
 
 namespace algo::data_structures::cht {
 

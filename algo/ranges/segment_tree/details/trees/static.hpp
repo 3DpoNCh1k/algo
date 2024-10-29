@@ -3,7 +3,7 @@
 #include <type_traits>
 #include <vector>
 #include <algo/utils/bits.hpp>
-#include "algo/utils/traits/traits.hpp"
+#include <algo/utils/traits/traits.hpp>
 
 namespace algo::ranges::segment_tree::details {
 

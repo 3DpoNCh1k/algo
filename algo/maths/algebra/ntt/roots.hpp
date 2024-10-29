@@ -6,7 +6,7 @@
 #include <algo/utils/types/fundamentals.hpp>
 #include <algo/maths/algebra/power.hpp>
 #include <algo/utils/bits.hpp>
-#include "algo/utils/random/random.hpp"
+#include <algo/utils/random/random.hpp>
 
 namespace algo::maths::algebra::ntt {
 std::pair<int, int> FindCK(int p) {

@@ -1,9 +1,9 @@
 #include <algo/graphs/entity/graph.hpp>
 #include <algo/graphs/bridges.hpp>
-#include "algo/utils/random/random.hpp"
-#include "algo/utils/generators/graph.hpp"
-#include "tests/framework/asserts.hpp"
-#include "tests/framework/test.hpp"
+#include <algo/utils/random/random.hpp>
+#include <algo/utils/generators/graph.hpp>
+#include <tests/framework/asserts.hpp>
+#include <tests/framework/test.hpp>
 
 #include "correct.hpp"
 

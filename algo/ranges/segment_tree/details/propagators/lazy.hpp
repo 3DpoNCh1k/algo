@@ -1,6 +1,5 @@
 #pragma once
 
-#include "algo/debug/debug.hpp"
 namespace algo::ranges::segment_tree::details {
 
 template <typename Tree>
@@ -24,14 +23,10 @@ struct LazyPropagator {
   }
 
   void ApplyOnRangeImpl(Node& node, const Update& update) {
-    debug("LazyPropagator.ApplyOnRangeImpl", node.range, update.range,
-          update.add);
     if (node.range.IsOutside(update.range)) {
-      debug("outside");
       return;
     }
     if (node.range.IsInside(update.range)) {
-      debug("inside");
       node.Apply(update.OnSubrange(node.range));
       return;
     }

@@ -8,7 +8,7 @@
 #include "helpers/tester.hpp"
 #include "helpers/stress.hpp"
 #include "helpers/duel.hpp"
-#include "tests/framework/test.hpp"
+#include <tests/framework/test.hpp>
 
 using namespace algo::strings::aho_corasick;
 using String = std::string;

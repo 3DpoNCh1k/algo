@@ -1,9 +1,9 @@
 #pragma once
 
 #include <limits>
-#include "algo/maths/algebra/group_theory/monoids/monoid.hpp"
-#include "algo/maths/algebra/group_theory/operations/min.hpp"
-#include "algo/utils/types/fundamentals.hpp"
+#include <algo/maths/algebra/group_theory/monoids/monoid.hpp>
+#include <algo/maths/algebra/group_theory/operations/min.hpp>
+#include <algo/utils/types/fundamentals.hpp>
 
 namespace algo::maths::algebra::group_theory::monoid {
 

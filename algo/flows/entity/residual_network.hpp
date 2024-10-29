@@ -6,7 +6,7 @@
 #include <algo/flows/entity/capacity.hpp>
 
 #include <algo/graphs/entity/graph.hpp>
-#include "algo/utils/types/fundamentals.hpp"
+#include <algo/utils/types/fundamentals.hpp>
 
 namespace algo::flows {
 

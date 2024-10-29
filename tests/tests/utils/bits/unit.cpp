@@ -1,7 +1,7 @@
 #include <algo/utils/bits.hpp>
 #include <algo/utils/meta.hpp>
 #include <tests/framework/asserts.hpp>
-#include "tests/framework/test.hpp"
+#include <tests/framework/test.hpp>
 
 using namespace algo::utils::bits;
 

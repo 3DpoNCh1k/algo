@@ -6,10 +6,10 @@
 #include <algo/ranges/statistics/value_of.hpp>
 #include <algo/ranges/statistics/sum.hpp>
 
-#include "algo/ranges/statistics/minimum.hpp"
-#include "algo/debug/debug.hpp"
-#include "tests/framework/asserts.hpp"
-#include "tests/framework/test.hpp"
+#include <algo/ranges/statistics/minimum.hpp>
+#include <algo/debug/debug.hpp>
+#include <tests/framework/asserts.hpp>
+#include <tests/framework/test.hpp>
 
 using namespace algo::ranges;
 using namespace algo::ranges::updates;

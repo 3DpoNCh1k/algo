@@ -1,8 +1,8 @@
 #include <algo/maths/algebra/power.hpp>
-#include "algo/utils/random/random.hpp"
-#include "algo/utils/types/modular.hpp"
-#include "tests/framework/asserts.hpp"
-#include "tests/framework/test.hpp"
+#include <algo/utils/random/random.hpp>
+#include <algo/utils/types/modular.hpp>
+#include <tests/framework/asserts.hpp>
+#include <tests/framework/test.hpp>
 
 using namespace algo::utils::random;
 

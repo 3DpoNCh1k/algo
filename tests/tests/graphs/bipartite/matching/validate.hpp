@@ -3,10 +3,10 @@
 #include <algorithm>
 
 #include <algo/graphs/entity/bipartite.hpp>
-#include "algo/graphs/entity/edge.hpp"
-#include "algo/utils/bits.hpp"
+#include <algo/graphs/entity/edge.hpp>
+#include <algo/utils/bits.hpp>
 
-#include "tests/framework/asserts.hpp"
+#include <tests/framework/asserts.hpp>
 
 using namespace algo::graphs;
 

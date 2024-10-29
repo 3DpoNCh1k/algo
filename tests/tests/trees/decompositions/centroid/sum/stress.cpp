@@ -1,9 +1,9 @@
 
-#include "algo/trees/entity/tree.hpp"
+#include <algo/trees/entity/tree.hpp>
 
-#include "algo/debug/debug.hpp"
-#include "tests/framework/asserts.hpp"
-#include "tests/framework/test.hpp"
+#include <algo/debug/debug.hpp>
+#include <tests/framework/asserts.hpp>
+#include <tests/framework/test.hpp>
 
 #include <algo/utils/random/random.hpp>
 #include <algo/utils/generators/tree.hpp>

@@ -1,8 +1,8 @@
 #pragma once
 
 #include <vector>
-#include "algo/maths/geometry/point.hpp"
-#include "algo/maths/geometry/vector.hpp"
+#include <algo/maths/geometry/point.hpp>
+#include <algo/maths/geometry/vector.hpp>
 
 namespace algo::maths::geometry {
 

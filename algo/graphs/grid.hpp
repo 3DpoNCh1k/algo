@@ -3,7 +3,7 @@
 #include <array>
 #include <utility>
 #include <vector>
-#include "algo/utils/meta.hpp"
+#include <algo/utils/meta.hpp>
 
 namespace algo::graphs {
 struct Grid {

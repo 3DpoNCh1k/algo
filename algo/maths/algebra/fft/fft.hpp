@@ -1,8 +1,8 @@
 #pragma once
 
 #include <algo/utils/types/fundamentals.hpp>
-#include "algo/maths/algebra/details/fft_impl.hpp"
-#include "algo/maths/algebra/fft/roots.hpp"
+#include <algo/maths/algebra/details/fft_impl.hpp>
+#include <algo/maths/algebra/fft/roots.hpp>
 
 namespace algo::maths::algebra::fft {
 struct FastFourierTransform : details::FastFourierTransformImpl<Complex> {

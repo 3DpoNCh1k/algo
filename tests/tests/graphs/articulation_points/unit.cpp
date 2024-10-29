@@ -1,11 +1,11 @@
 #include <vector>
 
-#include "algo/graphs/entity/edge.hpp"
-#include "algo/graphs/entity/graph.hpp"
-#include "algo/graphs/articulation_points.hpp"
+#include <algo/graphs/entity/edge.hpp>
+#include <algo/graphs/entity/graph.hpp>
+#include <algo/graphs/articulation_points.hpp>
 
-#include "tests/framework/asserts.hpp"
-#include "tests/framework/test.hpp"
+#include <tests/framework/asserts.hpp>
+#include <tests/framework/test.hpp>
 
 using namespace algo::graphs;
 

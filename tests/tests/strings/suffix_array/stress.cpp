@@ -5,7 +5,7 @@
 #include <algo/utils/generators/string.hpp>
 
 #include <tests/framework/asserts.hpp>
-#include "tests/framework/test.hpp"
+#include <tests/framework/test.hpp>
 
 struct Tester {
   int max_len;

@@ -1,5 +1,5 @@
 #include <algo/binary_search/binary_search.hpp>
-#include "tests/framework/asserts.hpp"
+#include <tests/framework/asserts.hpp>
 #include <tests/framework/test.hpp>
 
 using namespace algo::binary_search;

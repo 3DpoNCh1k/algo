@@ -1,7 +1,7 @@
 #pragma once
 
 #include <utility>
-#include "algo/utils/types/fundamentals.hpp"
+#include <algo/utils/types/fundamentals.hpp>
 
 namespace algo::binary_search {
 

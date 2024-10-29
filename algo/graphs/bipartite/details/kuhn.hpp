@@ -1,7 +1,7 @@
 #pragma once
 
 #include <algo/graphs/entity/bipartite.hpp>
-#include "algo/utils/random/random.hpp"
+#include <algo/utils/random/random.hpp>
 
 namespace algo::graphs::bipartite::details {
 template <typename... EdgeProperties>

@@ -1,9 +1,9 @@
 #include <algo/graphs/entity/graph.hpp>
 #include <algo/graphs/bridges.hpp>
 
-#include "algo/graphs/entity/edge.hpp"
-#include "tests/framework/asserts.hpp"
-#include "tests/framework/test.hpp"
+#include <algo/graphs/entity/edge.hpp>
+#include <tests/framework/asserts.hpp>
+#include <tests/framework/test.hpp>
 
 using namespace algo::graphs;
 

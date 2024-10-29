@@ -7,7 +7,7 @@
 #include <algo/utils/generators/tree.hpp>
 
 #include <tests/framework/asserts.hpp>
-#include "tests/framework/test.hpp"
+#include <tests/framework/test.hpp>
 
 #include <algo/graphs/entity/edge.hpp>
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "algo/maths/algebra/factorization/least_prime_factors.hpp"
+#include <algo/maths/algebra/factorization/least_prime_factors.hpp>
 
 namespace algo::maths::algebra::factorization {
 

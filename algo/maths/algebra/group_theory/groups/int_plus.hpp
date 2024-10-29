@@ -1,9 +1,9 @@
 #pragma once
 
-#include "algo/maths/algebra/group_theory/groups/group.hpp"
-#include "algo/maths/algebra/group_theory/monoids/int_plus.hpp"
-#include "algo/maths/algebra/group_theory/operations/plus.hpp"
-#include "algo/utils/types/fundamentals.hpp"
+#include <algo/maths/algebra/group_theory/groups/group.hpp>
+#include <algo/maths/algebra/group_theory/monoids/int_plus.hpp>
+#include <algo/maths/algebra/group_theory/operations/plus.hpp>
+#include <algo/utils/types/fundamentals.hpp>
 
 namespace algo::maths::algebra::group_theory::group {
 
