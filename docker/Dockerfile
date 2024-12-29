@@ -5,6 +5,8 @@ RUN sh install_deps.sh
 
 RUN ln -s /usr/bin/clang-17 /usr/bin/clang
 RUN ln -s /usr/bin/clang++-17 /usr/bin/clang++
+RUN ln -s /usr/bin/clang-format-17 /usr/bin/clang-format
+RUN ln -s /usr/bin/clang-tidy-17 /usr/bin/clang-tidy
 
 ENV TZ=Europe/Moscow
 ENV LANG C.UTF-8
@@ -20,5 +22,4 @@ ARG USERNAME
 RUN useradd -m -s /bin/bash $USERNAME
 COPY .bashrc /home/$USERNAME/.bashrc
 RUN chown $USERNAME:$USERNAME /home/$USERNAME/.bashrc
-
 RUN usermod -aG sudo $USERNAME
