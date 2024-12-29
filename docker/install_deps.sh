@@ -27,6 +27,8 @@ apt-get update
 apt-get install -y \
 	ssh \
 	bash-completion \
+    file \
+    sudo \
 	make \
 	cmake \
 	build-essential \
