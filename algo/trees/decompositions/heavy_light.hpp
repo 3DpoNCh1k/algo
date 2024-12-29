@@ -104,7 +104,7 @@ struct HeavyLightDecomposition {
       }
       int l = index_[top_[u]];
       int r = index_[u];
-      segment_tree_.template ApplyOnRange(Update(l, r, args...));
+      segment_tree_.ApplyOnRange(Update(l, r, args...));
       u = parent_[top_[u]];
     }
     if (height_[u] < height_[v]) {
@@ -112,7 +112,7 @@ struct HeavyLightDecomposition {
     }
     int l = index_[v];
     int r = index_[u];
-    segment_tree_.template ApplyOnRange(Update(l, r, args...));
+    segment_tree_.ApplyOnRange(Update(l, r, args...));
   };
 
   auto Get(int u, int v) {

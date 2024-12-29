@@ -3,27 +3,28 @@
 
 #include <algo/maths/algebra/ntt/roots.hpp>
 #include <algo/maths/algebra/ntt/ntt.hpp>
+#include <algo/utils/bits.hpp>
 
 #include "helpers.hpp"
 #include <tests/framework/test.hpp>
 
-using namespace algo::maths::algebra::ntt;
+namespace ntt = algo::maths::algebra::ntt;
 
 template <typename Modular>
 void TestMultiply(std::vector<Modular> a, std::vector<Modular> b,
                   std::vector<Modular> expected) {
-  int n = algo::utils::bits::PowerOfTwoThatAtLeast(a.size() + b.size());
+  int n = algo::utils::bits::PowerOfTwoThatAtLeast(u64(a.size() + b.size()));
   auto constexpr P = Modular::MOD;
-  auto [c, k] = FindCK(P);
+  auto [c, k] = ntt::FindCK(P);
   assert((1 << k) >= n);
 
   a.resize(n);
   b.resize(n);
   expected.resize(n);
   int degree = n;
-  auto g = FindRoot<Modular>(degree);
-  auto roots = UnityRoots(g, degree);
-  auto ntt = NTT<Modular>(roots);
+  auto g = ntt::FindRoot<Modular>(degree);
+  auto roots = ntt::UnityRoots(g, degree);
+  auto ntt = ntt::NTT<Modular>(roots);
 
   auto result = ntt.Multiply(a, b);
   ASSERT_EQ(result, expected);
@@ -33,15 +34,15 @@ template <typename Modular>
 void TestScalarProducts(std::vector<Modular> text, std::vector<Modular> pattern,
                         std::vector<Modular> expected) {
   int n =
-      algo::utils::bits::PowerOfTwoThatAtLeast(text.size() + pattern.size());
+      algo::utils::bits::PowerOfTwoThatAtLeast(u64(text.size() + pattern.size()));
   auto constexpr P = Modular::MOD;
-  auto [c, k] = FindCK(P);
+  auto [c, k] = ntt::FindCK(P);
   assert((1 << k) >= n);
 
   int degree = n;
-  auto g = FindRoot<Modular>(degree);
-  auto roots = UnityRoots(g, degree);
-  auto ntt = NTT<Modular>(roots);
+  auto g = ntt::FindRoot<Modular>(degree);
+  auto roots = ntt::UnityRoots(g, degree);
+  auto ntt = ntt::NTT<Modular>(roots);
 
   debug(n);
   debug(text);

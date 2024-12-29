@@ -9,13 +9,13 @@
 #include <algo/utils/random/random.hpp>
 #include <algo/utils/generators/tree.hpp>
 
-using namespace algo::trees::decompositions;
-using namespace algo::ranges::segment_tree;
-using namespace algo::ranges::updates;
-using namespace algo::ranges::statistics;
-using namespace algo::trees;
-using namespace algo::utils::generators;
-using namespace algo::utils::random;
+using IntAdd = algo::ranges::updates::IntAdd;
+using IntSum = algo::ranges::statistics::IntSum;
+using Tree = algo::trees::Tree;
+using TreeGenerator = algo::utils::generators::TreeGenerator;
+
+using algo::utils::random::Maybe;
+using algo::utils::random::RandomInt;
 
 struct BruteForce {
   const Tree& tree;
@@ -67,7 +67,7 @@ struct BruteForce {
 
 struct Tester {
   const Tree& tree;
-  HLD<IntAdd, IntSum> hld;
+  algo::trees::decompositions::HLD<IntAdd, IntSum> hld;
   BruteForce brute_force;
 
   explicit Tester(const Tree& tree)

@@ -6,7 +6,7 @@
 #include <tests/framework/asserts.hpp>
 #include <tests/framework/test.hpp>
 
-using namespace algo::utils::random;
+using algo::utils::random::RandomInt;
 
 struct MultiplyTester {
   int from, to;
@@ -51,7 +51,7 @@ struct MultiplyTester {
 
   std::vector<int> MultiplyViaFFT(const std::vector<int>& a,
                                   const std::vector<int>& b) {
-    int n = algo::utils::bits::PowerOfTwoThatAtLeast(a.size() + b.size());
+    int n = algo::utils::bits::PowerOfTwoThatAtLeast(u64(a.size() + b.size()));
     std::vector<Complex> ca(n);
     std::vector<Complex> cb(n);
     for (int i = 0; i < a.size(); ++i) {
@@ -111,8 +111,8 @@ struct ScalarProductTester {
 
   std::vector<int> ScalarProductsViaFFT(const std::vector<int>& text,
                                         const std::vector<int>& pattern) {
-    int n = algo::utils::bits::PowerOfTwoThatAtLeast(text.size() +
-                                                     pattern.size() - 1);
+    int n = algo::utils::bits::PowerOfTwoThatAtLeast(u64(text.size() +
+                                                     pattern.size() - 1));
     auto text_complex = AsComplexes(text);
     auto pattern_complex = AsComplexes(pattern);
     auto coefs = FFT(n).ScalarProducts(text_complex, pattern_complex);

@@ -23,7 +23,7 @@ void Test(std::vector<int> coefficients, std::vector<Complex> values) {
 
 void TestMultiply(std::vector<int> a, std::vector<int> b,
                   std::vector<int> expected) {
-  int n = algo::utils::bits::PowerOfTwoThatAtLeast(a.size() + b.size());
+  int n = algo::utils::bits::PowerOfTwoThatAtLeast(u64(a.size() + b.size()));
   a.resize(n);
   b.resize(n);
   expected.resize(n);
