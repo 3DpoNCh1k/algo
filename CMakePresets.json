@@ -1,57 +1,110 @@
 {
-  "version": 8,
-  "configurePresets": [
-    {
-      "name": "common",
-      "hidden": true,
-      "binaryDir": "${sourceDir}/build/${presetName}",
-      "generator": "Unix Makefiles",
-      "cacheVariables": {
-        "CMAKE_C_COMPILER": "gcc",
-        "CMAKE_CXX_COMPILER": "g++",
-        "ALGO_TESTS": true
-      }
-    },
-    {
-      "name": "debug",
-      "inherits": "common",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "ASAN": true,
-        "UBSAN": true
-      }
-    },
-    {
-      "name": "release",
-      "inherits": "common",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
-      }
-    }
-  ],
-  "buildPresets": [
-    {
-      "name": "debug",
-      "configurePreset": "debug",
-      "jobs": 4
-    },
-    {
-      "name": "release",
-      "configurePreset": "release",
-      "jobs": 4
-    }
-  ],
-  "testPresets": [
-    {
-      "name": "test-all",
-      "configurePreset": "debug",
-      "output": {
-        "outputOnFailure": true
-      },
-      "execution": {
-        "stopOnFailure": false,
-        "jobs": 4
-      }
-    }
-  ]
+    "version": 8,
+    "configurePresets": [
+        {
+            "name": "build",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "generator": "Unix Makefiles",
+            "cacheVariables": {
+                "ALGO_TESTS": true
+            }
+        },
+        {
+            "name": "g++",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "gcc",
+                "CMAKE_CXX_COMPILER": "g++"
+            }
+        },
+        {
+            "name": "clang",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "clang",
+                "CMAKE_CXX_COMPILER": "clang++"
+            }
+        },
+        {
+            "hidden": true,
+            "name": "debug",
+            "inherits": "build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "ASAN": true,
+                "UBSAN": true
+            }
+        },
+        {
+            "hidden": true,
+            "name": "release",
+            "inherits": "build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "g++-debug",
+            "inherits":["g++", "debug"]
+        },
+        {
+            "name": "g++-release",
+            "inherits":["g++", "release"]
+        },
+        {
+            "name": "clang-debug",
+            "inherits":["clang", "debug"]
+        },
+        {
+            "name": "clang-release",
+            "inherits":["clang", "release"]
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "g++-debug",
+            "configurePreset": "g++-debug",
+            "jobs": 4
+        },
+        {
+            "name": "g++-release",
+            "configurePreset": "g++-release",
+            "jobs": 4
+        },
+        {
+            "name": "clang-debug",
+            "configurePreset": "clang-debug",
+            "jobs": 4
+        },
+        {
+            "name": "clang-release",
+            "configurePreset": "clang-release",
+            "jobs": 4
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "g++-test-all",
+            "configurePreset": "g++-debug",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "stopOnFailure": false,
+                "jobs": 4
+            }
+        },
+        {
+            "name": "clang-test-all",
+            "configurePreset": "clang-debug",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "stopOnFailure": false,
+                "jobs": 4
+            }
+        }
+    ]
 }
