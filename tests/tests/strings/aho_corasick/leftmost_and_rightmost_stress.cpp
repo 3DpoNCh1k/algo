@@ -17,7 +17,7 @@ using Rightmost = algo::strings::aho_corasick::statistics::Rightmost<String>;
 
 struct LeftmostBruteForce : BruteForce {
   explicit LeftmostBruteForce(const Patterns& patterns)
-      : BruteForce(patterns) {};
+      : BruteForce(patterns){};
 
   Leftmost Get(int pattern_index) {
     const auto& pattern = patterns[pattern_index];
@@ -34,7 +34,7 @@ struct LeftmostBruteForce : BruteForce {
 
 struct RightmostBruteForce : BruteForce {
   explicit RightmostBruteForce(const Patterns& patterns)
-      : BruteForce(patterns) {};
+      : BruteForce(patterns){};
 
   Rightmost Get(int pattern_index) {
     const auto& pattern = patterns[pattern_index];
