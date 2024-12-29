@@ -1,0 +1,16 @@
+services:
+  algo-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        USERNAME: ${USER}
+    container_name: algo-dev
+    cap_add:
+      - SYS_PTRACE
+    stdin_open: true
+    tty: true
+    volumes:
+      - $ALGO_PATH:/algo
+    ports:
+      - "127.0.0.1:3333:22"
