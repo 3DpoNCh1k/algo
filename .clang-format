@@ -11,3 +11,4 @@ PackConstructorInitializers: Never
 BreakConstructorInitializers: BeforeColon
 BreakInheritanceList: AfterComma
 InsertNewlineAtEOF: true
+Standard: c++17
