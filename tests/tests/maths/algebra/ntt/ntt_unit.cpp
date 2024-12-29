@@ -33,8 +33,8 @@ void TestMultiply(std::vector<Modular> a, std::vector<Modular> b,
 template <typename Modular>
 void TestScalarProducts(std::vector<Modular> text, std::vector<Modular> pattern,
                         std::vector<Modular> expected) {
-  int n =
-      algo::utils::bits::PowerOfTwoThatAtLeast(u64(text.size() + pattern.size()));
+  int n = algo::utils::bits::PowerOfTwoThatAtLeast(
+      u64(text.size() + pattern.size()));
   auto constexpr P = Modular::MOD;
   auto [c, k] = ntt::FindCK(P);
   assert((1 << k) >= n);

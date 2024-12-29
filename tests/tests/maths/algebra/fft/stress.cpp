@@ -111,8 +111,8 @@ struct ScalarProductTester {
 
   std::vector<int> ScalarProductsViaFFT(const std::vector<int>& text,
                                         const std::vector<int>& pattern) {
-    int n = algo::utils::bits::PowerOfTwoThatAtLeast(u64(text.size() +
-                                                     pattern.size() - 1));
+    int n = algo::utils::bits::PowerOfTwoThatAtLeast(
+        u64(text.size() + pattern.size() - 1));
     auto text_complex = AsComplexes(text);
     auto pattern_complex = AsComplexes(pattern);
     auto coefs = FFT(n).ScalarProducts(text_complex, pattern_complex);

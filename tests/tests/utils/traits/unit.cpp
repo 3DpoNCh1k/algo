@@ -20,7 +20,9 @@ using namespace algo::utils::traits;
   }
 
 #define CHECK_WITH_CONST(template_value, type) \
-  { CHECK(template_value, const type); }
+  {                                            \
+    CHECK(template_value, const type);         \
+  }
 
 #define CHECK_ALL(template_value, type)     \
   {                                         \
@@ -28,28 +30,36 @@ using namespace algo::utils::traits;
     CHECK_WITH_CONST(template_value, type); \
   }
 
-#define CHECK_HAS_TO_STRING(type)     \
-  {                                   \
-    using T = type;                   \
-    { CHECK_ALL(has_ToString_v, T); } \
+#define CHECK_HAS_TO_STRING(type)   \
+  {                                 \
+    using T = type;                 \
+    {                               \
+      CHECK_ALL(has_ToString_v, T); \
+    }                               \
   }
 
-#define CHECK_IS_TO_STRINGABLE(type)      \
-  {                                       \
-    using T = type;                       \
-    { CHECK_ALL(is_to_stringable_v, T); } \
+#define CHECK_IS_TO_STRINGABLE(type)    \
+  {                                     \
+    using T = type;                     \
+    {                                   \
+      CHECK_ALL(is_to_stringable_v, T); \
+    }                                   \
   }
 
-#define CHECK_IS_ITERBALE(type)      \
+#define CHECK_IS_ITERBALE(type)    \
+  {                                \
+    using T = type;                \
+    {                              \
+      CHECK_ALL(is_iterable_v, T); \
+    }                              \
+  }
+
+#define CHECK_IS_STD_VECTOR(type)    \
   {                                  \
     using T = type;                  \
-    { CHECK_ALL(is_iterable_v, T); } \
-  }
-
-#define CHECK_IS_STD_VECTOR(type)      \
-  {                                    \
-    using T = type;                    \
-    { CHECK_ALL(is_std_vector_v, T); } \
+    {                                \
+      CHECK_ALL(is_std_vector_v, T); \
+    }                                \
   }
 
 #define CHECK_IS_STD_ARRAY(type)  \

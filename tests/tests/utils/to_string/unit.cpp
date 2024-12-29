@@ -13,8 +13,10 @@
 
 using algo::utils::ToString;
 
-#define CHECK_TO_STRING(object, expected) \
-  { ASSERT_EQ(ToString(object), expected); }
+#define CHECK_TO_STRING(object, expected)  \
+  {                                        \
+    ASSERT_EQ(ToString(object), expected); \
+  }
 
 TEST(Pair) {
   {

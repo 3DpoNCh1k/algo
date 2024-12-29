@@ -16,7 +16,7 @@ using Count = algo::strings::aho_corasick::statistics::Count<String>;
 
 struct CountBruteForce : BruteForce {
   explicit CountBruteForce(const Patterns& patterns)
-      : BruteForce(patterns){};
+      : BruteForce(patterns) {};
 
   Count Get(int pattern_index) {
     const auto& pattern = patterns[pattern_index];
