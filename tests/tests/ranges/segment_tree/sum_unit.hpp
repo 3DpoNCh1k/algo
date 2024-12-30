@@ -7,10 +7,8 @@
 
 #include <tests/framework/asserts.hpp>
 
-using namespace algo::ranges;
-using namespace algo::ranges::updates;
-using namespace algo::ranges::statistics;
-using namespace algo::ranges::segment_tree;
+using algo::ranges::statistics::IntSum;
+using algo::ranges::updates::IntAdd;
 
 namespace unit::sum {
 
@@ -77,12 +75,13 @@ void WithApplyOnRange(SegmentTree segment_tree) {
   }
 
   {
-    auto value = segment_tree.template GetFromRange<IntSum>(Range(0, 2));
+    auto value =
+        segment_tree.template GetFromRange<IntSum>(algo::ranges::Range(0, 2));
     auto expected = 5;
     ASSERT_EQ(value, expected);
   }
 
-  segment_tree.ApplyOnRange(IntAdd(Range(0, 1), 3));
+  segment_tree.ApplyOnRange(IntAdd(algo::ranges::Range(0, 1), 3));
 
   {
     auto value = segment_tree.template GetAtIndex<IntSum>(0);
@@ -101,13 +100,15 @@ void WithApplyOnRange(SegmentTree segment_tree) {
   }
 
   {
-    auto value = segment_tree.template GetFromRange<IntSum>(Range(0, 1));
+    auto value =
+        segment_tree.template GetFromRange<IntSum>(algo::ranges::Range(0, 1));
     auto expected = 9;
     ASSERT_EQ(value, expected);
   }
 
   {
-    auto value = segment_tree.template GetFromRange<IntSum>(Range(1, 2));
+    auto value =
+        segment_tree.template GetFromRange<IntSum>(algo::ranges::Range(1, 2));
     auto expected = 7;
     ASSERT_EQ(value, expected);
   }

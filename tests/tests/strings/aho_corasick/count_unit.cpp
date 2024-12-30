@@ -6,14 +6,14 @@
 #include <tests/framework/asserts.hpp>
 #include <tests/framework/test.hpp>
 
-using namespace algo::strings::aho_corasick;
-
 using String = std::string;
 using Count = algo::strings::aho_corasick::statistics::Count<String>;
 
 TEST(Simple1) {
   std::string pattern = "a";
-  AhoCorasick<Statistics<Count>, String> aho_corasick({pattern});
+  algo::strings::aho_corasick::AhoCorasick<
+      algo::strings::aho_corasick::Statistics<Count>, String>
+      aho_corasick({pattern});
   std::string s = "aba";
   aho_corasick.Scan(s);
   auto stat = aho_corasick.Get<Count>(0);
@@ -23,7 +23,9 @@ TEST(Simple1) {
 
 TEST(Simple2) {
   std::vector<std::string> patterns = {"a", "aba"};
-  AhoCorasick<Statistics<Count>, String> aho_corasick(patterns);
+  algo::strings::aho_corasick::AhoCorasick<
+      algo::strings::aho_corasick::Statistics<Count>, String>
+      aho_corasick(patterns);
   std::string s = "abac";
   aho_corasick.Scan(s);
   {

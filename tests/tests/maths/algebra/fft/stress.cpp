@@ -97,7 +97,7 @@ struct ScalarProductTester {
 
   std::vector<int> ScalarProducts(const std::vector<int>& text,
                                   const std::vector<int>& pattern) {
-    if (pattern.size() == 0) {
+    if (pattern.empty()) {
       return {};
     }
     std::vector<int> result(text.size() - pattern.size() + 1);

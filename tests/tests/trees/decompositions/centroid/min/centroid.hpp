@@ -7,16 +7,14 @@
 #include <algo/trees/entity/tree.hpp>
 #include <algo/trees/decompositions/centroid.hpp>
 
-using namespace algo::trees;
-
-struct MinCentroid : decompositions::centroid::BaseCentroid {
+struct MinCentroid : algo::trees::decompositions::centroid::BaseCentroid {
   struct Node {
     std::vector<int> min;
   };
 
   std::vector<Node> nodes;
 
-  explicit MinCentroid(const Tree& tree)
+  explicit MinCentroid(const algo::trees::Tree& tree)
       : BaseCentroid(tree),
         nodes(tree.n) {
     Calculate();

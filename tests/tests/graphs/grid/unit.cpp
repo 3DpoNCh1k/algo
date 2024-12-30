@@ -4,21 +4,19 @@
 #include <tests/framework/asserts.hpp>
 #include <tests/framework/test.hpp>
 
-using namespace algo::graphs;
-
 TEST(Neighbors4) {
   {
-    auto neighbors = Grid(1, 1).Neighbors4(0, 0);
+    auto neighbors = algo::graphs::Grid(1, 1).Neighbors4(0, 0);
     ASSERT_TRUE(neighbors.empty());
   }
   {
-    auto neighbors = Grid(1, 3).Neighbors4(0, 0);
+    auto neighbors = algo::graphs::Grid(1, 3).Neighbors4(0, 0);
     ASSERT_EQ(neighbors.size(), 1);
     auto neighbor = std::make_pair(0, 1);
     ASSERT_CONTAINS(neighbors, neighbor);
   }
   {
-    auto neighbors = Grid(1, 3).Neighbors4(0, 1);
+    auto neighbors = algo::graphs::Grid(1, 3).Neighbors4(0, 1);
     ASSERT_EQ(neighbors.size(), 2);
     {
       auto neighbor = std::make_pair(0, 0);
@@ -30,7 +28,7 @@ TEST(Neighbors4) {
     }
   }
   {
-    auto neighbors = Grid(3, 2).Neighbors4(1, 0);
+    auto neighbors = algo::graphs::Grid(3, 2).Neighbors4(1, 0);
     ASSERT_EQ(neighbors.size(), 3);
     {
       auto neighbor = std::make_pair(0, 0);
@@ -46,7 +44,7 @@ TEST(Neighbors4) {
     }
   }
   {
-    auto neighbors = Grid(3, 3).Neighbors4(1, 1);
+    auto neighbors = algo::graphs::Grid(3, 3).Neighbors4(1, 1);
     ASSERT_EQ(neighbors.size(), 4);
     {
       auto neighbor = std::make_pair(0, 1);
@@ -69,11 +67,11 @@ TEST(Neighbors4) {
 
 TEST(Neighbors8) {
   {
-    auto neighbors = Grid(1, 1).Neighbors8(0, 0);
+    auto neighbors = algo::graphs::Grid(1, 1).Neighbors8(0, 0);
     ASSERT_TRUE(neighbors.empty());
   }
   {
-    auto neighbors = Grid(3, 1).Neighbors8(0, 0);
+    auto neighbors = algo::graphs::Grid(3, 1).Neighbors8(0, 0);
     ASSERT_EQ(neighbors.size(), 1);
     {
       auto neighbor = std::make_pair(1, 0);
@@ -81,7 +79,7 @@ TEST(Neighbors8) {
     }
   }
   {
-    auto neighbors = Grid(3, 1).Neighbors8(1, 0);
+    auto neighbors = algo::graphs::Grid(3, 1).Neighbors8(1, 0);
     ASSERT_EQ(neighbors.size(), 2);
     {
       auto neighbor = std::make_pair(0, 0);
@@ -93,7 +91,7 @@ TEST(Neighbors8) {
     }
   }
   {
-    auto neighbors = Grid(2, 2).Neighbors8(0, 0);
+    auto neighbors = algo::graphs::Grid(2, 2).Neighbors8(0, 0);
     ASSERT_EQ(neighbors.size(), 3);
     {
       auto neighbor = std::make_pair(0, 1);
@@ -109,7 +107,7 @@ TEST(Neighbors8) {
     }
   }
   {
-    auto neighbors = Grid(3, 2).Neighbors8(1, 1);
+    auto neighbors = algo::graphs::Grid(3, 2).Neighbors8(1, 1);
     ASSERT_EQ(neighbors.size(), 5);
     {
       auto neighbor = std::make_pair(0, 1);
@@ -133,7 +131,7 @@ TEST(Neighbors8) {
     }
   }
   {
-    auto neighbors = Grid(3, 3).Neighbors8(1, 1);
+    auto neighbors = algo::graphs::Grid(3, 3).Neighbors8(1, 1);
     ASSERT_EQ(neighbors.size(), 8);
     for (int row = 0; row < 3; ++row) {
       for (int col = 0; col < 3; ++col) {

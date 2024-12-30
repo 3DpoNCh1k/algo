@@ -6,11 +6,9 @@
 
 #include "centroid.hpp"
 
-using namespace algo::trees;
-
 TEST(Bamboo) {
   // 0 - 1
-  Tree tree(2);
+  algo::trees::Tree tree(2);
   tree.AddEdge(0, 1);
 
   SumCentroid centroids(tree);
@@ -57,7 +55,7 @@ TEST(Tree) {
        / \
       0   4
   */
-  Tree tree(5);
+  algo::trees::Tree tree(5);
   tree.AddEdge(1, 2);
   tree.AddEdge(2, 3);
   tree.AddEdge(3, 0);

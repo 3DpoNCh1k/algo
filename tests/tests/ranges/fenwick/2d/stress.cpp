@@ -5,15 +5,14 @@
 #include <tests/framework/asserts.hpp>
 #include <tests/framework/test.hpp>
 
-using namespace algo::ranges::fenwick;
-using namespace algo::ranges::statistics;
-using namespace algo::utils::random;
+using algo::utils::random::Maybe;
+using algo::utils::random::RandomInt;
 
 struct AddAndSumTester2D {
   int n;
   int m;
 
-  Fenwick2D<IntSum> fenwick;
+  algo::ranges::fenwick::Fenwick2D<algo::ranges::statistics::IntSum> fenwick;
   std::vector<std::vector<i64>> rival;
 
   explicit AddAndSumTester2D(int n, int m)

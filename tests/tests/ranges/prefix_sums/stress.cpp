@@ -6,13 +6,12 @@
 #include <tests/framework/asserts.hpp>
 #include <tests/framework/test.hpp>
 
-using namespace algo::ranges;
-using namespace algo::utils::random;
+using algo::utils::random::RandomInt;
 
 struct Tester {
   std::vector<int> a;
   int n;
-  PrefixSums prefix_sums;
+  algo::ranges::PrefixSums prefix_sums;
   explicit Tester(const std::vector<int>& a)
       : a(a),
         n(a.size()),

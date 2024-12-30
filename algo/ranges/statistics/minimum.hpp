@@ -12,12 +12,12 @@
 
 namespace algo::ranges::statistics {
 
-using namespace algo::maths::algebra::group_theory;
+namespace gt = algo::maths::algebra::group_theory;
 
 template <typename ValueType>
 struct Minimum {
   using Value = ValueType;
-  using Monoid = monoid::Monoid<Value, operation::Min>;
+  using Monoid = gt::monoid::Monoid<Value, gt::operation::Min>;
 };
 
 using IntMinimum = Minimum<i64>;

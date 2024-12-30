@@ -4,11 +4,9 @@
 #include <tests/framework/asserts.hpp>
 #include <tests/framework/test.hpp>
 
-using namespace algo::ranges::fenwick;
-using namespace algo::ranges::statistics;
-
 TEST(Simple) {
-  auto fenwick = Fenwick<IntSum>(3);
+  auto fenwick =
+      algo::ranges::fenwick::Fenwick<algo::ranges::statistics::IntSum>(3);
   fenwick.Set(0, 1);
   {
     auto value = fenwick.Get(0);

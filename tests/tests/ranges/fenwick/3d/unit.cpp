@@ -5,11 +5,10 @@
 #include <algo/debug/debug.hpp>
 #include <tests/framework/test.hpp>
 
-using namespace algo::ranges::fenwick;
-using namespace algo::ranges::statistics;
-
 TEST(Simple) {
-  auto fenwick = Fenwick3D<IntSum>(3, 3, 3);
+  auto fenwick =
+      algo::ranges::fenwick::Fenwick3D<algo::ranges::statistics::IntSum>(3, 3,
+                                                                         3);
   fenwick.Set(0, 0, 0, 1);
   {
     auto res = fenwick.Get(0, 0, 0);

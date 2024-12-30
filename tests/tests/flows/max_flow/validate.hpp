@@ -6,10 +6,8 @@
 #include <algo/utils/types/fundamentals.hpp>
 #include <tests/framework/asserts.hpp>
 
-using namespace algo::flows;
-
-void Validate(const ResidualNetwork& network, const Flow& flow,
-              const Cut& cut) {
+void Validate(const algo::flows::ResidualNetwork& network,
+              const algo::flows::Flow& flow, const algo::flows::Cut& cut) {
   ASSERT_EQ(2 * flow.edge_flow.size(), network.edges.size());
 
   for (int index = 0; index < flow.edge_flow.size(); ++index) {

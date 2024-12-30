@@ -11,9 +11,6 @@
 
 #include <algo/graphs/entity/edge.hpp>
 
-using namespace algo::utils::generators;
-using namespace algo::graphs;
-
 struct Graph {
   bool has_cycles;
   int k_components;
@@ -22,7 +19,7 @@ struct Graph {
 
   std::map<int, std::set<int>> g;
   std::map<int, Color> colors;
-  explicit Graph(std::vector<UndirectedEdge> edges) {
+  explicit Graph(std::vector<algo::graphs::UndirectedEdge> edges) {
     has_cycles = false;
     for (auto [u, v] : edges) {
       g[u].insert(v);
@@ -67,49 +64,51 @@ struct Graph {
 
 TEST(Graph) {
   {
-    auto edges = std::vector<UndirectedEdge>({});
+    auto edges = std::vector<algo::graphs::UndirectedEdge>({});
     auto graph = Graph(edges);
     ASSERT_TRUE(graph.IsConnected());
     ASSERT_FALSE(graph.HasCycles());
   }
   {
-    auto edges = std::vector<UndirectedEdge>({{1, 2}});
+    auto edges = std::vector<algo::graphs::UndirectedEdge>({{1, 2}});
     auto graph = Graph(edges);
     ASSERT_TRUE(graph.IsConnected());
     ASSERT_FALSE(graph.HasCycles());
   }
   {
-    auto edges = std::vector<UndirectedEdge>({{1, 2}, {3, 4}});
+    auto edges = std::vector<algo::graphs::UndirectedEdge>({{1, 2}, {3, 4}});
     auto graph = Graph(edges);
     ASSERT_FALSE(graph.IsConnected());
     ASSERT_FALSE(graph.HasCycles());
   }
   {
-    auto edges = std::vector<UndirectedEdge>({{0, 0}});
+    auto edges = std::vector<algo::graphs::UndirectedEdge>({{0, 0}});
     auto graph = Graph(edges);
     ASSERT_TRUE(graph.IsConnected());
     ASSERT_TRUE(graph.HasCycles());
   }
   {
-    auto edges = std::vector<UndirectedEdge>({{0, 1}, {1, 0}});
+    auto edges = std::vector<algo::graphs::UndirectedEdge>({{0, 1}, {1, 0}});
     auto graph = Graph(edges);
     ASSERT_TRUE(graph.IsConnected());
     ASSERT_TRUE(graph.HasCycles());
   }
   {
-    auto edges = std::vector<UndirectedEdge>({{0, 1}, {1, 2}});
+    auto edges = std::vector<algo::graphs::UndirectedEdge>({{0, 1}, {1, 2}});
     auto graph = Graph(edges);
     ASSERT_TRUE(graph.IsConnected());
     ASSERT_FALSE(graph.HasCycles());
   }
   {
-    auto edges = std::vector<UndirectedEdge>({{0, 1}, {1, 2}, {2, 0}});
+    auto edges =
+        std::vector<algo::graphs::UndirectedEdge>({{0, 1}, {1, 2}, {2, 0}});
     auto graph = Graph(edges);
     ASSERT_TRUE(graph.IsConnected());
     ASSERT_TRUE(graph.HasCycles());
   }
   {
-    auto edges = std::vector<UndirectedEdge>({{0, 1}, {2, 3}, {3, 4}, {4, 2}});
+    auto edges = std::vector<algo::graphs::UndirectedEdge>(
+        {{0, 1}, {2, 3}, {3, 4}, {4, 2}});
     auto graph = Graph(edges);
     ASSERT_FALSE(graph.IsConnected());
     ASSERT_TRUE(graph.HasCycles());
@@ -117,7 +116,7 @@ TEST(Graph) {
 }
 
 TEST(TreeGenerator) {
-  auto tree_generator = TreeGenerator();
+  auto tree_generator = algo::utils::generators::TreeGenerator();
   {
     const int from = 1;
     const int to = 10;

@@ -8,9 +8,7 @@
 
 #include <tests/framework/asserts.hpp>
 
-using namespace algo::graphs;
-
-int GetMatchingSize(const BipartiteGraph& g) {
+int GetMatchingSize(const algo::graphs::BipartiteGraph& g) {
   int max_size = 0;
   for (int mask = 0; mask < (1 << g.edges.size()); ++mask) {
     std::vector<bool> left_side_taken(g.n);
@@ -33,8 +31,8 @@ int GetMatchingSize(const BipartiteGraph& g) {
   return max_size;
 };
 
-void Validate(const std::vector<DirectedEdge>& matching,
-              const BipartiteGraph& g) {
+void Validate(const std::vector<algo::graphs::DirectedEdge>& matching,
+              const algo::graphs::BipartiteGraph& g) {
   std::vector<bool> left_side_taken(g.n);
   std::vector<bool> right_side_taken(g.n_right);
   for (auto edge : matching) {

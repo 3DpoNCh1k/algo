@@ -6,12 +6,10 @@
 
 #include "validate.hpp"
 
-using namespace algo::flows;
-using namespace algo::utils::random;
-using namespace algo::utils::generators;
+using algo::utils::random::RandomInt;
 
 void Stress(int k_rep, int max_n, int max_e, int max_c) {
-  auto graph_generator = GraphGenerator();
+  auto graph_generator = algo::utils::generators::GraphGenerator();
   for (int rep = 0; rep < k_rep; ++rep) {
     int n = RandomInt(2, max_n);
     int source = RandomInt(0, n - 1);
@@ -22,7 +20,7 @@ void Stress(int k_rep, int max_n, int max_e, int max_c) {
     int e = RandomInt(0, max_e);
     int c = RandomInt(0, max_c);
     auto network = graph_generator.ResidualNetwork(n, source, sink, e, c);
-    auto [flow, cut] = MaxFlow(network);
+    auto [flow, cut] = algo::flows::MaxFlow(network);
     Validate(network, flow, cut);
   }
 }

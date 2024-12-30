@@ -10,14 +10,12 @@
 
 #include "centroid.hpp"
 
-using namespace algo::trees;
-using namespace algo::utils::generators;
-using namespace algo::utils::random;
+using algo::utils::random::RandomInt;
 
 struct BruteForce {
-  const Tree& tree;
+  const algo::trees::Tree& tree;
 
-  explicit BruteForce(const Tree& tree)
+  explicit BruteForce(const algo::trees::Tree& tree)
       : tree(tree) {
   }
 
@@ -40,11 +38,11 @@ struct BruteForce {
 };
 
 struct Tester {
-  const Tree& tree;
+  const algo::trees::Tree& tree;
 
   MinCentroid centroids;
   BruteForce brute_force;
-  explicit Tester(const Tree& tree)
+  explicit Tester(const algo::trees::Tree& tree)
       : tree(tree),
         centroids(tree),
         brute_force(tree) {
@@ -70,7 +68,7 @@ struct Tester {
 };
 
 void Stress(int k_rep, int min_tree_size, int max_tree_size, int k_query) {
-  auto tree_generator = TreeGenerator();
+  auto tree_generator = algo::utils::generators::TreeGenerator();
   for (int rep = 0; rep < k_rep; ++rep) {
     int n = RandomInt(min_tree_size, max_tree_size);
     auto tree = tree_generator.Tree(n);

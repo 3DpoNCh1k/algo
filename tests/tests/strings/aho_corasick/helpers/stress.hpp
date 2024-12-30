@@ -6,8 +6,9 @@
 #include <algo/utils/random/random.hpp>
 #include <algo/utils/generators/string.hpp>
 
-using namespace algo::utils::generators;
-using namespace algo::utils::random;
+using algo::utils::random::Maybe;
+using algo::utils::random::RandomInt;
+using algo::utils::random::Shuffle;
 
 template <typename GeneratorFunction>
 auto GeneratePatterns(int max_pattern_count, int max_pattern_length,
@@ -28,7 +29,7 @@ auto GeneratePatterns(int max_pattern_count, int max_pattern_length,
 
 template <typename Tester>
 void StressShort() {
-  auto string_generator = StringGenerator();
+  auto string_generator = algo::utils::generators::StringGenerator();
   for (int rep = 0; rep < 1000; ++rep) {
     auto patterns = GeneratePatterns(2, 3, [&string_generator](int len) {
       return string_generator.Lowercase(len);
@@ -45,7 +46,7 @@ void StressShort() {
 template <typename Tester>
 void StressLong() {
   {
-    auto string_generator = StringGenerator();
+    auto string_generator = algo::utils::generators::StringGenerator();
     for (int rep = 0; rep < 100; ++rep) {
       auto patterns = GeneratePatterns(5, 15, [&string_generator](int len) {
         return string_generator.Lowercase(len);
@@ -60,7 +61,7 @@ void StressLong() {
   }
 
   {
-    auto string_generator = StringGenerator();
+    auto string_generator = algo::utils::generators::StringGenerator();
     for (int rep = 0; rep < 10; ++rep) {
       auto patterns = GeneratePatterns(5, 5, [&string_generator](int len) {
         return string_generator.Printable(len);

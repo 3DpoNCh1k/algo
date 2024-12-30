@@ -4,28 +4,26 @@
 #include <algo/maths/algebra/group_theory/monoids/int_plus.hpp>
 #include <algo/maths/algebra/group_theory/monoids/int_min.hpp>
 
-using namespace algo::maths::algebra::group_theory::monoid;
+namespace gt = algo::maths::algebra::group_theory;
 
 TEST(Simple) {
   {
-    using M = IntPlus;
-    auto e = M::Identity();
+    auto e = gt::monoid::IntPlus::Identity();
     debug(e);
 
     auto a = 1;
     auto b = 2;
-    auto c = M::Combine(a, b);
+    auto c = gt::monoid::IntPlus::Combine(a, b);
     debug(c);
   }
 
   {
-    using M = IntMin;
-    auto e = M::Identity();
+    auto e = gt::monoid::IntMin::Identity();
     debug(e);
 
     auto a = 1;
     auto b = 2;
-    auto c = M::Combine(a, b);
+    auto c = gt::monoid::IntMin::Combine(a, b);
     debug(c);
   }
 }

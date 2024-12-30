@@ -12,8 +12,6 @@
 
 namespace algo::ranges::updates {
 
-using namespace statistics;
-
 template <typename Element, typename Range = ranges::IntRange>
 struct SetAdd {
   SetAdd(Range range, Element value, Element add, bool should_set)
@@ -54,7 +52,7 @@ struct SetAdd {
     return SetAdd(subrange, value, add, should_set);
   }
 
-  auto Apply(ValueOf<IntSum> stat_value) const {
+  auto Apply(statistics::ValueOf<statistics::IntSum> stat_value) const {
     Element result = stat_value.value;
 
     if (should_set) {
@@ -65,7 +63,7 @@ struct SetAdd {
     return result;
   }
 
-  auto Apply(ValueOf<IntMinimum> stat_value) const {
+  auto Apply(statistics::ValueOf<statistics::IntMinimum> stat_value) const {
     Element result = stat_value.value;
 
     if (should_set) {

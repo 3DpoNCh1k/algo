@@ -4,7 +4,7 @@
 #include <tests/framework/asserts.hpp>
 #include <tests/framework/test.hpp>
 
-using namespace algo::utils::random;
+using algo::utils::random::RandomInt;
 
 TEST(StressInt) {
   const int from = -5;

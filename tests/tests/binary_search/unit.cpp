@@ -2,33 +2,31 @@
 #include <tests/framework/asserts.hpp>
 #include <tests/framework/test.hpp>
 
-using namespace algo::binary_search;
-
 TEST(FindFirstTrue) {
   {
     std::vector<bool> value = {false, false, false};
-    auto result = FindFirstTrue(0, 2, [&value](int i) {
+    auto result = algo::binary_search::FindFirstTrue(0, 2, [&value](int i) {
       return value[i];
     });
     ASSERT_EQ(result, 3);
   }
   {
     std::vector<bool> value = {false, false, true};
-    auto result = FindFirstTrue(0, 2, [&value](int i) {
+    auto result = algo::binary_search::FindFirstTrue(0, 2, [&value](int i) {
       return value[i];
     });
     ASSERT_EQ(result, 2);
   }
   {
     std::vector<bool> value = {false, true, true};
-    auto result = FindFirstTrue(0, 2, [&value](int i) {
+    auto result = algo::binary_search::FindFirstTrue(0, 2, [&value](int i) {
       return value[i];
     });
     ASSERT_EQ(result, 1);
   }
   {
     std::vector<bool> value = {true, true, true};
-    auto result = FindFirstTrue(0, 2, [&value](int i) {
+    auto result = algo::binary_search::FindFirstTrue(0, 2, [&value](int i) {
       return value[i];
     });
     ASSERT_EQ(result, 0);
@@ -38,28 +36,28 @@ TEST(FindFirstTrue) {
 TEST(FindLastTrue) {
   {
     std::vector<bool> value = {false, false, false};
-    auto result = FindLastTrue(0, 2, [&value](int i) {
+    auto result = algo::binary_search::FindLastTrue(0, 2, [&value](int i) {
       return value[i];
     });
     ASSERT_EQ(result, -1);
   }
   {
     std::vector<bool> value = {true, false, false};
-    auto result = FindLastTrue(0, 2, [&value](int i) {
+    auto result = algo::binary_search::FindLastTrue(0, 2, [&value](int i) {
       return value[i];
     });
     ASSERT_EQ(result, 0);
   }
   {
     std::vector<bool> value = {true, true, false};
-    auto result = FindLastTrue(0, 2, [&value](int i) {
+    auto result = algo::binary_search::FindLastTrue(0, 2, [&value](int i) {
       return value[i];
     });
     ASSERT_EQ(result, 1);
   }
   {
     std::vector<bool> value = {true, true, true};
-    auto result = FindLastTrue(0, 2, [&value](int i) {
+    auto result = algo::binary_search::FindLastTrue(0, 2, [&value](int i) {
       return value[i];
     });
     ASSERT_EQ(result, 2);
@@ -69,28 +67,28 @@ TEST(FindLastTrue) {
 TEST(FindFirstFalse) {
   {
     std::vector<bool> value = {true, true, true};
-    auto result = FindFirstFalse(0, 2, [&value](int i) {
+    auto result = algo::binary_search::FindFirstFalse(0, 2, [&value](int i) {
       return value[i];
     });
     ASSERT_EQ(result, 3);
   }
   {
     std::vector<bool> value = {true, true, false};
-    auto result = FindFirstFalse(0, 2, [&value](int i) {
+    auto result = algo::binary_search::FindFirstFalse(0, 2, [&value](int i) {
       return value[i];
     });
     ASSERT_EQ(result, 2);
   }
   {
     std::vector<bool> value = {true, false, false};
-    auto result = FindFirstFalse(0, 2, [&value](int i) {
+    auto result = algo::binary_search::FindFirstFalse(0, 2, [&value](int i) {
       return value[i];
     });
     ASSERT_EQ(result, 1);
   }
   {
     std::vector<bool> value = {false, false, false};
-    auto result = FindFirstFalse(0, 2, [&value](int i) {
+    auto result = algo::binary_search::FindFirstFalse(0, 2, [&value](int i) {
       return value[i];
     });
     ASSERT_EQ(result, 0);
@@ -100,28 +98,28 @@ TEST(FindFirstFalse) {
 TEST(FindLastFalse) {
   {
     std::vector<bool> value = {false, false, false};
-    auto result = FindLastFalse(0, 2, [&value](int i) {
+    auto result = algo::binary_search::FindLastFalse(0, 2, [&value](int i) {
       return value[i];
     });
     ASSERT_EQ(result, 2);
   }
   {
     std::vector<bool> value = {false, false, true};
-    auto result = FindLastFalse(0, 2, [&value](int i) {
+    auto result = algo::binary_search::FindLastFalse(0, 2, [&value](int i) {
       return value[i];
     });
     ASSERT_EQ(result, 1);
   }
   {
     std::vector<bool> value = {false, true, true};
-    auto result = FindLastFalse(0, 2, [&value](int i) {
+    auto result = algo::binary_search::FindLastFalse(0, 2, [&value](int i) {
       return value[i];
     });
     ASSERT_EQ(result, 0);
   }
   {
     std::vector<bool> value = {true, true, true};
-    auto result = FindLastFalse(0, 2, [&value](int i) {
+    auto result = algo::binary_search::FindLastFalse(0, 2, [&value](int i) {
       return value[i];
     });
     ASSERT_EQ(result, -1);

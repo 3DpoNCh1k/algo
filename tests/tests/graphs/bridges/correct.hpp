@@ -7,11 +7,9 @@
 #include <algo/graphs/entity/graph.hpp>
 #include <algo/graphs/entity/edge.hpp>
 
-using namespace algo::graphs;
-
 struct Correct {
-  auto GetBridges(const UndirectedGraph& g0) {
-    std::vector<UndirectedEdge> bridges;
+  auto GetBridges(const algo::graphs::UndirectedGraph& g0) {
+    std::vector<algo::graphs::UndirectedEdge> bridges;
     int n = g0.n;
     for (int v = 0; v < n; ++v) {
       for (int e : g0.edge_list[v]) {
@@ -38,7 +36,7 @@ struct Correct {
     return bridges;
   };
 
-  bool IsReachable(const UndirectedGraph& g, int from, int to) {
+  bool IsReachable(const algo::graphs::UndirectedGraph& g, int from, int to) {
     std::vector<bool> visited(g.n, false);
     visited[from] = true;
     std::deque<int> q = {from};

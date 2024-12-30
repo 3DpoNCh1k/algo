@@ -8,18 +8,16 @@
 #include <tests/framework/asserts.hpp>
 #include <tests/framework/test.hpp>
 
-using namespace algo::trees::decompositions;
-using namespace algo::ranges::updates;
-using namespace algo::ranges::statistics;
-using namespace algo::trees;
+using algo::ranges::statistics::IntSum;
+using algo::ranges::updates::IntAdd;
 
 TEST(Simple1) {
   // 0 - 1 - 2
-  Tree tree(3);
+  algo::trees::Tree tree(3);
   tree.AddEdge(0, 1);
   tree.AddEdge(1, 2);
 
-  HLD<IntAdd, IntSum> hld(tree);
+  algo::trees::decompositions::HLD<IntAdd, IntSum> hld(tree);
   {
     auto stat = hld.GetFromPath(0, 2);
     ASSERT_EQ(stat, 0);
@@ -63,11 +61,11 @@ TEST(Simple2) {
       / \
      1   2
   */
-  Tree tree(3);
+  algo::trees::Tree tree(3);
   tree.AddEdge(0, 1);
   tree.AddEdge(0, 2);
 
-  HLD<IntAdd, IntSum> hld(tree);
+  algo::trees::decompositions::HLD<IntAdd, IntSum> hld(tree);
   {
     auto stat = hld.GetFromPath(0, 2);
     ASSERT_EQ(stat, 0);
@@ -115,13 +113,13 @@ TEST(Simple3) {
      |   |
      4   2
   */
-  Tree tree(5);
+  algo::trees::Tree tree(5);
   tree.AddEdge(0, 1);
   tree.AddEdge(1, 4);
   tree.AddEdge(0, 3);
   tree.AddEdge(3, 2);
 
-  HLD<IntAdd, IntSum> hld(tree);
+  algo::trees::decompositions::HLD<IntAdd, IntSum> hld(tree);
   {
     auto stat = hld.GetFromPath(2, 4);
     ASSERT_EQ(stat, 0);

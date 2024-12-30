@@ -6,9 +6,7 @@
 #include <algo/trees/entity/tree.hpp>
 #include <algo/trees/decompositions/centroid.hpp>
 
-using namespace algo::trees;
-
-struct SumCentroid : decompositions::centroid::BaseCentroid {
+struct SumCentroid : algo::trees::decompositions::centroid::BaseCentroid {
   struct Node {
     int color = 0;
     std::array<i64, 2> sum;
@@ -20,7 +18,7 @@ struct SumCentroid : decompositions::centroid::BaseCentroid {
 
   std::vector<Node> nodes;
 
-  explicit SumCentroid(const Tree& tree)
+  explicit SumCentroid(const algo::trees::Tree& tree)
       : BaseCentroid(tree),
         nodes(tree.n) {
     Calculate();

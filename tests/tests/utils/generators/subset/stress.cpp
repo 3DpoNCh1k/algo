@@ -6,11 +6,10 @@
 #include <tests/framework/asserts.hpp>
 #include <tests/framework/test.hpp>
 
-using namespace algo::utils::random;
-using namespace algo::utils::generators;
+using algo::utils::random::RandomInt;
 
 TEST(StressGetFromRange) {
-  auto subset_generator = SubsetGenerator();
+  auto subset_generator = algo::utils::generators::SubsetGenerator();
   {
     const int from = -10;
     const int to = 10;

@@ -18,13 +18,13 @@
 
 namespace algo::ranges::statistics {
 
-using namespace algo::maths::algebra::group_theory;
+namespace gt = algo::maths::algebra::group_theory;
 
 template <typename ValueType>
 struct Sum {
   using Value = ValueType;
-  using Monoid = monoid::Monoid<Value, operation::Plus>;
-  using Group = group::Group<Value, operation::Plus>;
+  using Monoid = gt::monoid::Monoid<Value, gt::operation::Plus>;
+  using Group = gt::group::Group<Value, gt::operation::Plus>;
 };
 
 using IntSum = Sum<i64>;

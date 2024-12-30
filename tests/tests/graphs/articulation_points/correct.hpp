@@ -5,10 +5,9 @@
 #include <algo/graphs/entity/graph.hpp>
 #include <algo/graphs/articulation_points.hpp>
 
-using namespace algo::graphs;
-
 struct Correct {
-  std::vector<int> GetArticulationPoints(const UndirectedGraph& g) {
+  std::vector<int> GetArticulationPoints(
+      const algo::graphs::UndirectedGraph& g) {
     std::vector<int> articulation_points;
     int k = FindNumberOfConnectedComponents(g);
     for (int v = 0; v < g.n; ++v) {
@@ -19,7 +18,7 @@ struct Correct {
     return articulation_points;
   };
 
-  int FindNumberOfConnectedComponents(const UndirectedGraph& g,
+  int FindNumberOfConnectedComponents(const algo::graphs::UndirectedGraph& g,
                                       int forbidden = -1) {
     int k = 0;
     std::vector<bool> visited(g.n, false);

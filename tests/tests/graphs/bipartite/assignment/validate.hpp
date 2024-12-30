@@ -6,10 +6,8 @@
 #include <algo/graphs/entity/bipartite.hpp>
 #include <tests/framework/asserts.hpp>
 
-using namespace algo::graphs;
-
 template <typename Cost>
-auto GetAssignmentCost(const BipartiteGraphWith<Cost>& g) {
+auto GetAssignmentCost(const algo::graphs::BipartiteGraphWith<Cost>& g) {
   using C = typename Cost::CostType;
   int n = std::max(g.n, g.n_right);
   std::pair<int, C> min_cost = {n, 0};
@@ -40,8 +38,9 @@ auto GetAssignmentCost(const BipartiteGraphWith<Cost>& g) {
 };
 
 template <typename Cost>
-void Validate(const std::vector<DirectedEdgeWith<Cost>>& assignment,
-              const BipartiteGraphWith<Cost>& g) {
+void Validate(
+    const std::vector<algo::graphs::DirectedEdgeWith<Cost>>& assignment,
+    const algo::graphs::BipartiteGraphWith<Cost>& g) {
   auto min_cost = GetAssignmentCost(g);
   typename Cost::CostType cost = 0;
   std::set<int> left;

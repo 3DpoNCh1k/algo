@@ -7,13 +7,11 @@
 #include <tests/framework/asserts.hpp>
 #include <tests/framework/test.hpp>
 
-using namespace algo::utils;
-
 TEST(One) {
   auto dummy_string = DummyWithToString().ToString();
   std::vector<DummyWithToString> dummies = {DummyWithToString()};
   {
-    auto s = JoinToString(dummies);
+    auto s = algo::utils::JoinToString(dummies);
     ASSERT_EQ(s, dummy_string);
   }
 
@@ -21,7 +19,7 @@ TEST(One) {
   std::vector<MoveOnlyWithToString> move_onlies;
   move_onlies.emplace_back();
   {
-    auto s = JoinToString(move_onlies);
+    auto s = algo::utils::JoinToString(move_onlies);
     ASSERT_EQ(s, move_only_string);
   }
 }
@@ -29,13 +27,13 @@ TEST(One) {
 TEST(Many) {
   {
     std::vector<int> v = {1, 2, 3};
-    auto result = JoinToString(v, ", ");
+    auto result = algo::utils::JoinToString(v, ", ");
     std::string expected = "1, 2, 3";
     ASSERT_EQ(result, expected)
   }
   {
     std::map<int, bool> m = {{1, true}, {2, false}};
-    auto result = JoinToString(m, "; ");
+    auto result = algo::utils::JoinToString(m, "; ");
     std::string expected = "(1, true); (2, false)";
     ASSERT_EQ(result, expected)
   }
@@ -44,10 +42,10 @@ TEST(Many) {
 TEST(ManyWithTransform) {
   {
     std::vector<int> v = {1, 2, 3};
-    auto result = JoinToString(
+    auto result = algo::utils::JoinToString(
         v,
         [](int i) {
-          return ToString(-i);
+          return algo::utils::ToString(-i);
         },
         " ");
     std::string expected = "-1 -2 -3";
@@ -62,10 +60,10 @@ TEST(ManyWithTransform) {
 
     int counter = 0;
     auto transformer = [&counter](auto& move_only) {
-      return ToString(++counter);
+      return algo::utils::ToString(++counter);
     };
 
-    auto result = JoinToString(move_onlies, transformer, ", ");
+    auto result = algo::utils::JoinToString(move_onlies, transformer, ", ");
     std::string expected = "1, 2, 3";
     ASSERT_EQ(result, expected)
   }

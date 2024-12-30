@@ -8,8 +8,7 @@
 
 namespace algo::utils::generators {
 
-using namespace graphs;
-using namespace random;
+using random::RandomInt;
 
 struct GraphGenerator {
   GraphGenerator() {
@@ -23,7 +22,7 @@ struct GraphGenerator {
     for (int i = 0; i < m; ++i) {
       int u = RandomInt(0, n - 1);
       int v = RandomInt(0, n - 1);
-      g.AddEdge(UndirectedEdge(u, v));
+      g.AddEdge(graphs::UndirectedEdge(u, v));
     }
     return g;
   }
@@ -36,21 +35,20 @@ struct GraphGenerator {
     for (int i = 0; i < e; ++i) {
       int v = RandomInt(0, n - 1);
       int u = RandomInt(0, m - 1);
-      g.AddEdge(DirectedEdge(v, u));
+      g.AddEdge(graphs::DirectedEdge(v, u));
     }
     return g;
   };
 
   template <typename C>
-  graphs::BipartiteGraphWith<Cost<C>> BipartiteGraphWithCost(int n, int m,
-                                                             bool full, C min_c,
-                                                             C max_c) {
-    auto g = graphs::BipartiteGraphWith<Cost<C>>(n, m);
+  graphs::BipartiteGraphWith<graphs::Cost<C>> BipartiteGraphWithCost(
+      int n, int m, bool full, C min_c, C max_c) {
+    auto g = graphs::BipartiteGraphWith<graphs::Cost<C>>(n, m);
     if (full) {
       for (int v = 0; v < n; ++v) {
         for (int u = 0; u < m; ++u) {
           C c = RandomInt(min_c, max_c);
-          g.AddEdge(DirectedEdgeWith<Cost<C>>(v, u, Cost(c)));
+          g.AddEdge(graphs::DirectedEdgeWith(v, u, graphs::Cost(c)));
         }
       }
     } else {
@@ -59,7 +57,7 @@ struct GraphGenerator {
         int v = RandomInt(0, n - 1);
         int u = RandomInt(0, m - 1);
         C c = RandomInt(min_c, max_c);
-        g.AddEdge(DirectedEdgeWith<Cost<C>>(v, u, Cost(c)));
+        g.AddEdge(graphs::DirectedEdgeWith(v, u, graphs::Cost(c)));
       }
     }
     return g;

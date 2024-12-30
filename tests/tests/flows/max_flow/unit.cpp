@@ -6,15 +6,13 @@
 #include <tests/framework/asserts.hpp>
 #include <tests/framework/test.hpp>
 
-using namespace algo::flows;
-
 TEST(Simple) {
-  auto network = ResidualNetwork(4, 0, 3);
+  auto network = algo::flows::ResidualNetwork(4, 0, 3);
   network.AddEdge(0, 1, 1);
   network.AddEdge(0, 2, 1);
   network.AddEdge(1, 3, 2);
   network.AddEdge(2, 1, 1);
-  auto [flow, cut] = MaxFlow(network);
+  auto [flow, cut] = algo::flows::MaxFlow(network);
   ASSERT_EQ(flow.flow, 2);
 };
 

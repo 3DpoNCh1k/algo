@@ -6,8 +6,6 @@
 
 namespace algo::ranges::updates {
 
-using namespace statistics;
-
 template <typename Element, typename Range = ranges::IntRange>
 struct Set {
   using Index = typename Range::Index;
@@ -41,11 +39,11 @@ struct Set {
     return Set(subrange, value);
   }
 
-  auto Apply(ValueOf<IntSum>) const {
+  auto Apply(statistics::ValueOf<statistics::IntSum>) const {
     return range.Length() * value;
   }
 
-  auto Apply(ValueOf<IntMinimum>) const {
+  auto Apply(statistics::ValueOf<statistics::IntMinimum>) const {
     return value;
   }
 

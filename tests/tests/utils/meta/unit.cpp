@@ -2,43 +2,43 @@
 #include <tests/framework/asserts.hpp>
 #include <tests/framework/test.hpp>
 
-using namespace algo::utils::meta;
+namespace meta = algo::utils::meta;
 
 TEST(IntNumber) {
-  STATIC_ASSERT_EQ(IntNumber<-1>::Value, -1);
-  STATIC_ASSERT_EQ(IntNumber<1>::Value, 1);
+  STATIC_ASSERT_EQ(meta::IntNumber<-1>::Value, -1);
+  STATIC_ASSERT_EQ(meta::IntNumber<1>::Value, 1);
 }
 
 TEST(Concat) {
   {
-    constexpr auto SeqA = IntSeq<1, 2>{};
-    constexpr auto SeqB = IntSeq<3, 4>{};
-    constexpr auto SeqAB = Concat(SeqA, SeqB);
-    constexpr auto Expected = IntSeq<1, 2, 3, 4>();
+    constexpr auto SeqA = meta::IntSeq<1, 2>{};
+    constexpr auto SeqB = meta::IntSeq<3, 4>{};
+    constexpr auto SeqAB = meta::Concat(SeqA, SeqB);
+    constexpr auto Expected = meta::IntSeq<1, 2, 3, 4>();
     constexpr auto IsSame = std::is_same_v<decltype(SeqAB), decltype(Expected)>;
     STATIC_ASSERT_TRUE(IsSame);
   }
   {
-    constexpr auto SeqA = IntSeq<>{};
-    constexpr auto SeqB = IntSeq<1>{};
-    constexpr auto SeqAB = Concat(SeqA, SeqB);
-    constexpr auto Expected = IntSeq<1>();
+    constexpr auto SeqA = meta::IntSeq<>{};
+    constexpr auto SeqB = meta::IntSeq<1>{};
+    constexpr auto SeqAB = meta::Concat(SeqA, SeqB);
+    constexpr auto Expected = meta::IntSeq<1>();
     constexpr auto IsSame = std::is_same_v<decltype(SeqAB), decltype(Expected)>;
     STATIC_ASSERT_TRUE(IsSame);
   }
   {
-    constexpr auto SeqA = IntSeq<1>{};
-    constexpr auto SeqB = IntSeq<>{};
-    constexpr auto SeqAB = Concat(SeqA, SeqB);
-    constexpr auto Expected = IntSeq<1>();
+    constexpr auto SeqA = meta::IntSeq<1>{};
+    constexpr auto SeqB = meta::IntSeq<>{};
+    constexpr auto SeqAB = meta::Concat(SeqA, SeqB);
+    constexpr auto Expected = meta::IntSeq<1>();
     constexpr auto IsSame = std::is_same_v<decltype(SeqAB), decltype(Expected)>;
     STATIC_ASSERT_TRUE(IsSame);
   }
   {
-    constexpr auto SeqA = IntSeq<>{};
-    constexpr auto SeqB = IntSeq<>{};
-    constexpr auto SeqAB = Concat(SeqA, SeqB);
-    constexpr auto Expected = IntSeq<>();
+    constexpr auto SeqA = meta::IntSeq<>{};
+    constexpr auto SeqB = meta::IntSeq<>{};
+    constexpr auto SeqAB = meta::Concat(SeqA, SeqB);
+    constexpr auto Expected = meta::IntSeq<>();
     constexpr auto IsSame = std::is_same_v<decltype(SeqAB), decltype(Expected)>;
     STATIC_ASSERT_TRUE(IsSame);
   }
@@ -46,22 +46,22 @@ TEST(Concat) {
 
 TEST(IntRange) {
   {
-    constexpr auto RangeSeq = IntRange<0, 0>();
-    constexpr auto Expected = IntSeq<0>();
+    constexpr auto RangeSeq = meta::IntRange<0, 0>();
+    constexpr auto Expected = meta::IntSeq<0>();
     constexpr auto IsSame =
         std::is_same_v<decltype(RangeSeq), decltype(Expected)>;
     STATIC_ASSERT_TRUE(IsSame);
   }
   {
-    constexpr auto RangeSeq = IntRange<1, 0>();
-    constexpr auto Expected = IntSeq<>();
+    constexpr auto RangeSeq = meta::IntRange<1, 0>();
+    constexpr auto Expected = meta::IntSeq<>();
     constexpr auto IsSame =
         std::is_same_v<decltype(RangeSeq), decltype(Expected)>;
     STATIC_ASSERT_TRUE(IsSame);
   }
   {
-    constexpr auto RangeSeq = IntRange<-2, 3>();
-    constexpr auto Expected = IntSeq<-2, -1, 0, 1, 2, 3>();
+    constexpr auto RangeSeq = meta::IntRange<-2, 3>();
+    constexpr auto Expected = meta::IntSeq<-2, -1, 0, 1, 2, 3>();
     constexpr auto IsSame =
         std::is_same_v<decltype(RangeSeq), decltype(Expected)>;
     STATIC_ASSERT_TRUE(IsSame);
@@ -77,7 +77,7 @@ constexpr void CalculateSum() {
     STATIC_ASSERT_TRUE(num.Value <= R);
     s += num.Value;
   };
-  ForLoop<L, R>(func);
+  meta::ForLoop<L, R>(func);
   ASSERT_EQ(s, S);
 }
 

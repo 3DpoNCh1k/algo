@@ -9,8 +9,6 @@
 #include "helpers/duel.hpp"
 #include <tests/framework/test.hpp>
 
-using namespace algo::strings::aho_corasick;
-
 using String = std::string;
 using Count = algo::strings::aho_corasick::statistics::Count<String>;
 
@@ -32,7 +30,8 @@ struct CountBruteForce : BruteForce {
 
 struct CountTester : Tester {
   using BruteForceType = CountBruteForce;
-  using AhoCorasickType = AhoCorasick<Statistics<Count>, String>;
+  using AhoCorasickType = algo::strings::aho_corasick::AhoCorasick<
+      algo::strings::aho_corasick::Statistics<Count>, String>;
   BruteForceType brute_force;
   AhoCorasickType aho_corasick;
   Duel<BruteForceType, AhoCorasickType, Count> duel;

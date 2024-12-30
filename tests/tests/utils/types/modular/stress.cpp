@@ -4,11 +4,9 @@
 #include <algo/utils/meta.hpp>
 #include <tests/framework/test.hpp>
 
-using namespace algo::utils;
-
 template <typename ValueType, ValueType Mod>
 struct Tester {
-  using ModularType = Modular<ValueType, Mod>;
+  using ModularType = algo::utils::Modular<ValueType, Mod>;
 
   static constexpr i64 MOD = Mod;
   static const i64 MinValue = -10;
@@ -146,7 +144,7 @@ struct Tester {
 };
 
 TEST(From1To10i64) {
-  meta::ForLoop<1, 10>([](auto int_number) {
+  algo::utils::meta::ForLoop<1, 10>([](auto int_number) {
     Tester<i64, int_number.Value>().Test();
   });
 }

@@ -7,11 +7,9 @@
 
 #include "centroid.hpp"
 
-using namespace algo::trees;
-
 TEST(Simple1) {
   // 0 - 1
-  Tree tree(2);
+  algo::trees::Tree tree(2);
   tree.AddEdge(0, 1);
 
   MinCentroid centroids(tree);
@@ -30,7 +28,7 @@ TEST(Simple1) {
 
 TEST(Simple2) {
   // 0 - 1 - 2
-  Tree tree(3);
+  algo::trees::Tree tree(3);
   tree.AddEdge(0, 1);
   tree.AddEdge(1, 2);
 

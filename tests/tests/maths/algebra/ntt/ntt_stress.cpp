@@ -11,13 +11,13 @@
 #include "helpers.hpp"
 #include <tests/framework/test.hpp>
 
-using namespace algo::maths::algebra::ntt;
-using namespace algo::utils::random;
+namespace ntt = algo::maths::algebra::ntt;
+using algo::utils::random::RandomInt;
 
 template <typename Modular>
 struct MultiplyTester {
   std::vector<Modular> roots;
-  NTT<Modular> ntt;
+  ntt::NTT<Modular> ntt;
 
   explicit MultiplyTester(const std::vector<Modular>& roots)
       : roots(roots),
@@ -75,7 +75,7 @@ struct MultiplyTester {
 template <typename Modular>
 struct ScalarProductsTester {
   std::vector<Modular> roots;
-  NTT<Modular> ntt;
+  ntt::NTT<Modular> ntt;
 
   explicit ScalarProductsTester(const std::vector<Modular>& roots)
       : roots(roots),
@@ -104,7 +104,7 @@ struct ScalarProductsTester {
 
   std::vector<Modular> ScalarProducts(const std::vector<Modular>& text,
                                       const std::vector<Modular>& pattern) {
-    if (pattern.size() == 0) {
+    if (pattern.empty()) {
       return {};
     }
     std::vector<Modular> result(text.size() - pattern.size() + 1);
@@ -120,7 +120,7 @@ struct ScalarProductsTester {
 template <typename Modular>
 struct TransformTester {
   std::vector<Modular> roots;
-  NTT<Modular> ntt;
+  ntt::NTT<Modular> ntt;
 
   explicit TransformTester(const std::vector<Modular>& roots)
       : roots(roots),
@@ -177,7 +177,7 @@ void TestTransform() {
     Modular<P> primitive_root = 3;
     int degree = 1 << K;
     auto g = algo::maths::algebra::Power(primitive_root, C);
-    auto roots = UnityRoots(g, degree);
+    auto roots = ntt::UnityRoots(g, degree);
     auto tester = TransformTester<Modular<P>>(roots);
     tester.Test(100);
   }
@@ -191,7 +191,7 @@ void TestTransform() {
     Modular<P> primitive_root = 23;
     int degree = 1 << K;
     auto g = algo::maths::algebra::Power(primitive_root, C);
-    auto roots = UnityRoots(g, degree);
+    auto roots = ntt::UnityRoots(g, degree);
     auto tester = TransformTester<Modular<P>>(roots);
     tester.Test(100);
   }
@@ -205,7 +205,7 @@ void TestTransform() {
     Modular<P> primitive_root = 5;
     int degree = 1 << K;
     auto g = algo::maths::algebra::Power(primitive_root, C);
-    auto roots = UnityRoots(g, degree);
+    auto roots = ntt::UnityRoots(g, degree);
     auto tester = TransformTester<Modular<P>>(roots);
     tester.Test(100);
   }
@@ -222,7 +222,7 @@ void TestMultiply() {
     Modular<P> primitive_root = 3;
     int degree = 1 << K;
     auto g = algo::maths::algebra::Power(primitive_root, C);
-    auto roots = UnityRoots(g, degree);
+    auto roots = ntt::UnityRoots(g, degree);
     auto tester = MultiplyTester<Modular<P>>(roots);
     tester.Test(1000);
   }
@@ -236,7 +236,7 @@ void TestMultiply() {
     Modular<P> primitive_root = 123;
     int degree = 1 << K;
     auto g = algo::maths::algebra::Power(primitive_root, C);
-    auto roots = UnityRoots(g, degree);
+    auto roots = ntt::UnityRoots(g, degree);
     auto tester = MultiplyTester<Modular<P>>(roots);
     tester.Test(100);
   }
@@ -253,7 +253,7 @@ void TestScalarProducts() {
     Modular<P> primitive_root = 3;
     int degree = 1 << K;
     auto g = algo::maths::algebra::Power(primitive_root, C);
-    auto roots = UnityRoots(g, degree);
+    auto roots = ntt::UnityRoots(g, degree);
     auto tester = ScalarProductsTester<Modular<P>>(roots);
     tester.Test(1000);
   }
@@ -267,7 +267,7 @@ void TestScalarProducts() {
     Modular<P> primitive_root = 123;
     int degree = 1 << K;
     auto g = algo::maths::algebra::Power(primitive_root, C);
-    auto roots = UnityRoots(g, degree);
+    auto roots = ntt::UnityRoots(g, degree);
     auto tester = ScalarProductsTester<Modular<P>>(roots);
     tester.Test(100);
   }

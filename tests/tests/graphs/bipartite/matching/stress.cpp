@@ -6,19 +6,16 @@
 
 #include "validate.hpp"
 
-using namespace algo::graphs;
-using namespace algo::graphs::bipartite;
-using namespace algo::utils::random;
-using namespace algo::utils::generators;
+using algo::utils::random::RandomInt;
 
 void Stress(int k_rep, bool use_kuhn, int max_n, int max_m, int max_e) {
-  auto graph_generator = GraphGenerator();
+  auto graph_generator = algo::utils::generators::GraphGenerator();
   for (int rep = 0; rep < k_rep; ++rep) {
     int n = RandomInt(0, max_n);
     int m = RandomInt(0, max_m);
     int e = RandomInt(0, max_e);
     auto g = graph_generator.BipartiteGraph(n, m, e);
-    auto matching = Matching(g, use_kuhn);
+    auto matching = algo::graphs::bipartite::Matching(g, use_kuhn);
     auto max_size = GetMatchingSize(g);
     ASSERT_EQ(matching.size(), max_size);
     Validate(matching, g);

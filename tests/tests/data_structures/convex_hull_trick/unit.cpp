@@ -2,8 +2,6 @@
 #include <tests/framework/asserts.hpp>
 #include <tests/framework/test.hpp>
 
-using namespace algo::data_structures::cht;
-
 template <typename CHT>
 void Test() {
   auto sign = CHT::IsMinimum ? 1 : -1;
@@ -43,13 +41,13 @@ void Test() {
 }
 
 TEST(Minimum) {
-  STATIC_ASSERT_EQ(MinimumCHT<>::IsMinimum, true);
-  Test<MinimumCHT<>>();
+  STATIC_ASSERT_EQ(algo::data_structures::cht::MinimumCHT<>::IsMinimum, true);
+  Test<algo::data_structures::cht::MinimumCHT<>>();
 }
 
 TEST(Maximum) {
-  STATIC_ASSERT_EQ(MaximumCHT<>::IsMinimum, false);
-  Test<MaximumCHT<>>();
+  STATIC_ASSERT_EQ(algo::data_structures::cht::MaximumCHT<>::IsMinimum, false);
+  Test<algo::data_structures::cht::MaximumCHT<>>();
 }
 
 RUN_ALL_TESTS()

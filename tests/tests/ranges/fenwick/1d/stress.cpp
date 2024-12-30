@@ -4,13 +4,12 @@
 #include <tests/framework/asserts.hpp>
 #include <tests/framework/test.hpp>
 
-using namespace algo::ranges::fenwick;
-using namespace algo::ranges::statistics;
-using namespace algo::utils::random;
+using algo::utils::random::Maybe;
+using algo::utils::random::RandomInt;
 
 struct AddAndSumTester {
   int n;
-  Fenwick<IntSum> fenwick;
+  algo::ranges::fenwick::Fenwick<algo::ranges::statistics::IntSum> fenwick;
   std::vector<i64> rival;
 
   explicit AddAndSumTester(int n)

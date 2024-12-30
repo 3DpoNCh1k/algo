@@ -10,17 +10,13 @@
 #include <tests/framework/asserts.hpp>
 #include <tests/framework/test.hpp>
 
-using namespace algo::ranges;
-using namespace algo::ranges::updates;
-using namespace algo::ranges::statistics;
-
 TEST(IntSum) {
-  auto value = IntSum::Monoid::Combine(1, 2);
+  auto value = algo::ranges::statistics::IntSum::Monoid::Combine(1, 2);
   ASSERT_EQ(value, 3);
 }
 
 TEST(IntMinimum) {
-  auto value = IntMinimum::Monoid::Combine(1, 2);
+  auto value = algo::ranges::statistics::IntMinimum::Monoid::Combine(1, 2);
   ASSERT_EQ(value, 1);
 }
 
