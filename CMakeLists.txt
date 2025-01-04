@@ -5,6 +5,7 @@ project(algo)
 include(cmake/CompileOptions.cmake)
 include(cmake/Development.cmake)
 include(cmake/Sanitize.cmake)
+include(cmake/Coverage.cmake)
 
 add_subdirectory(algo)
 

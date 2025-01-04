@@ -15,6 +15,7 @@ HISTFILESIZE=2000
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
+alias ls='ls --color=auto'
 alias l='ls -CFG'
 alias la='ls -AFG'
 alias ll='ls -alFG'

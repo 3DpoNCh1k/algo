@@ -45,6 +45,13 @@
             }
         },
         {
+            "hidden": true,
+            "name": "coverage",
+            "cacheVariables": {
+                "ALGO_COVERAGE": true
+            }
+        },
+        {
             "name": "g++-debug",
             "inherits":["g++", "debug"]
         },
@@ -59,6 +66,10 @@
         {
             "name": "clang-release",
             "inherits":["clang", "release"]
+        },
+        {
+            "name": "g++-debug-coverage",
+            "inherits":["g++", "debug", "coverage"]
         }
     ],
     "buildPresets": [
@@ -81,6 +92,11 @@
             "name": "clang-release",
             "configurePreset": "clang-release",
             "jobs": 4
+        },
+        {
+            "name": "g++-debug-coverage",
+            "configurePreset": "g++-debug-coverage",
+            "jobs": 4
         }
     ],
     "testPresets": [
@@ -98,6 +114,17 @@
         {
             "name": "clang-test-all",
             "configurePreset": "clang-debug",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "stopOnFailure": false,
+                "jobs": 4
+            }
+        },
+        {
+            "name": "g++-test-all-coverage",
+            "configurePreset": "g++-debug-coverage",
             "output": {
                 "outputOnFailure": true
             },

@@ -220,3 +220,7 @@ rithm
 
 # logs:
 *.log
+
+# coverage
+coverage/
+coverage.info

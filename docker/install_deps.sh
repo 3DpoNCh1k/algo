@@ -29,6 +29,8 @@ apt-get install -y \
 	bash-completion \
     file \
     sudo \
+	lcov \
+	htop \
 	make \
 	cmake \
 	build-essential \
