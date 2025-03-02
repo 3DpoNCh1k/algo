@@ -15,6 +15,20 @@ struct Matrix {
     matrix.assign(k_row, std::vector<Element>(k_column));
   };
 
+  explicit Matrix(int n): Matrix(n, n) {}
+
+  static Matrix Identity(int n) {
+    auto result = Matrix(n);
+    for(int i = 0; i < n; ++i) {
+        result[i][i] = 1;
+    }
+    return result;
+  }
+
+  static Matrix Zero(int n) {
+    return Matrix(n);
+  }
+
   Matrix(const Matrix&) = default;
   Matrix(Matrix&&) = default;
   Matrix& operator=(const Matrix&) = default;
@@ -95,6 +109,10 @@ struct Matrix {
 
   bool operator!=(const Matrix& that) const {
     return !(*this == that);
+  }
+
+  bool IsSquare() const {
+    return k_row == k_column;
   }
 
   std::vector<std::vector<Element>> matrix;

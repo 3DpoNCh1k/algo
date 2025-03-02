@@ -60,19 +60,19 @@ TEST(1x2x2x1) {
 
 TEST(Modular) {
   using Modular = algo::utils::Modular<i64, 5>;
-  auto a = matrix::Matrix<Modular>(2,2);
+  auto a = matrix::Matrix<Modular>(2);
   a[0][0] = 1;
   a[0][1] = 2;
   a[1][0] = 3;
   a[1][1] = 4;
   
-  auto b = matrix::Matrix<Modular>(2,2);
+  auto b = matrix::Matrix<Modular>(2);
   b[0][0] = 8;
   b[0][1] = 7;
   b[1][0] = 6;
   b[1][1] = 5;
 
-  auto expected = matrix::Matrix<Modular>(2,2);
+  auto expected = matrix::Matrix<Modular>(2);
   expected[0][0] = 0;
   expected[0][1] = 2;
   expected[1][0] = 3;
