@@ -1,8 +1,13 @@
 #pragma once
 
+#include <algo/maths/algebra/matrix/matrix.hpp>
+
 #include <algo/ranges/statistics/value_of.hpp>
 #include <algo/ranges/statistics/sum.hpp>
 #include <algo/ranges/statistics/minimum.hpp>
+#include <cassert>
+#include "algo/maths/algebra/power.hpp"
+#include "algo/ranges/statistics/multiplication.hpp"
 
 namespace algo::ranges::updates {
 
@@ -47,10 +52,19 @@ struct Set {
     return value;
   }
 
+  auto Apply(statistics::ValueOf<statistics::IntMatrixMultiplication>) const {
+    if (range.Length() == 1) {
+      return value;
+    }
+    assert(value.IsSquare());
+    return maths::algebra::Power(value, range.Length());
+  }
+
   Range range;
   Element value;
 };
 
 using IntSet = Set<i64>;
+using IntMatrixSet = Set<maths::algebra::matrix::IntMatrix>;
 
 }  // namespace algo::ranges::updates

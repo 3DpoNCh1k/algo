@@ -11,6 +11,10 @@
     {
       "target": "min_sum_unit.cpp",
       "profile": "DebugLocalDebug"
+    },
+    {
+      "target": "matrix_multiply.cpp",
+      "profile": "DebugLocalDebug"
     }
   ]
 }

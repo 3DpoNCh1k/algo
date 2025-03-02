@@ -17,7 +17,13 @@ struct Matrix {
 
   explicit Matrix(int n): Matrix(n, n) {}
 
-  static Matrix Identity(int n) {
+  static Matrix Identity() {
+    auto result = Matrix(0);
+    result.is_identity_ = true;
+    return result;
+  }
+
+  static Matrix One(int n) {
     auto result = Matrix(n);
     for(int i = 0; i < n; ++i) {
         result[i][i] = 1;
@@ -44,6 +50,12 @@ struct Matrix {
 
   // +
   Matrix operator+(const Matrix& that) const {
+    if (is_identity_) {
+        return that;
+    }
+    if (that.is_identity_) {
+        return *this;
+    }
     assert(k_row == that.k_row);
     assert(k_column == that.k_column);
     Matrix result = *this;
@@ -84,6 +96,12 @@ struct Matrix {
 
   // *
   Matrix operator*(const Matrix& that) const {
+    if (is_identity_) {
+        return that;
+    }
+    if (that.is_identity_) {
+        return *this;
+    }
     assert(k_column == that.k_row);
     auto result = Matrix(k_row, that.k_column);
     for (int row = 0; row < result.k_row; ++row) {
@@ -117,5 +135,10 @@ struct Matrix {
 
   std::vector<std::vector<Element>> matrix;
   int k_row, k_column;
+
+  private:
+  bool is_identity_ = false;
 };
+
+using IntMatrix = Matrix<i64>;
 }  // namespace algo::maths::algebra::matrix

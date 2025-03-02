@@ -29,6 +29,6 @@ T Power(T value, i64 power) {
 template<typename T>
 matrix::Matrix<T> Power(matrix::Matrix<T> matrix, i64 power) {
   assert(matrix.IsSquare());
-  return details::Power(matrix::Matrix<T>::Identity(matrix.k_row), std::move(matrix), power);
+  return details::Power(matrix::Matrix<T>::One(matrix.k_row), std::move(matrix), power);
 }
 }  // namespace algo::maths::algebra

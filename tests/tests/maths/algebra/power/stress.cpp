@@ -19,7 +19,7 @@ T LinearPower(T value, int power) {
 template <typename T>
 auto LinearPower(algo::maths::algebra::matrix::Matrix<T> value, int power) {
   ASSERT_TRUE(value.IsSquare());
-  auto result = algo::maths::algebra::matrix::Matrix<T>::Identity(value.k_row);
+  auto result = algo::maths::algebra::matrix::Matrix<T>::One(value.k_row);
   for (int i = 0; i < power; ++i) {
     result *= value;
   }
