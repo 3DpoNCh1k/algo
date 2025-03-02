@@ -1,0 +1,9 @@
+{
+    "tests": [
+      {
+        "target": "multiply_unit.cpp",
+        "profile": "DebugLocalDebug"
+      }
+    ]
+}
+  

@@ -68,7 +68,7 @@ struct Modular {
   }
   // *
 
-  // *
+  // /
   Modular operator/(const Modular& that) const {
     auto inverse = maths::algebra::ModularInverse(that.value, MOD);
     assert(inverse != -1);
@@ -79,7 +79,7 @@ struct Modular {
     *this = *this / that;
     return *this;
   }
-  // *
+  // /
 
   bool operator==(const Modular& that) const {
     return value == that.value;
