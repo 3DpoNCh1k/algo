@@ -21,6 +21,7 @@ struct Multiplication {
   using Monoid = gt::monoid::Monoid<Value, gt::operation::Multiply>;
 };
 
-using IntMatrixMultiplication = Multiplication<maths::algebra::matrix::IntMatrix>;
+using IntMatrixMultiplication =
+    Multiplication<maths::algebra::matrix::IntMatrix>;
 
 }  // namespace algo::ranges::statistics

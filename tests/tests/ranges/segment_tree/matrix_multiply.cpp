@@ -16,7 +16,7 @@ TEST(EagerPropagationStaticSegmentTree) {
   a[1][0] = 2;
   a[1][1] = 3;
   a[1][2] = 1;
-  
+
   auto b = IntMatrix(3, 2);
   b[0][0] = 1;
   b[0][1] = 2;
@@ -41,31 +41,31 @@ TEST(EagerPropagationStaticSegmentTree) {
   segment_tree.ApplyAtIndex(Update(1, b));
   segment_tree.ApplyAtIndex(Update(2, c));
 
-  auto ab = segment_tree.GetFromRange<Stat>(algo::ranges::Range(0,1));
-  
+  auto ab = segment_tree.GetFromRange<Stat>(algo::ranges::Range(0, 1));
+
   auto expected_ab = IntMatrix(2, 2);
   expected_ab[0][0] = 18;
   expected_ab[0][1] = -17;
   expected_ab[1][0] = 9;
   expected_ab[1][1] = 19;
-  
+
   ASSERT_EQ(ab, expected_ab)
 
-  auto bc = segment_tree.GetFromRange<Stat>(algo::ranges::Range(1,2));
-  
+  auto bc = segment_tree.GetFromRange<Stat>(algo::ranges::Range(1, 2));
+
   auto expected_bc = IntMatrix(3, 1);
   expected_bc[0][0] = 11;
   expected_bc[1][0] = 34;
   expected_bc[2][0] = -23;
-  
+
   ASSERT_EQ(bc, expected_bc)
 
-  auto abc = segment_tree.GetFromRange<Stat>(algo::ranges::Range(0,2));
-  
+  auto abc = segment_tree.GetFromRange<Stat>(algo::ranges::Range(0, 2));
+
   auto expected_abc = IntMatrix(2, 1);
   expected_abc[0][0] = 92;
   expected_abc[1][0] = 101;
-  
+
   ASSERT_EQ(abc, expected_abc)
 }
 

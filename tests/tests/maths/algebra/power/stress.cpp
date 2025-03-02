@@ -50,11 +50,11 @@ void TestBig(int k_rep) {
 
 template <typename T>
 void TestSmallMatrix() {
-  for(int size = 1; size <= 5; ++size) {
-    for(int rep = 0; rep < 100; ++rep) {
+  for (int size = 1; size <= 5; ++size) {
+    for (int rep = 0; rep < 100; ++rep) {
       algo::maths::algebra::matrix::Matrix<T> a(size);
-      for(int row = 0; row < size; ++row) {
-        for(int col = 0; col < size; ++col) {
+      for (int row = 0; row < size; ++row) {
+        for (int col = 0; col < size; ++col) {
           a[row][col] = RandomInt(-5, 5);
         }
       }
@@ -98,6 +98,5 @@ TEST(StressModular2SmallMatrix) {
 TEST(StressModularBigPrimeSmallMatirx) {
   TestSmallMatrix<algo::utils::Modular_1_000_000_007>();
 }
-
 
 RUN_ALL_TESTS()

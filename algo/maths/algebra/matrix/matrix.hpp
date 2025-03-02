@@ -15,7 +15,9 @@ struct Matrix {
     matrix.assign(k_row, std::vector<Element>(k_column));
   };
 
-  explicit Matrix(int n): Matrix(n, n) {}
+  explicit Matrix(int n)
+      : Matrix(n, n) {
+  }
 
   static Matrix Identity() {
     auto result = Matrix(0);
@@ -25,8 +27,8 @@ struct Matrix {
 
   static Matrix One(int n) {
     auto result = Matrix(n);
-    for(int i = 0; i < n; ++i) {
-        result[i][i] = 1;
+    for (int i = 0; i < n; ++i) {
+      result[i][i] = 1;
     }
     return result;
   }
@@ -40,21 +42,21 @@ struct Matrix {
   Matrix& operator=(const Matrix&) = default;
   Matrix& operator=(Matrix&&) = default;
 
-  auto & operator[](int row) {
+  auto& operator[](int row) {
     return matrix[row];
   }
 
-  const auto & operator[](int row) const {
+  const auto& operator[](int row) const {
     return matrix[row];
   }
 
   // +
   Matrix operator+(const Matrix& that) const {
     if (is_identity_) {
-        return that;
+      return that;
     }
     if (that.is_identity_) {
-        return *this;
+      return *this;
     }
     assert(k_row == that.k_row);
     assert(k_column == that.k_column);
@@ -97,10 +99,10 @@ struct Matrix {
   // *
   Matrix operator*(const Matrix& that) const {
     if (is_identity_) {
-        return that;
+      return that;
     }
     if (that.is_identity_) {
-        return *this;
+      return *this;
     }
     assert(k_column == that.k_row);
     auto result = Matrix(k_row, that.k_column);
@@ -136,7 +138,7 @@ struct Matrix {
   std::vector<std::vector<Element>> matrix;
   int k_row, k_column;
 
-  private:
+ private:
   bool is_identity_ = false;
 };
 

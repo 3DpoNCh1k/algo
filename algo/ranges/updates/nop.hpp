@@ -12,12 +12,12 @@ struct Nop {
     return Nop();
   };
 
-  template<typename Range>
+  template <typename Range>
   Nop OnSubrange(Range subrange) const {
     return Nop();
   }
 
-  template<typename Stat>
+  template <typename Stat>
   auto Apply(statistics::ValueOf<Stat> value) const {
     return value.value;
   }
