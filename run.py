@@ -13,9 +13,10 @@ ALGO_PATH = Path(os.environ["ALGO_PATH"])
 
 assert CURRENT_DIRECTORY == ALGO_PATH
 
-DEFAULT_COVERAGE_BUILD_PRESET="g++-debug-coverage"
-DEFAULT_COVERAGE_TEST_PRESET="g++-test-all-coverage"
-DEFAULT_BUILD_PRESET="g++-debug"
+DEFAULT_COVERAGE_BUILD_PRESET = "g++-debug-coverage"
+DEFAULT_COVERAGE_TEST_PRESET = "g++-test-all-coverage"
+DEFAULT_BUILD_PRESET = "g++-debug"
+
 
 def run_shell_cmd(cmd):
     result = subprocess.run(
@@ -90,6 +91,9 @@ class ClangFormat:
     def run(self, file: Path):
         run_shell_cmd(f"{self.clang_format} --style=file -i {file}")
 
+    def check(self, file: Path):
+        run_shell_cmd(f"{self.clang_format} --style=file -n -Werror {file}")
+
 
 def build(args):
     cmake = CMake()
@@ -123,9 +127,11 @@ def coverage(args):
 
 def format(args):
     path = Path(args.path)
+    check: bool = args.check
+
     clang_format = ClangFormat()
     for file in [path] if path.is_file() else cpp_files_recursive_iterator(path):
-        clang_format.run(file)
+        clang_format.check(file) if check else clang_format.run(file)
 
 
 def lint(args):
@@ -154,6 +160,7 @@ def main():
 
     format_parser = subparsers.add_parser("format")
     format_parser.add_argument("path")
+    format_parser.add_argument("--check", action="store_true")
     format_parser.set_defaults(cmd=format)
 
     lint_parser = subparsers.add_parser("lint")
