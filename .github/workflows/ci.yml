@@ -26,7 +26,7 @@ jobs:
       run: clang --version
 
     - name: Check formatting
-      run: python run.py format . --check
+      run: python run.py format algo --check && python run.py format tests --check
 
     - name: Build
       run: python run.py build g++-debug
@@ -35,4 +35,4 @@ jobs:
       run: python run.py test g++-test-all
 
     - name: Lint
-      run: python run.py lint . --preset g++-debug
+      run: python run.py lint algo --preset g++-debug && python run.py lint tests --preset g++-debug
