@@ -8,19 +8,22 @@ on:
 
 jobs:
   ci:
-    runs-on: ubuntu-22.04
-
+    runs-on: ubuntu-24.04
+    
+    env:
+      ALGO_PATH: ${{ github.workspace }}
+    
     steps:
     - uses: actions/checkout@v4
 
-    - name: Check formatting
-      run: python run.py format . --check
+    - name: Format
+      run: python run.py format algo --check && python run.py format tests --check
 
     - name: Build
       run: python run.py build g++-debug
 
     - name: Test
-      run: python run.py build g++-test-all
+      run: python run.py test g++-test-all
 
     - name: Lint
-      run: python run.py lint . --preset g++-debug
+      run: python run.py lint algo --preset g++-debug && python run.py lint tests --preset g++-debug

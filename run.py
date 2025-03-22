@@ -127,8 +127,9 @@ def coverage(args):
 
 def format(args):
     path = Path(args.path)
+    assert path.exists(), f"{path} does not exist"
     check: bool = args.check
-
+    # format
     clang_format = ClangFormat()
     for file in [path] if path.is_file() else cpp_files_recursive_iterator(path):
         clang_format.check(file) if check else clang_format.run(file)
@@ -136,6 +137,7 @@ def format(args):
 
 def lint(args):
     path = Path(args.path)
+    assert path.exists(), f"{path} does not exist"
     preset = str(args.preset) if args.preset is not None else DEFAULT_BUILD_PRESET
     # lint
     clang_tidy = ClangTidy()
