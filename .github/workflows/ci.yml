@@ -13,6 +13,15 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: check env
+      run: echo $GITHUB_WORKSPACE
+
+    - name: check pwd
+      run: pwd
+
+    - name: ls
+      run: ls
+
     - name: Check formatting
       run: python run.py format . --check
 
