@@ -18,6 +18,16 @@ TEST(LazyPropagationStaticSegmentTree) {
   unit::sum::OnlyApplyAtIndex(segment_tree);
 }
 
+TEST(EagerPropagationDynamicSegmentTree) {
+  auto segment_tree =
+      algo::ranges::segment_tree::EagerPropagationDynamicSegmentTree<IntAdd,
+                                                                     IntSum>(
+          0, 2, [](int, int) {
+            return 0;
+          });
+  unit::sum::OnlyApplyAtIndex(segment_tree);
+}
+
 TEST(LazyPropagationDynamicSegmentTree) {
   auto segment_tree =
       algo::ranges::segment_tree::LazyPropagationDynamicSegmentTree<IntAdd,

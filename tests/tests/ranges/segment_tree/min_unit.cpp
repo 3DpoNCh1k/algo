@@ -21,6 +21,15 @@ TEST(LazyPropagationStaticSegmentTree) {
   unit::min::OnlyApplyAtIndex(segment_tree);
 }
 
+TEST(EagerPropagationDynamicSegmentTree) {
+  auto segment_tree =
+      algo::ranges::segment_tree::EagerPropagationDynamicSegmentTree<
+          IntSetAdd, IntMinimum>(0, 2, [](int, int) {
+        return 0;
+      });
+  unit::min::OnlyApplyAtIndex(segment_tree);
+}
+
 TEST(LazyPropagationDynamicSegmentTree) {
   auto segment_tree =
       algo::ranges::segment_tree::LazyPropagationDynamicSegmentTree<IntSetAdd,

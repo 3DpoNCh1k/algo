@@ -27,4 +27,9 @@ using LazyPropagationDynamicSegmentTree =
     details::SegmentTree<i64, details::LazyPropagator, details::DynamicTree,
                          details::LazyNode, Update, Statistics...>;
 
+template <typename Update, typename... Statistics>
+using EagerPropagationDynamicSegmentTree =
+    details::SegmentTree<int, details::EagerPropagator, details::DynamicTree,
+                         details::EagerNode, Update, Statistics...>;
+
 }  // namespace algo::ranges::segment_tree

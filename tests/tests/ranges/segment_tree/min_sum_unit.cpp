@@ -36,6 +36,21 @@ TEST(LazyPropagationStaticSegmentTree) {
   }
 }
 
+TEST(EagerPropagationDynamicSegmentTree) {
+  {
+    auto segment_tree =
+        algo::ranges::segment_tree::EagerPropagationDynamicSegmentTree<
+            IntSetAdd, IntSum, IntMinimum>(0, 2, 0);
+    unit::sum::OnlyApplyAtIndex(segment_tree);
+  }
+  {
+    auto segment_tree =
+        algo::ranges::segment_tree::EagerPropagationDynamicSegmentTree<
+            IntSetAdd, IntSum, IntMinimum>(0, 2, 0);
+    unit::min::OnlyApplyAtIndex(segment_tree);
+  }
+}
+
 TEST(LazyPropagationDynamicSegmentTree) {
   {
     auto segment_tree =
@@ -63,6 +78,21 @@ TEST(LazyPropagationStaticSegmentTreeWithRange) {
     auto segment_tree =
         algo::ranges::segment_tree::LazyPropagationStaticSegmentTree<
             IntSetAdd, IntSum, IntMinimum>(values);
+    unit::min::WithApplyOnRange(segment_tree);
+  }
+}
+
+TEST(LazyPropagationDynamicSegmentTreeWithRange) {
+  {
+    auto segment_tree =
+        algo::ranges::segment_tree::LazyPropagationDynamicSegmentTree<
+            IntSetAdd, IntSum, IntMinimum>(0, 2, 0);
+    unit::sum::WithApplyOnRange(segment_tree);
+  }
+  {
+    auto segment_tree =
+        algo::ranges::segment_tree::LazyPropagationDynamicSegmentTree<
+            IntSetAdd, IntSum, IntMinimum>(0, 2, 0);
     unit::min::WithApplyOnRange(segment_tree);
   }
 }
