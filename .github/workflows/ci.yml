@@ -32,7 +32,7 @@ jobs:
       run: python run.py build g++-debug
 
     - name: Test
-      run: python run.py build g++-test-all
+      run: python run.py test g++-test-all
 
     - name: Lint
       run: python run.py lint . --preset g++-debug
