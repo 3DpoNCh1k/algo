@@ -21,6 +21,9 @@ jobs:
 
     - name: ls
       run: ls
+    
+    - name: set ALGO_PATH
+      run: export ALGO_PATH=$GITHUB_WORKSPACE
 
     - name: Check formatting
       run: python run.py format . --check
