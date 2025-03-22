@@ -13,14 +13,14 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: check formatting
+    - name: Check formatting
       run: python run.py format . --check
 
-    - name: Configure CMake
-      run: cmake --preset g++-debug
-
     - name: Build
-      run: cmake --build --preset g++-debug
+      run: python run.py build g++-debug
 
     - name: Test
-      run: ctest --preset g++-test-all
+      run: python run.py build g++-test-all
+
+    - name: Lint
+      run: python run.py lint . --preset g++-debug

@@ -136,7 +136,7 @@ def format(args):
 
 def lint(args):
     path = Path(args.path)
-    preset = DEFAULT_BUILD_PRESET
+    preset = str(args.preset) if args.preset is not None else DEFAULT_BUILD_PRESET
     # lint
     clang_tidy = ClangTidy()
     for file in [path] if path.is_file() else cpp_files_recursive_iterator(path):
@@ -165,6 +165,7 @@ def main():
 
     lint_parser = subparsers.add_parser("lint")
     lint_parser.add_argument("path")
+    lint_parser.add_argument("--preset")
     lint_parser.set_defaults(cmd=lint)
 
     args = parser.parse_args()
