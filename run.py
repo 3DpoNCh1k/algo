@@ -13,7 +13,8 @@ ALGO_PATH = Path(os.environ["ALGO_PATH"])
 
 assert CURRENT_DIRECTORY == ALGO_PATH
 
-DEFAULT_COVERAGE_PRESET="g++-debug-coverage"
+DEFAULT_COVERAGE_BUILD_PRESET="g++-debug-coverage"
+DEFAULT_COVERAGE_TEST_PRESET="g++-test-all-coverage"
 DEFAULT_BUILD_PRESET="g++-debug"
 
 def run_shell_cmd(cmd):
@@ -63,7 +64,7 @@ class Coverage:
     def run(self, directory: Path, include_pattern: str, output_directory: Path):
         with tempfile.NamedTemporaryFile() as output_coverage_file:
             run_shell_cmd(
-                f"{self.lcov} --directory {directory}  --include {include_pattern} --capture --output-file {output_coverage_file.name}"
+                f"{self.lcov} --directory {directory}  --include '{include_pattern}' --capture --output-file {output_coverage_file.name}"
             )
             run_shell_cmd(
                 f"{self.genhtml} --demangle-cpp -o {output_directory} {output_coverage_file.name}"
@@ -102,18 +103,19 @@ def test(args):
 
 
 def coverage(args):
-    preset = DEFAULT_COVERAGE_PRESET
+    build_preset = DEFAULT_COVERAGE_BUILD_PRESET
     # build
     cmake = CMake()
-    cmake.configure(preset)
-    cmake.build(preset)
+    cmake.configure(build_preset)
+    cmake.build(build_preset)
     # run
+    test_preset = DEFAULT_COVERAGE_TEST_PRESET
     ctest = CTest()
-    ctest.test(preset)
+    ctest.test(test_preset)
     # process
     coverage = Coverage()
     coverage.run(
-        directory=ALGO_PATH / "build" / preset,
+        directory=ALGO_PATH / "build" / build_preset,
         include_pattern=f"{ALGO_PATH}/algo/*",
         output_directory=ALGO_PATH / "coverage",
     )
@@ -139,24 +141,24 @@ def main():
     parser = argparse.ArgumentParser(prog="run")
     subparsers = parser.add_subparsers()
 
-    run = subparsers.add_parser("build")
-    run.add_argument("preset")
-    run.set_defaults(cmd=build)
+    build_parser = subparsers.add_parser("build")
+    build_parser.add_argument("preset")
+    build_parser.set_defaults(cmd=build)
 
-    run = subparsers.add_parser("test")
-    run.add_argument("preset")
-    run.set_defaults(cmd=test)
+    test_parser = subparsers.add_parser("test")
+    test_parser.add_argument("preset")
+    test_parser.set_defaults(cmd=test)
 
-    run = subparsers.add_parser("coverage")
-    run.set_defaults(cmd=coverage)
+    coverage_parser = subparsers.add_parser("coverage")
+    coverage_parser.set_defaults(cmd=coverage)
 
-    run = subparsers.add_parser("format")
-    run.add_argument("path")
-    run.set_defaults(cmd=format)
+    format_parser = subparsers.add_parser("format")
+    format_parser.add_argument("path")
+    format_parser.set_defaults(cmd=format)
 
-    run = subparsers.add_parser("lint")
-    run.add_argument("path")
-    run.set_defaults(cmd=lint)
+    lint_parser = subparsers.add_parser("lint")
+    lint_parser.add_argument("path")
+    lint_parser.set_defaults(cmd=lint)
 
     args = parser.parse_args()
 
