@@ -22,9 +22,9 @@ using EagerPropagationStaticSegmentTree =
     details::SegmentTree<int, details::EagerPropagator, details::StaticTree,
                          details::EagerNode, Update, Statistics...>;
 
-template <typename Update, typename Statistics>
+template <typename Update, typename... Statistics>
 using LazyPropagationDynamicSegmentTree =
     details::SegmentTree<i64, details::LazyPropagator, details::DynamicTree,
-                         details::LazyNode, Update, Statistics>;
+                         details::LazyNode, Update, Statistics...>;
 
 }  // namespace algo::ranges::segment_tree
