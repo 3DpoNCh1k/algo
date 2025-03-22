@@ -16,16 +16,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: check env
-      run: echo $GITHUB_WORKSPACE
-
-    - name: check ALGO_PATH
-      run: echo $ALGO_PATH
-
-    - name: check clang
-      run: clang --version
-
-    - name: Check formatting
+    - name: Format
       run: python run.py format algo --check && python run.py format tests --check
 
     - name: Build
