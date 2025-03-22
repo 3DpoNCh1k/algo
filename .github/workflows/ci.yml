@@ -9,21 +9,18 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-22.04
-
+    
+    env:
+      ALGO_PATH: ${{ github.workspace }}
+    
     steps:
     - uses: actions/checkout@v4
 
     - name: check env
       run: echo $GITHUB_WORKSPACE
 
-    - name: check pwd
-      run: pwd
-
-    - name: ls
-      run: ls
-    
-    - name: set ALGO_PATH
-      run: export ALGO_PATH=$GITHUB_WORKSPACE
+    - name: check ALGO_PATH
+      run: echo $ALGO_PATH
 
     - name: Check formatting
       run: python run.py format . --check
