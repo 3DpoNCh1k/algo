@@ -2,8 +2,6 @@
 #include <tests/framework/asserts.hpp>
 #include <tests/framework/test.hpp>
 
-
-
 TEST(Simple) {
   auto mex = algo::data_structures::MEX(5);
   ASSERT_EQ(mex.Mex(), 0);
