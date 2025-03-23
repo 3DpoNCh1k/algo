@@ -15,14 +15,14 @@ void Test(int from, int to, int k_points, int k_rep, bool as_segment = false) {
       int x = algo::utils::random::RandomInt(from, to);
       int y = algo::utils::random::RandomInt(from, to);
       if (as_segment) {
-        auto l = std::min(x,y);
-        auto r = std::max(x,y);
+        auto l = std::min(x, y);
+        auto r = std::max(x, y);
         x = l;
         y = r;
       }
       points.push_back({x, y});
     }
-    
+
     auto order = algo::misc::Mo(points);
     // check permutation
     ASSERT_EQ(order.size(), k_points);
@@ -36,7 +36,7 @@ void Test(int from, int to, int k_points, int k_rep, bool as_segment = false) {
       auto next = order[i];
       auto prev = order[i - 1];
       auto diff = points[next] - points[prev];
-      
+
       dist_x += abs(diff.x);
       dist_y += abs(diff.y);
     }
@@ -60,7 +60,6 @@ TEST(Small) {
 TEST(SmallSegments) {
   Test(0, 5, 5, 500, true);
 }
-
 
 TEST(Medium) {
   Test(-10, 10, 10, 5000);

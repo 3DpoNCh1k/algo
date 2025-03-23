@@ -5,19 +5,19 @@
 #include <cassert>
 
 namespace algo::ranges {
-template<typename Statistics>
+template <typename Statistics>
 struct DisjointSparseTable {
   using Value = typename Statistics::Value;
-  explicit DisjointSparseTable(const std::vector<Value> & a) {
+  explicit DisjointSparseTable(const std::vector<Value>& a) {
     int k =
         utils::bits::ExponentOfPowerOfTwoThatAtLeast(std::max(a.size(), 2ul));
     int n = 1 << k;
-    dp.assign(k , std::vector<Value>(n));
+    dp.assign(k, std::vector<Value>(n));
     for (int i = 0; i < a.size(); ++i) {
       dp[0][i] = a[i];
     }
     for (int lvl = 0; lvl < k; ++lvl) {
-      const auto & values = dp[0];
+      const auto& values = dp[0];
       int len = 1 << lvl;
       for (int center = len; center < n; center += 2 * len) {
         // left
@@ -45,7 +45,7 @@ struct DisjointSparseTable {
   std::vector<std::vector<Value>> dp;
 };
 
-template<typename Statistics>
+template <typename Statistics>
 using DST = DisjointSparseTable<Statistics>;
 
 }  // namespace algo::ranges

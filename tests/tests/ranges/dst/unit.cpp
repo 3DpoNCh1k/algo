@@ -5,7 +5,7 @@
 #include <tests/framework/test.hpp>
 
 TEST(Minimum) {
-  std::vector<i64> a = {1,0,3,2, 1};
+  std::vector<i64> a = {1, 0, 3, 2, 1};
   auto dst = algo::ranges::DST<algo::ranges::statistics::IntMinimum>(a);
 
   ASSERT_EQ(dst.Get(0, 0), 1);
@@ -20,7 +20,7 @@ TEST(Minimum) {
 }
 
 TEST(Sum) {
-  std::vector<i64> a = {1,0,3,2, 1};
+  std::vector<i64> a = {1, 0, 3, 2, 1};
   auto dst = algo::ranges::DST<algo::ranges::statistics::IntSum>(a);
 
   ASSERT_EQ(dst.Get(0, 0), 1);
@@ -33,6 +33,5 @@ TEST(Sum) {
   ASSERT_EQ(dst.Get(1, 4), 6);
   ASSERT_EQ(dst.Get(0, 4), 7);
 }
-
 
 RUN_ALL_TESTS()

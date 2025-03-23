@@ -7,8 +7,8 @@ namespace algo::data_structures {
 struct MinimumExcluded {
   // multiset [0, n]
   explicit MinimumExcluded(int n) {
-    for(int v = 0; v <= n + 1; ++v) {
-        excluded_.insert(v);
+    for (int v = 0; v <= n + 1; ++v) {
+      excluded_.insert(v);
     }
   }
 
@@ -21,7 +21,7 @@ struct MinimumExcluded {
     assert(Contains(v));
     included_.erase(included_.find(v));
     if (!Contains(v)) {
-        excluded_.insert(v);
+      excluded_.insert(v);
     }
   }
 
@@ -38,7 +38,6 @@ struct MinimumExcluded {
     return *excluded_.begin();
   }
 
-  
  private:
   std::multiset<int> included_;
   std::multiset<int> excluded_;
